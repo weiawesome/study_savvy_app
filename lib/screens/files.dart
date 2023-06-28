@@ -1,8 +1,7 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
-
 import '../styles/custom_style.dart';
+
 class FilesPage extends StatefulWidget{
   const FilesPage({Key?key}):super(key: key);
   @override
@@ -36,7 +35,6 @@ class _FilesPage extends State<FilesPage> {
     for (var i = 0; i < 15; i++) {
       List<String> options = ['SUCCESS', 'FAILURE', 'PENDING'];
       Random random = Random();
-
       String randomOption = options[random.nextInt(options.length)];
       _items.add(randomOption);
     }
@@ -54,7 +52,7 @@ class _FilesPage extends State<FilesPage> {
                 flex: 1,
                 child: Container(
                   alignment: Alignment.center,
-                  child: Text('History',style: Theme.of(context).textTheme.bodyLarge),
+                  child: Text('Files',style: Theme.of(context).textTheme.bodyLarge),
                 ),
               ),
               Expanded(
