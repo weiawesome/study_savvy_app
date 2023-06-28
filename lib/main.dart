@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:study_savvy_app/screens/Home.dart';
 import 'blocs/provider/theme_provider.dart';
 import 'styles/custom_style.dart';
-import 'screens/article_improver.dart';
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => ThemeProvider(),
-      child: MyApp(),
-    ),
-
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (_) => ThemeProvider(),
+          ),
+        ],
+        child: MyApp(),
+      )
   );
 }
 
@@ -22,7 +25,7 @@ class MyApp extends StatelessWidget {
       darkTheme: DarkStyle.theme,
       // themeMode: themeProvider.themeMode,
       themeMode: ThemeMode.system,
-      home: ArticleImproverPage(),
+      home: HomePage(),
       debugShowCheckedModeBanner: false,
     );
   }
