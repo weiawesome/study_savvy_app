@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:study_savvy_app/styles/custom_style.dart';
-import '../blocs/provider/theme_provider.dart';
 
 class ArticleImproverPage extends StatefulWidget{
   const ArticleImproverPage({Key?key}):super(key: key);
@@ -11,7 +9,6 @@ class ArticleImproverPage extends StatefulWidget{
 class _ArticleImproverPage extends State<ArticleImproverPage>{
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
         body:Padding(
           padding: EdgeInsets.symmetric(vertical: 30,horizontal: 30),

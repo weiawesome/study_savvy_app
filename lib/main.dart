@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import 'package:study_savvy_app/blocs/bolc_navigator.dart';
+import 'package:study_savvy_app/blocs/bloc_navigator.dart';
 import 'package:study_savvy_app/screens/Home.dart';
 import 'blocs/provider/theme_provider.dart';
 import 'styles/custom_style.dart';

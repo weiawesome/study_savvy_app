@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:study_savvy_app/screens/files.dart';
-import 'package:study_savvy_app/screens/profile.dart';
-import '../blocs/bolc_navigator.dart';
-import '../widgets/custom_BottomNavagationBar.dart';
+import '../blocs/bloc_navigator.dart';
+import '../widgets/custom_BottomNavigationBar.dart';
 
 class HomePage extends StatefulWidget{
   const HomePage({Key?key}):super(key: key);

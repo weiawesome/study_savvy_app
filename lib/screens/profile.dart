@@ -25,6 +25,31 @@ class _ProfilePage extends State<ProfilePage> {
       throw 'Could not launch $urlString';
     }
   }
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Logout',style: Theme.of(context).textTheme.displayMedium),
+          actions: <Widget>[
+            TextButton(
+              child: Text('cancel',style: Theme.of(context).textTheme.displaySmall,),
+              onPressed: () {
+                Navigator.of(context).pop();  
+              },
+            ),
+            TextButton(
+              child: Text('confirm',style: Theme.of(context).textTheme.displaySmall),
+              onPressed: () {
+                Navigator.of(context).pop();  
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
@@ -40,7 +65,7 @@ class _ProfilePage extends State<ProfilePage> {
                   children: [
                     Expanded(flex:1,child: Container()),
                     Expanded(flex:5,child: Text('Profile',style: Theme.of(context).textTheme.bodyLarge,textAlign: TextAlign.center,),),
-                    Expanded(flex:1,child: IconButton(onPressed: (){_launchURL();}, icon: Icon(Icons.logout),alignment: Alignment.centerRight,)),
+                    Expanded(flex:1,child: IconButton(onPressed: (){_showLogoutDialog(context);}, icon: Icon(Icons.logout),alignment: Alignment.centerRight,)),
                   ],
                 ),
               ),
