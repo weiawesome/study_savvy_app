@@ -45,7 +45,7 @@ class _ArticleImproverPage extends State<ArticleImproverPage>{
                                 maxLines: null,
                                 keyboardType: TextInputType.multiline,
                                 decoration: InputDecoration(
-                                  hintText: "可以在這寫入你的作文或使用照片",
+                                  hintText: "可以在這寫下你的作文或使用照片",
                                   border: InputBorder.none,
                                 ),
                               ),
