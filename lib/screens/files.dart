@@ -45,7 +45,7 @@ class _FilesPage extends State<FilesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body:Padding(
-            padding: EdgeInsets.symmetric(vertical: 30,horizontal: 30),
+            padding: EdgeInsets.symmetric(vertical: 30,horizontal: 10),
             child: Column(
             children: [
               Expanded(
@@ -64,12 +64,12 @@ class _FilesPage extends State<FilesPage> {
                       controller: _scrollController,
                       itemCount: _items.length,
                       itemBuilder: (context, index) {
-                        return ElevatedButton(
+                        return TextButton(
                             onPressed: (){print(index);},
                             child: Container(
                               padding: EdgeInsets.symmetric(vertical: 10,horizontal: 15),
                               height: 100,
-                              margin: EdgeInsets.symmetric(vertical: 10),
+                              margin: EdgeInsets.symmetric(vertical: 5),
                               decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)),border: Border.all(width: 1),color:Theme.of(context).brightness == Brightness.dark ? DarkStyle.FileBoxColor:LightStyle.FileBoxColor),
                               child: Row(
                                 children: [
