@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:study_savvy_app/blocs/bolc_navigator.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
   @override
@@ -7,12 +9,6 @@ class CustomBottomNavigationBar extends StatefulWidget {
 
 class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
   int _selectedIndex = 0;
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
@@ -43,8 +39,13 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
       showUnselectedLabels: false,
       selectedItemColor: Theme.of(context).brightness== Brightness.dark?Color.fromRGBO(217,217,217,1):Colors.black,
       unselectedItemColor: Color.fromRGBO(118,118,118,1),
-      onTap: _onItemTapped,
-      currentIndex: _selectedIndex,
+      onTap: (index) {
+        setState(() {
+          _selectedIndex=index;
+        });
+        context.read<PageBloc>().add(pageEvents[index]);
+      },
+      currentIndex: _selectedIndex
     );
   }
 }
