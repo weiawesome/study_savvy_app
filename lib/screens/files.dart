@@ -96,7 +96,7 @@ class _FilesPage extends State<FilesPage> {
                                       _items[index]=='SUCCESS'?
                                       [Icon(Icons.check_circle_outline,color: Color.fromRGBO(48,219,91,1),size: 45,),Text('Finish',style: Theme.of(context).textTheme.bodySmall,)] :_items[index]=='FAILURE'?
                                       [Icon(Icons.dangerous_sharp,color: Colors.red,size: 45,),Text('Fail',style: Theme.of(context).textTheme.bodySmall,)]:
-                                      [Icon(Icons.query_stats_rounded,color: Colors.yellow,size: 45,),Text('Wait',style: Theme.of(context).textTheme.bodySmall,)],
+                                      [Icon(Icons.query_stats_rounded,color: Colors.yellow[900],size: 45,),Text('Wait',style: Theme.of(context).textTheme.bodySmall,)],
 
                                     ),
                                   )

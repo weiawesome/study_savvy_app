@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:study_savvy_app/screens/files.dart';
 import 'package:study_savvy_app/screens/profile.dart';
 import '../widgets/custom_BottomNavagationBar.dart';
 
@@ -12,7 +13,7 @@ class _HomePage extends State<HomePage> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-          body: ProfilePage(),
+          body: FilesPage(),
           bottomNavigationBar:CustomBottomNavigationBar(),
         ),
     );
