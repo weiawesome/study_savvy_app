@@ -40,13 +40,13 @@ class _ArticleImproverPage extends State<ArticleImproverPage>{
                             margin: EdgeInsets.symmetric(vertical: 15),
                             height: 180,
                             decoration: Theme.of(context).brightness == Brightness.dark ? DarkStyle.boxDecoration : LightStyle.boxDecoration,
-                            child: SingleChildScrollView(
+                            child: const SingleChildScrollView(
                               child: TextField(
-                                maxLines: null,  // 允许TextField无限扩展
-                                keyboardType: TextInputType.multiline,  // 支持多行文本
+                                maxLines: null,
+                                keyboardType: TextInputType.multiline,
                                 decoration: InputDecoration(
-                                  hintText: (themeProvider.themeMode==ThemeMode.light).toString(),
-                                  border: InputBorder.none,  // 这里将 border 设置为 none
+                                  hintText: "可以在這寫入你的作文或使用照片",
+                                  border: InputBorder.none,
                                 ),
                               ),
                             ),
@@ -80,13 +80,13 @@ class _ArticleImproverPage extends State<ArticleImproverPage>{
                             margin: EdgeInsets.symmetric(vertical: 15),
                             height: 150,
                             decoration: Theme.of(context).brightness == Brightness.dark ? DarkStyle.boxDecoration : LightStyle.boxDecoration,
-                            child: SingleChildScrollView(
+                            child: const SingleChildScrollView(
                               child: TextField(
-                                maxLines: null,  // 允许TextField无限扩展
-                                keyboardType: TextInputType.multiline,  // 支持多行文本
+                                maxLines: null,
+                                keyboardType: TextInputType.multiline,
                                 decoration: InputDecoration(
-                                  hintText: (themeProvider.themeMode==ThemeMode.light).toString(),
-                                  border: InputBorder.none,  // 这里将 border 设置为 none
+                                  hintText: "可以寫下作文主題以及你認為需加強部分\n(選填)",
+                                  border: InputBorder.none,
                                 ),
                               ),
                             ),
