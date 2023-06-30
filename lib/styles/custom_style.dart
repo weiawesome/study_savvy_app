@@ -22,6 +22,8 @@ class LightStyle {
       bodySmall: TextStyle(color: Colors.black, fontSize:17,fontFamily: 'Play',fontWeight: FontWeight.bold),
       displayMedium: TextStyle(color: Colors.black, fontSize:24,fontFamily: 'Play',fontWeight: FontWeight.bold),
       displaySmall: TextStyle(color: Colors.black, fontSize:17,fontFamily: 'Play',fontWeight: FontWeight.bold),
+      labelMedium: TextStyle(color: Colors.black, fontSize:30,fontFamily: 'Play',fontWeight: FontWeight.bold),
+      labelSmall: TextStyle(color: Colors.white, fontSize:20,fontFamily: 'Play',fontWeight: FontWeight.bold),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
@@ -37,6 +39,7 @@ class DarkStyle {
   static const Color primaryDark = Color(0xFF202124);
   static const BoxDecoration boxDecoration= BoxDecoration(color: Color.fromRGBO(118, 118, 128, 0.24));
   static const Color FileBoxColor= Colors.black;
+
   static final ThemeData theme = ThemeData(
     primaryColor: primaryDark,
     brightness: Brightness.dark,
@@ -46,6 +49,8 @@ class DarkStyle {
       bodySmall: TextStyle(color: Colors.white, fontSize:17,fontFamily: 'Play',fontWeight: FontWeight.bold),
       displayMedium: TextStyle(color: Colors.white, fontSize:24,fontFamily: 'Play',fontWeight: FontWeight.bold),
       displaySmall: TextStyle(color: Colors.white, fontSize:17,fontFamily: 'Play',fontWeight: FontWeight.bold),
+      labelMedium: TextStyle(color: Colors.white, fontSize:30,fontFamily: 'Play',fontWeight: FontWeight.bold),
+      labelSmall: TextStyle(color: Colors.black, fontSize:20,fontFamily: 'Play',fontWeight: FontWeight.bold),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(

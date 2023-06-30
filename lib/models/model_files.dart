@@ -17,3 +17,11 @@ class File_Info{
   final String type;
   File_Info(this.id,this.type);
 }
+
+class Specific_File{
+  final String content;
+  final String prompt;
+  final String summarize;
+  final List<String> details;
+  Specific_File(this.content,this.prompt,this.summarize,this.details);
+}
