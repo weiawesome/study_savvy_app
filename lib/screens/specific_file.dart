@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:study_savvy_app/blocs/bloc_jwt.dart';
+import 'package:study_savvy_app/models/model_files.dart';
+import 'package:study_savvy_app/services/jwt_storage.dart';
 class SpecificFilePage extends StatefulWidget{
-  const SpecificFilePage({Key?key}):super(key: key);
+  final File_Info fileInfo;
+  const SpecificFilePage({Key?key,required this.fileInfo}):super(key: key);
+
   @override
   State<SpecificFilePage> createState()=> _SpecificFilePage();
 }
@@ -27,7 +33,14 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                   ),
                   Expanded(
                     flex: 8,
-                    child:Container(),
+                    child:Container(
+                      child: Column(
+                        children: [
+                          Text(context.watch<JWTBloc>().state.toString()),
+                          TextButton(onPressed: () async {await JwtService.saveJwt("Wei");context.read<JWTBloc>().add(JWTEventGet());}, child: Text("AA"))
+                        ],
+                      )
+                    ),
                   ),
                   Expanded(
                       flex: 1,
@@ -35,7 +48,7 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                           widthFactor: 0.5,
                           child: ElevatedButton(
                             onPressed: () { Navigator.pop(context); },
-                            child:Text('Done',textAlign: TextAlign.center,style: TextStyle(color: Colors.white, fontSize:25,fontFamily: 'Play',fontWeight: FontWeight.bold),),
+                            child:Text("ReGenerate",textAlign: TextAlign.center,style: TextStyle(color: Colors.white, fontSize:23,fontFamily: 'Play',fontWeight: FontWeight.bold),),
                             style: Theme.of(context).elevatedButtonTheme.style,
                           )
                       )

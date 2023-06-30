@@ -1,5 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:study_savvy_app/models/model_files.dart';
+import 'package:study_savvy_app/utils/routes.dart';
 import '../styles/custom_style.dart';
 
 class FilesPage extends StatefulWidget{
@@ -61,7 +63,7 @@ class _FilesPage extends State<FilesPage> {
                     itemCount: _items.length,
                     itemBuilder: (context, index) {
                       return TextButton(
-                          onPressed: (){print(index);},
+                          onPressed: (){Navigator.pushNamed(context, Routes.SpecificFile,arguments: File_Info('111', 'ASR'));},
                           child: Container(
                             padding: EdgeInsets.symmetric(vertical: 10,horizontal: 15),
                             height: 100,

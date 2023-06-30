@@ -69,7 +69,7 @@ class _InformationPage extends State<InformationPage> {
                           widthFactor: 0.5,
                           child: ElevatedButton(
                             onPressed: () { Navigator.pop(context); },
-                            child:Text('Done',textAlign: TextAlign.center,style: TextStyle(color: Colors.white, fontSize:25,fontFamily: 'Play',fontWeight: FontWeight.bold),),
+                            child:Text('Done',textAlign: TextAlign.center,style: TextStyle(color: Colors.white, fontSize:23,fontFamily: 'Play',fontWeight: FontWeight.bold),),
                             style: Theme.of(context).elevatedButtonTheme.style,
                           )
                       )

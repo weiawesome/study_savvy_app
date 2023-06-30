@@ -12,3 +12,8 @@ class Files{
   final BigInt total_pages;
   Files(this.files,this.page,this.total_pages);
 }
+class File_Info{
+  final String id;
+  final String type;
+  File_Info(this.id,this.type);
+}

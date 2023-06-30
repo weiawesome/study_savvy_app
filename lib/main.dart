@@ -4,12 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:study_savvy_app/blocs/bloc_navigator.dart';
-import 'package:study_savvy_app/screens/ACCESS_TOKEN.dart';
-import 'package:study_savvy_app/screens/API_KEY.dart';
-import 'package:study_savvy_app/screens/Home.dart';
-import 'package:study_savvy_app/screens/Information.dart';
-import 'package:study_savvy_app/screens/Password.dart';
 import 'package:study_savvy_app/utils/routes.dart';
+import 'blocs/bloc_jwt.dart';
 import 'blocs/provider/theme_provider.dart';
 import 'styles/custom_style.dart';
 void main() {
@@ -24,6 +20,9 @@ void main() {
               BlocProvider(
                 create: (context) => PageBloc(),
               ),
+              BlocProvider(
+                create:  (context) => JWTBloc(),
+              )
             ],
             child: MyApp(),
           )
@@ -36,7 +35,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     return MaterialApp(
-      useInheritedMediaQuery: true,
       locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
       title: 'Flutter Demo',
@@ -44,14 +42,7 @@ class MyApp extends StatelessWidget {
       darkTheme: DarkStyle.theme,
       themeMode: themeProvider.themeMode,
       initialRoute: Routes.Home,
-      routes: {
-        Routes.Home: (context) => HomePage(),
-        Routes.Information: (context) => InformationPage(),
-        Routes.ACCESS_TOKEN:(context)=>ACCESS_TOKENPage(),
-        Routes.API_KEY:(context)=>API_KEYPage(),
-        Routes.Password:(context)=>PasswordPage(),
-      },
-      home: HomePage(),
+      onGenerateRoute: RouteGenerator.generateRoute,
       debugShowCheckedModeBanner: false,
     );
   }
