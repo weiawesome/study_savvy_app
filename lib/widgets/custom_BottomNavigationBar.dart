@@ -8,11 +8,10 @@ class CustomBottomNavigationBar extends StatefulWidget {
 }
 
 class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
-  int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      backgroundColor: Theme.of(context).primaryColor,
+
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(Icons.feed_outlined,size: 38,),
@@ -36,17 +35,15 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
         ),
       ],
 
+      backgroundColor: Theme.of(context).primaryColor,
       showSelectedLabels: false,
       showUnselectedLabels: false,
       selectedItemColor: Theme.of(context).brightness== Brightness.dark?Color.fromRGBO(217,217,217,1):Colors.black,
       unselectedItemColor: Color.fromRGBO(118,118,118,1),
       onTap: (index) {
-        setState(() {
-          _selectedIndex=index;
-        });
         context.read<PageBloc>().add(pageEvents[index]);
       },
-      currentIndex: _selectedIndex,
+      currentIndex: pageIndex[context.watch<PageBloc>().state]??0,
       elevation: 0,
       type: BottomNavigationBarType.fixed,
     );

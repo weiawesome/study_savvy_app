@@ -39,6 +39,8 @@ class PageBloc extends Bloc<PageEvent,PageState> {
         emit(PageState.files);
       }else if(event is PageEventProfile){
         emit(PageState.profile);
+      }else{
+        emit(PageState.audio);
       }
     });
   }
