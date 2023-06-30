@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../blocs/provider/theme_provider.dart';
-
 class InformationPage extends StatefulWidget{
   const InformationPage({Key?key}):super(key: key);
   @override
@@ -10,6 +6,8 @@ class InformationPage extends StatefulWidget{
 }
 
 class _InformationPage extends State<InformationPage> {
+  String Mail='open891013@gmail.com';
+  String Name='童俊維';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,14 +29,46 @@ class _InformationPage extends State<InformationPage> {
                   ),
                   Expanded(
                     flex: 8,
-                    child:Container(),
+                    child:Container(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                flex:3,
+                                child: Text('Email:',style: Theme.of(context).textTheme.displayMedium,)
+                              ),
+                              Expanded(
+                                flex:7,
+                                child: Text(Mail,style: Theme.of(context).textTheme.displaySmall,),
+                              ),
+
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                  flex:3,
+                                  child: Text('Name:',style: Theme.of(context).textTheme.displayMedium,)
+                              ),
+                              Expanded(
+                                flex:7,
+                                child: Text(Name,style: Theme.of(context).textTheme.displaySmall,),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                   Expanded(
                       flex: 1,
                       child:FractionallySizedBox(
                           widthFactor: 0.5,
                           child: ElevatedButton(
-                            onPressed: () {  },
+                            onPressed: () { Navigator.pop(context); },
                             child:Text('Done',textAlign: TextAlign.center,style: TextStyle(color: Colors.white, fontSize:25,fontFamily: 'Play',fontWeight: FontWeight.bold),),
                             style: Theme.of(context).elevatedButtonTheme.style,
                           )

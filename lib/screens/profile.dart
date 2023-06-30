@@ -230,8 +230,7 @@ class _ProfilePage extends State<ProfilePage> {
                                                     ),
                                                     onPressed: () => {
                                                       themeProvider.themeMode=ThemeMode.dark,
-                                                      Navigator.pop(context),
-                                                      print(themeProvider.themeMode)
+                                                      Navigator.pop(context)
                                                     },
                                                   ),
                                                   TextButton(
@@ -244,8 +243,7 @@ class _ProfilePage extends State<ProfilePage> {
                                                     ),
                                                     onPressed: () => {
                                                       themeProvider.themeMode=ThemeMode.light,
-                                                      Navigator.pop(context),
-                                                      print(themeProvider.themeMode)
+                                                      Navigator.pop(context)
                                                     },
                                                   ),
                                                 ],
