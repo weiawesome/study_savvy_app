@@ -31,7 +31,6 @@ class _FilesPage extends State<FilesPage> {
   }
 
   void _loadMore() {
-
     for (var i = 0; i < 15; i++) {
       List<String> options = ['SUCCESS', 'FAILURE', 'PENDING'];
       Random random = Random();
@@ -43,74 +42,69 @@ class _FilesPage extends State<FilesPage> {
 
 
   Widget build(BuildContext context) {
-    return Scaffold(
-        body:Padding(
-            padding: EdgeInsets.symmetric(vertical: 30,horizontal: 10),
-            child: Column(
-            children: [
-              Expanded(
-                flex: 1,
-                child: Container(
-                  alignment: Alignment.center,
-                  child: Text('Files',style: Theme.of(context).textTheme.bodyLarge),
-                ),
-              ),
-              Expanded(
-                flex: 9,
-                child: RefreshIndicator(
-                  onRefresh: _refresh,
-                  child: ListView.builder(
-                      physics: AlwaysScrollableScrollPhysics(),
-                      controller: _scrollController,
-                      itemCount: _items.length,
-                      itemBuilder: (context, index) {
-                        return TextButton(
-                            onPressed: (){print(index);},
-                            child: Container(
-                              padding: EdgeInsets.symmetric(vertical: 10,horizontal: 15),
-                              height: 100,
-                              margin: EdgeInsets.symmetric(vertical: 5),
-                              decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)),border: Border.all(width: 1),color:Theme.of(context).brightness == Brightness.dark ? DarkStyle.FileBoxColor:LightStyle.FileBoxColor),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    flex:5,
-                                    child: Container(
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text('Title',style: Theme.of(context).textTheme.bodySmall,),
-                                          Text('Type',style: Theme.of(context).textTheme.bodySmall,),
-                                          Text('Date_Time',style: Theme.of(context).textTheme.bodySmall,),
-                                        ],
-                                      ),
+    return Column(
+        children: [
+          Expanded(
+            flex: 1,
+            child: Container(
+              alignment: Alignment.center,
+              child: Text('Files',style: Theme.of(context).textTheme.bodyLarge),
+            ),
+          ),
+          Expanded(
+              flex: 9,
+              child: RefreshIndicator(
+                onRefresh: _refresh,
+                child: ListView.builder(
+                    physics: AlwaysScrollableScrollPhysics(),
+                    controller: _scrollController,
+                    itemCount: _items.length,
+                    itemBuilder: (context, index) {
+                      return TextButton(
+                          onPressed: (){print(index);},
+                          child: Container(
+                            padding: EdgeInsets.symmetric(vertical: 10,horizontal: 15),
+                            height: 100,
+                            margin: EdgeInsets.symmetric(vertical: 5),
+                            decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)),border: Border.all(width: 1),color:Theme.of(context).brightness == Brightness.dark ? DarkStyle.FileBoxColor:LightStyle.FileBoxColor),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  flex:5,
+                                  child: Container(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text('Title',style: Theme.of(context).textTheme.bodySmall,),
+                                        Text('Type',style: Theme.of(context).textTheme.bodySmall,),
+                                        Text('Date_Time',style: Theme.of(context).textTheme.bodySmall,),
+                                      ],
                                     ),
                                   ),
-                                  Expanded(
-                                    flex: 1,
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 
-                                      children:
-                                      _items[index]=='SUCCESS'?
-                                      [Icon(Icons.check_circle_outline,color: Color.fromRGBO(48,219,91,1),size: 45,),Text('Finish',style: Theme.of(context).textTheme.bodySmall,)] :_items[index]=='FAILURE'?
-                                      [Icon(Icons.dangerous_sharp,color: Colors.red,size: 45,),Text('Fail',style: Theme.of(context).textTheme.bodySmall,)]:
-                                      [Icon(Icons.query_stats_rounded,color: Colors.yellow[900],size: 45,),Text('Wait',style: Theme.of(context).textTheme.bodySmall,)],
+                                    children:
+                                    _items[index]=='SUCCESS'?
+                                    [Icon(Icons.check_circle_outline,color: Color.fromRGBO(48,219,91,1),size: 45,),Text('OK',style: Theme.of(context).textTheme.bodySmall,)] :_items[index]=='FAILURE'?
+                                    [Icon(Icons.dangerous_sharp,color: Colors.red,size: 45,),Text('Fail',style: Theme.of(context).textTheme.bodySmall,)]:
+                                    [Icon(Icons.query_stats_rounded,color: Colors.yellow[900],size: 45,),Text('Wait',style: Theme.of(context).textTheme.bodySmall,)],
 
-                                    ),
-                                  )
-                                ],
+                                  ),
+                                )
+                              ],
 
-                              ),
-                            ));
-                      }
-                  ),
-                )
-              ),
-            ]
-            )
-      )
+                            ),
+                          ));
+                    }
+                ),
+              )
+          ),
+        ]
     );
   }
   @override

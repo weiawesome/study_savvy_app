@@ -12,6 +12,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
+      backgroundColor: Theme.of(context).primaryColor,
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(Icons.feed_outlined,size: 38,),
@@ -45,7 +46,9 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
         });
         context.read<PageBloc>().add(pageEvents[index]);
       },
-      currentIndex: _selectedIndex
+      currentIndex: _selectedIndex,
+      elevation: 0,
+      type: BottomNavigationBarType.fixed,
     );
   }
 }
