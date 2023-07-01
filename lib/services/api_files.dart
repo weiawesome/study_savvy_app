@@ -24,6 +24,26 @@ Future<Uint8List> getImage(String ID) async {
   }
 }
 
+Future<Uint8List> getAudio(String ID) async {
+  String? jwt=await JwtService.getJwt();
+  print(API_Routes.File_audio_url+"/"+ID);
+  final response = await http.get(
+    Uri.parse(API_Routes.File_audio_url+"/"+ID),
+    headers: {'Authorization': 'Bearer '+jwt!},
+  );
+  print(response.statusCode);
+  if (response.statusCode == 200) {
+    return response.bodyBytes;
+  } else if (response.statusCode == 422){
+    await JwtService.deleteJwt();
+    JWTBloc().add(JWTEventGet());
+    throw Exception('Failed to load audio');
+  }
+  else{
+    throw Exception('Failed to load audio');
+  }
+}
+
 Future<Specific_File> getSpecificFile(String ID) async {
   String? jwt=await JwtService.getJwt();
   final response = await http.get(
@@ -35,10 +55,10 @@ Future<Specific_File> getSpecificFile(String ID) async {
   } else if (response.statusCode == 422){
     await JwtService.deleteJwt();
     JWTBloc().add(JWTEventGet());
-    throw Exception('Failed to load image');
+    throw Exception('Failed to load file');
   }
   else{
-    throw Exception('Failed to load image');
+    throw Exception('Failed to load file');
   }
 }
 
@@ -54,9 +74,9 @@ Future<Files> getFiles(int page) async {
   } else if (response.statusCode == 422){
     await JwtService.deleteJwt();
     JWTBloc().add(JWTEventGet());
-    throw Exception('Failed to load image');
+    throw Exception('Failed to load files');
   }
   else{
-    throw Exception('Failed to load image');
+    throw Exception('Failed to load files');
   }
 }

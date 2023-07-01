@@ -31,7 +31,6 @@ class _FilesPage extends State<FilesPage> {
     context.read<FilesBloc>().add(FilesEventRefresh());
   }
 
-
   Widget build(BuildContext context) {
     return Column(
         children: [
@@ -56,11 +55,34 @@ class _FilesPage extends State<FilesPage> {
                         itemBuilder: (context, index) {
                           return TextButton(
                               onPressed: (){
-                                Navigator.pushNamed(context, Routes.SpecificFile);
-                                if((state.files.files[index]).type=="OCR"){
-                                  context.read<FileBloc>().add(FileEventOCR((state.files.files[index]).id));
+                                if ((state.files.files[index]).status=='SUCCESS'){
+                                  Navigator.pushNamed(context, Routes.SpecificFile);
+                                  if((state.files.files[index]).type=="OCR"){
+                                    context.read<FileBloc>().add(FileEventOCR((state.files.files[index]).id));
+                                  }
+                                  else if((state.files.files[index]).type=="ASR"){
+                                    context.read<FileBloc>().add(FileEventASR((state.files.files[index]).id));
+                                  }
                                 }
-                                else if((state.files.files[index]).type=="ASR"){
+                                else{
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text('錯誤'),
+                                        content: Text('這份檔案正在執行或失敗\n目前無法開啟'),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            child: Text('确定'),
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+
                                 }
 
                               },

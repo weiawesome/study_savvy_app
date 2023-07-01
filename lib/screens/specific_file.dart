@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_savvy_app/blocs/bloc_specific_file.dart';
@@ -13,6 +14,7 @@ class SpecificFilePage extends StatefulWidget{
 
 class _SpecificFilePage extends State<SpecificFilePage> {
   late FileBloc bloc;
+  AudioPlayer audioPlayer = AudioPlayer();
   @override
   void initState() {
     super.initState();
@@ -161,7 +163,7 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                         ],
                                       ),
                                     ),
-                                    "ASR"=='ASR'?
+                                    state.type=="OCR"?
                                     Container(
                                       margin: EdgeInsets.symmetric(vertical: 10),
                                       width: double.infinity,
@@ -183,7 +185,30 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                         ],
                                       ),
                                     ):
-                                    Container(color:Colors.green,height: 10,)
+                                    Container(
+                                      margin: EdgeInsets.symmetric(vertical: 10),
+                                      width: double.infinity,
+                                      padding: EdgeInsets.symmetric(horizontal: 10,vertical: 15),
+                                      decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)),color: Theme.of(context).brightness==Brightness.light?Colors.grey[300]:Colors.black),
+                                      child: Column(
+                                        children: [
+                                          ExpansionTile(
+                                            title: Text('Original Audio',style: Theme.of(context).textTheme.labelMedium,),
+                                            children: [
+                                              Container(
+                                                  margin: EdgeInsets.symmetric(vertical: 15),
+                                                  padding: EdgeInsets.symmetric(horizontal: 10),
+                                                  child: TextButton(
+                                                    onPressed: () { print("HAHA");},
+                                                    child: Icon(Icons.play_circle_fill_rounded,color: Theme.of(context).hintColor,size: 50,),
+                                                  )
+                                              )
+                                            ],
+                                            iconColor: Theme.of(context).brightness==Brightness.light?Colors.black:Colors.white,
+                                          ),
+                                        ],
+                                      ),
+                                    )
                                   ],
                                 );
                               }
