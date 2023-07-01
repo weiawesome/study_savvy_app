@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:study_savvy_app/blocs/bloc_files.dart';
 import 'package:study_savvy_app/blocs/bloc_navigator.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
@@ -41,6 +42,9 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
       selectedItemColor: Theme.of(context).brightness== Brightness.dark?Color.fromRGBO(217,217,217,1):Colors.black,
       unselectedItemColor: Color.fromRGBO(118,118,118,1),
       onTap: (index) {
+        if (index==2){
+          context.read<FilesBloc>().add(FilesEventInit());
+        }
         context.read<PageBloc>().add(pageEvents[index]);
       },
       currentIndex: pageIndex[context.watch<PageBloc>().state]??0,

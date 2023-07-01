@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:study_savvy_app/blocs/bloc_navigator.dart';
+import 'package:study_savvy_app/blocs/bloc_specific_file.dart';
 import 'package:study_savvy_app/utils/routes.dart';
+import 'blocs/bloc_files.dart';
 import 'blocs/bloc_jwt.dart';
 import 'blocs/provider/theme_provider.dart';
 import 'styles/custom_style.dart';
@@ -22,6 +24,12 @@ void main() {
               ),
               BlocProvider(
                 create:  (context) => JWTBloc(),
+              ),
+              BlocProvider(
+                create:  (context) => FileBloc(),
+              ),
+              BlocProvider(
+                create:  (context) => FilesBloc(),
               )
             ],
             child: MyApp(),

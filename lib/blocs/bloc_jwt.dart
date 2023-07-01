@@ -6,11 +6,6 @@ class JWTEventGet extends JWTEvent{}
 class JWTEventDelete extends JWTEvent{}
 class JWTBloc extends Bloc<JWTEvent,String?> {
   JWTBloc(): super(null){
-    Future<void> _initializeJwt() async {
-      String? jwt = await JwtService.getJwt();
-      emit(jwt);
-    }
-    _initializeJwt();
     on<JWTEvent>((event,emit) async {
       if (event is JWTEventGet){
         String? jwt = await JwtService.getJwt();

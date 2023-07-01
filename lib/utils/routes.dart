@@ -29,8 +29,7 @@ class RouteGenerator {
       case Routes.ACCESS_TOKEN:
         return MaterialPageRoute(builder: (_) => ACCESS_TOKENPage());
       case Routes.SpecificFile:
-        final args = settings.arguments as File_Info;
-        return MaterialPageRoute(builder: (_) => SpecificFilePage(fileInfo: args));
+        return MaterialPageRoute(builder: (_) => SpecificFilePage());
       default:
         return MaterialPageRoute(builder: (_) => HomePage());
     }

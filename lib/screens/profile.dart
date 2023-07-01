@@ -95,6 +95,17 @@ class _ProfilePage extends State<ProfilePage> {
                             color: Color.fromRGBO(118, 118, 128, 0.24),
                             child: TextButton(
                                 onPressed: (){Navigator.pushNamed(context, Routes.Information,);},
+                                style: ButtonStyle(
+                                  overlayColor: MaterialStateProperty.resolveWith<Color>(
+                                        (Set<MaterialState> states) {
+                                      if (states.contains(MaterialState.pressed)) {
+                                        return Theme.of(context).hintColor;
+                                      }
+                                      // 其他状态下的背景色
+                                      return Colors.transparent;
+                                    },
+                                  ),
+                                ),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
@@ -109,6 +120,17 @@ class _ProfilePage extends State<ProfilePage> {
                             color: Color.fromRGBO(118, 118, 128, 0.24),
                             child: TextButton(
                                 onPressed: (){Navigator.pushNamed(context, Routes.Password);},
+                                style: ButtonStyle(
+                                  overlayColor: MaterialStateProperty.resolveWith<Color>(
+                                        (Set<MaterialState> states) {
+                                      if (states.contains(MaterialState.pressed)) {
+                                        return Theme.of(context).hintColor;
+                                      }
+                                      // 其他状态下的背景色
+                                      return Colors.transparent;
+                                    },
+                                  ),
+                                ),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
@@ -135,6 +157,17 @@ class _ProfilePage extends State<ProfilePage> {
                             color: Color.fromRGBO(118, 118, 128, 0.24),
                             child: TextButton(
                                 onPressed: (){Navigator.pushNamed(context, Routes.API_KEY);},
+                                style: ButtonStyle(
+                                  overlayColor: MaterialStateProperty.resolveWith<Color>(
+                                        (Set<MaterialState> states) {
+                                      if (states.contains(MaterialState.pressed)) {
+                                        return Theme.of(context).hintColor;
+                                      }
+                                      // 其他状态下的背景色
+                                      return Colors.transparent;
+                                    },
+                                  ),
+                                ),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
@@ -149,6 +182,17 @@ class _ProfilePage extends State<ProfilePage> {
                             color: Color.fromRGBO(118, 118, 128, 0.24),
                             child: TextButton(
                                 onPressed: (){Navigator.pushNamed(context, Routes.ACCESS_TOKEN);},
+                                style: ButtonStyle(
+                                  overlayColor: MaterialStateProperty.resolveWith<Color>(
+                                        (Set<MaterialState> states) {
+                                      if (states.contains(MaterialState.pressed)) {
+                                        return Theme.of(context).hintColor;
+                                      }
+                                      // 其他状态下的背景色
+                                      return Colors.transparent;
+                                    },
+                                  ),
+                                ),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
@@ -174,6 +218,17 @@ class _ProfilePage extends State<ProfilePage> {
                             margin: EdgeInsets.only(top:20),
                             color: Color.fromRGBO(118, 118, 128, 0.24),
                             child: TextButton(
+                              style: ButtonStyle(
+                                overlayColor: MaterialStateProperty.resolveWith<Color>(
+                                      (Set<MaterialState> states) {
+                                    if (states.contains(MaterialState.pressed)) {
+                                      return Theme.of(context).hintColor;
+                                    }
+                                    // 其他状态下的背景色
+                                    return Colors.transparent;
+                                  },
+                                ),
+                              ),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
