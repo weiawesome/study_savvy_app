@@ -40,6 +40,9 @@ dependencies:
   device_preview: ^1.1.0
   url_launcher: ^6.0.12
   flutter_secure_storage: ^8.0.0
+  http: any
+  flutter_cache_manager: any
+  audioplayers: ^4.1.0
 
 dev_dependencies:
   flutter_test:
