@@ -11,27 +11,27 @@ class FilesEventLoadMore extends FilesEvent{
 class FilesEventRefresh extends FilesEvent{}
 
 class FilesState {
+  final bool status;
   final Files files;
-  FilesState(this.files);
+  FilesState(this.status,this.files);
 }
 
 class FilesBloc extends Bloc<FilesEvent,FilesState> {
-  FilesBloc(): super(FilesState(Files([],0,0))){
+  FilesBloc(): super(FilesState(false,Files([],0,0))){
     on<FilesEvent>((event,emit) async {
       if (event is FilesEventInit){
-
         Files result=await getFiles(1);
-        emit(FilesState(result));
+        emit(FilesState(true,result));
         print(result);
       }
       else if (event is FilesEventRefresh){
         Files result=await getFiles(1);
-        emit(FilesState(result));
+        emit(FilesState(true,result));
       }
       else if (event is FilesEventLoadMore){
         if(event.files.total_pages>event.files.current_page){
           Files result=await getFiles((event.files.current_page+1));
-          emit(FilesState(combineFiles(event.files, result)));
+          emit(FilesState(true,combineFiles(event.files, result)));
         }
       }
       else {
