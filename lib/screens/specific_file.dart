@@ -6,6 +6,7 @@ import 'package:study_savvy_app/blocs/bloc_specific_file.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:study_savvy_app/services/api_files.dart';
 import 'package:study_savvy_app/services/jwt_storage.dart';
+import 'package:study_savvy_app/widgets/loading.dart';
 class SpecificFilePage extends StatefulWidget{
   const SpecificFilePage({Key?key}):super(key: key);
   @override
@@ -52,13 +53,7 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                           child: BlocBuilder<FileBloc,FileState>(
                             builder: (context,state){
                               if(!state.status){
-                                return Container(
-                                  margin: EdgeInsets.only(top:30),
-                                  alignment: Alignment.center,
-                                  child: CircularProgressIndicator(
-                                    color: Theme.of(context).hintColor,
-                                  ),
-                                );
+                                return Loading();
                               }
                               else{
                                 return Column(

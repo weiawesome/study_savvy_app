@@ -4,6 +4,7 @@ import 'package:study_savvy_app/blocs/bloc_files.dart';
 import 'package:study_savvy_app/blocs/bloc_specific_file.dart';
 import 'package:study_savvy_app/models/model_files.dart';
 import 'package:study_savvy_app/utils/routes.dart';
+import 'package:study_savvy_app/widgets/loading.dart';
 import '../styles/custom_style.dart';
 
 class FilesPage extends StatefulWidget{
@@ -46,13 +47,7 @@ class _FilesPage extends State<FilesPage> {
               child: BlocBuilder<FilesBloc,FilesState>(
                 builder: (context,state){
                   if(!state.status){
-                    return Container(
-                      margin: EdgeInsets.only(top:30),
-                      alignment: Alignment.center,
-                      child: CircularProgressIndicator(
-                        color: Theme.of(context).hintColor,
-                      ),
-                    );
+                    return Loading();
                   }
                   else{
                     return RefreshIndicator(
