@@ -12,13 +12,7 @@ class InformationPage extends StatefulWidget{
 class _InformationPage extends State<InformationPage> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProfileBloc,ProfileState>(
-        builder: (context,state){
-          if(!state.status){
-            return Loading();
-          }
-          else {
-            return Scaffold(
+    return Scaffold(
               body: SafeArea(
                   child: Padding(
                       padding: EdgeInsets.symmetric(
@@ -48,71 +42,80 @@ class _InformationPage extends State<InformationPage> {
                           ),
                           Expanded(
                             flex: 8,
-                            child: Container(
-                              padding: EdgeInsets.symmetric(horizontal: 20),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment
-                                    .spaceEvenly,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                          flex: 3,
-                                          child: Text('Email:', style: Theme
-                                              .of(context)
-                                              .textTheme
-                                              .displayMedium,)
-                                      ),
-                                      Expanded(
-                                        flex: 7,
-                                        child: Text(state.profile.mail, style: Theme
-                                            .of(context)
-                                            .textTheme
-                                            .displaySmall,),
-                                      ),
+                            child: BlocBuilder<ProfileBloc,ProfileState>(
+                              builder: (context,state) {
+                                if (!state.status) {
+                                  return Loading();
+                                }
+                                else {
+                                  return Container(
+                                    padding: EdgeInsets.symmetric(horizontal: 20),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment
+                                          .spaceEvenly,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                                flex: 3,
+                                                child: Text('Email:', style: Theme
+                                                    .of(context)
+                                                    .textTheme
+                                                    .displayMedium,)
+                                            ),
+                                            Expanded(
+                                              flex: 7,
+                                              child: Text(state.profile.mail, style: Theme
+                                                  .of(context)
+                                                  .textTheme
+                                                  .displaySmall,),
+                                            ),
 
 
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                          flex: 3,
-                                          child: Text('Name:', style: Theme
-                                              .of(context)
-                                              .textTheme
-                                              .displayMedium,)
-                                      ),
-                                      Expanded(
-                                        flex: 7,
-                                        child: Text(state.profile.name, style: Theme
-                                            .of(context)
-                                            .textTheme
-                                            .displaySmall,),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                          flex: 3,
-                                          child: Text('Gender:', style: Theme
-                                              .of(context)
-                                              .textTheme
-                                              .displayMedium,)
-                                      ),
-                                      Expanded(
-                                        flex: 7,
-                                        child: Text(state.profile.gender, style: Theme
-                                            .of(context)
-                                            .textTheme
-                                            .displaySmall,),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                                flex: 3,
+                                                child: Text('Name:', style: Theme
+                                                    .of(context)
+                                                    .textTheme
+                                                    .displayMedium,)
+                                            ),
+                                            Expanded(
+                                              flex: 7,
+                                              child: Text(state.profile.name, style: Theme
+                                                  .of(context)
+                                                  .textTheme
+                                                  .displaySmall,),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                                flex: 3,
+                                                child: Text('Gender:', style: Theme
+                                                    .of(context)
+                                                    .textTheme
+                                                    .displayMedium,)
+                                            ),
+                                            Expanded(
+                                              flex: 7,
+                                              child: Text(state.profile.gender, style: Theme
+                                                  .of(context)
+                                                  .textTheme
+                                                  .displaySmall,),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }
+                              }
+                            )
                           ),
                           Expanded(
                               flex: 1,
@@ -140,8 +143,5 @@ class _InformationPage extends State<InformationPage> {
                   )
               ),
             );
-          }
-        }
-    );
   }
 }
