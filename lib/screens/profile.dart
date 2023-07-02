@@ -1,9 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import '../blocs/bloc_profile.dart';
 import '../blocs/provider/theme_provider.dart';
 import '../utils/routes.dart';
 
@@ -14,7 +12,6 @@ class ProfilePage extends StatefulWidget{
 }
 
 class _ProfilePage extends State<ProfilePage> {
-
   void _launchURL() async {
     const String urlString = 'https://www.google.com';
     Uri url = Uri.parse(urlString);
@@ -94,7 +91,7 @@ class _ProfilePage extends State<ProfilePage> {
                             margin: EdgeInsets.only(top:20),
                             color: Color.fromRGBO(118, 118, 128, 0.24),
                             child: TextButton(
-                                onPressed: (){Navigator.pushNamed(context, Routes.Information,);},
+                                onPressed: (){Navigator.pushNamed(context, Routes.Information,);context.read<ProfileBloc>().add(ProfileEventGet());},
                                 style: ButtonStyle(
                                   overlayColor: MaterialStateProperty.resolveWith<Color>(
                                         (Set<MaterialState> states) {

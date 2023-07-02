@@ -3,4 +3,5 @@ class API_Routes{
   static const String File_image_url=API_base_url+"files/resources/graph";
   static const String File_audio_url=API_base_url+"files/resources/audio";
   static const String File_url=API_base_url+"files";
+  static const String Profile_url=API_base_url+"information";
 }

@@ -8,6 +8,7 @@ import 'package:study_savvy_app/blocs/bloc_specific_file.dart';
 import 'package:study_savvy_app/utils/routes.dart';
 import 'blocs/bloc_files.dart';
 import 'blocs/bloc_jwt.dart';
+import 'blocs/bloc_profile.dart';
 import 'blocs/provider/theme_provider.dart';
 import 'styles/custom_style.dart';
 void main() {
@@ -30,6 +31,9 @@ void main() {
               ),
               BlocProvider(
                 create:  (context) => FilesBloc(),
+              ),
+              BlocProvider(
+                create:  (context) => ProfileBloc(),
               )
             ],
             child: MyApp(),

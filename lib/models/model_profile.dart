@@ -3,6 +3,10 @@ class Profile{
   final String mail;
   final String gender;
   Profile(this.name,this.mail,this.gender);
+  Profile.fromJson(Map<String, dynamic> json) :
+        name=json['name'],
+        mail=json['mail'],
+        gender=json['gender'];
 }
 class Update_Profile{
   final String name;

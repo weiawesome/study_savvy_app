@@ -26,12 +26,10 @@ Future<Uint8List> getImage(String ID) async {
 
 Future<Uint8List> getAudio(String ID) async {
   String? jwt=await JwtService.getJwt();
-  print(API_Routes.File_audio_url+"/"+ID);
   final response = await http.get(
     Uri.parse(API_Routes.File_audio_url+"/"+ID),
     headers: {'Authorization': 'Bearer '+jwt!},
   );
-  print(response.statusCode);
   if (response.statusCode == 200) {
     return response.bodyBytes;
   } else if (response.statusCode == 422){
