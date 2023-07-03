@@ -1,0 +1,54 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../services/api_profile.dart';
+
+abstract class Access_methodEvent {}
+
+class Access_methodEventReset extends Access_methodEvent{}
+
+class Access_methodEventApiKey extends Access_methodEvent{
+  final String apikey;
+  Access_methodEventApiKey(this.apikey);
+}
+class Access_methodEventAccessToken extends Access_methodEvent{
+  final String accesstoken;
+  Access_methodEventAccessToken(this.accesstoken);
+}
+
+class Access_methodState {
+  final String status;
+  final String? error;
+  Access_methodState(this.status,this.error);
+}
+class Access_methodBloc extends Bloc<Access_methodEvent,Access_methodState?> {
+  Access_methodBloc(): super(null){
+    on<Access_methodEvent>((event,emit) async {
+      if(event is Access_methodEventReset){
+        emit(null);
+      }
+      else if(event is Access_methodEventApiKey){
+        emit(Access_methodState("PENDING",null));
+        try{
+          await setApiKey(event.apikey);
+          emit(Access_methodState("SUCCESS",null));
+        }
+        catch(e) {
+          emit(Access_methodState("FAILURE",e.toString()));
+        }
+      }
+      else if(event is Access_methodEventAccessToken){
+        emit(Access_methodState("PENDING",null));
+        try{
+          await setAccessToken(event.accesstoken);
+          emit(Access_methodState("SUCCESS",null));
+        }
+        catch(e) {
+          emit(Access_methodState("FAILURE",e.toString()));
+        }
+      }
+      else{
+        throw Exception("Error event in Access_method_file");
+      }
+    });
+  }
+}

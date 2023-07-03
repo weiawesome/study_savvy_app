@@ -43,6 +43,10 @@ dependencies:
   http: any
   flutter_cache_manager: any
   audioplayers: ^4.1.0
+  encrypt: ^5.0.1
+  pointycastle: ^3.3.0
+  asn1lib: any
+  file_picker: ^4.3.0
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +71,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/initial.jpg
+    - assets/keys/public_key.pem
   fonts:
     - family: Play
       fonts:

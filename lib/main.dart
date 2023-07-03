@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:study_savvy_app/blocs/bloc_access_methds.dart';
 import 'package:study_savvy_app/blocs/bloc_navigator.dart';
 import 'package:study_savvy_app/blocs/bloc_specific_file.dart';
 import 'package:study_savvy_app/utils/routes.dart';
@@ -38,6 +39,9 @@ void main() {
               ),
               BlocProvider(
                 create:  (context) => ProfileBloc(),
+              ),
+              BlocProvider(
+                create:  (context) => Access_methodBloc(),
               )
             ],
             child: MyApp(),
@@ -57,7 +61,7 @@ class MyApp extends StatelessWidget {
       theme: LightStyle.theme,
       darkTheme: DarkStyle.theme,
       themeMode: themeProvider.themeMode,
-      // initialRoute: Routes.Home,
+      initialRoute: Routes.Home,
       onGenerateRoute: RouteGenerator.generateRoute,
       debugShowCheckedModeBanner: false,
       home: Container(

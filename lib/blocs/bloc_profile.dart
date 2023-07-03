@@ -4,6 +4,7 @@ import 'package:study_savvy_app/services/api_profile.dart';
 
 abstract class ProfileEvent {}
 class ProfileEventGet extends ProfileEvent{}
+
 class ProfileState {
   final bool status;
   final Profile profile;

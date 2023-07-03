@@ -18,7 +18,23 @@ class Update_Pwd{
   final String new_pwd;
   Update_Pwd(this.pwd,this.new_pwd);
 }
+
 class AI_Methods{
   final String token;
   AI_Methods(this.token);
 }
+
+
+class SecureData{
+  final String data;
+  final String key;
+  SecureData(this.data,this.key);
+
+  Map<String,String> formatAccessToken(){
+    return {"AES_key":key,"access_token":data};
+  }
+  Map<String,String> formatApiKey(){
+    return {"AES_key":key,"api_key":data};
+  }
+}
+

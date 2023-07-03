@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../blocs/bloc_access_methds.dart';
+import '../widgets/loading.dart';
+
 class ACCESS_TOKENPage extends StatefulWidget{
   const ACCESS_TOKENPage({Key?key}):super(key: key);
   @override
@@ -6,6 +10,13 @@ class ACCESS_TOKENPage extends StatefulWidget{
 }
 
 class _ACCESS_TOKENPage extends State<ACCESS_TOKENPage> {
+  final _controller= TextEditingController();
+  @override
+  void dispose() {
+    // 清理控制器资源
+    _controller.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,51 +71,93 @@ class _ACCESS_TOKENPage extends State<ACCESS_TOKENPage> {
                               flex: 1,
                               child: Container()
                           ),
-                          Expanded(
-                            flex: 4,
-                            child: Row(
-                              children: [
-                                Expanded(
-                                    flex:4,
-                                    child: Text('ACCESS\nTOKEN:',style: Theme.of(context).textTheme.displayMedium,)
-                                ),
-                                Expanded(
-                                    flex:6,
-                                    child: Container(
-                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),border: Border.all(width: 1)),
-                                      padding: EdgeInsets.symmetric(horizontal: 10),
-                                      child: TextField(
-                                        maxLines: 1,
-                                        decoration: InputDecoration(
-                                          hintText: "API_KEY",
-                                          hintMaxLines: 1,
-                                          border: InputBorder.none,
-                                        ),
+                          BlocBuilder<Access_methodBloc,Access_methodState?>(
+                            builder: (context,state){
+                              if(state==null){
+                                return Expanded(
+                                  flex: 4,
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                          flex:4,
+                                          child: Text('ACCESS\nTOKEN:',style: Theme.of(context).textTheme.displayMedium,)
                                       ),
-                                    )
-                                ),
+                                      Expanded(
+                                          flex:6,
+                                          child: Container(
+                                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),border: Border.all(width: 1)),
+                                            padding: EdgeInsets.symmetric(horizontal: 10),
+                                            child: TextField(
+                                              controller: _controller,
+                                              maxLines: 1,
+                                              decoration: InputDecoration(
+                                                hintText: "API_KEY",
+                                                hintMaxLines: 1,
+                                                border: InputBorder.none,
+                                              ),
+                                            ),
+                                          )
+                                      ),
 
-                              ],
-                            ),
+                                    ],
+                                  ),
+                                );
+                              }
+                              else if (state.status=="PENDING"){
+                                return Loading();
+                              }
+                              else if (state.status=="SUCCESS"){
+                                return Container(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Icon(Icons.check_circle_outline,color: Color.fromRGBO(48,219,91,1),size: 60,),
+                                      Text('Success',style: Theme.of(context).textTheme.displayMedium,)
+                                    ],
+                                  ),
+                                );
+                              }
+                              else{
+                                return Container(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Icon(Icons.dangerous_sharp,color: Colors.red,size: 60,),
+                                      Text("Failure",style: Theme.of(context).textTheme.displayMedium,)
+                                    ],
+                                  ),
+                                );
+                              }
+                            },
                           ),
-
-
-
                         ],
                       ),
                     ),
                   ),
-                  Expanded(
-                      flex: 1,
-                      child:FractionallySizedBox(
-                          widthFactor: 0.5,
-                          child: ElevatedButton(
-                            onPressed: () {  },
-                            child:Text('Done',textAlign: TextAlign.center,style: TextStyle(color: Colors.white, fontSize:23,fontFamily: 'Play',fontWeight: FontWeight.bold),),
-                            style: Theme.of(context).elevatedButtonTheme.style,
-                          )
-                      )
+                  BlocBuilder<Access_methodBloc,Access_methodState?>(
+                    builder: (context,state){
+                      if (state==null){
+                        return Expanded(
+                            flex: 1,
+                            child:FractionallySizedBox(
+                                widthFactor: 0.5,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    context.read<Access_methodBloc>().add(Access_methodEventApiKey(_controller.text));
+                                    Navigator.pop(context);
+                                  },
+                                  child:Text('Done',textAlign: TextAlign.center,style: TextStyle(color: Colors.white, fontSize:23,fontFamily: 'Play',fontWeight: FontWeight.bold),),
+                                  style: Theme.of(context).elevatedButtonTheme.style,
+                                )
+                            )
+                        );
+                      }
+                      else{
+                        return Container();
+                      }
+                    },
                   ),
+
                 ],
               )
           )

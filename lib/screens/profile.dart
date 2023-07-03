@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:study_savvy_app/blocs/bloc_access_methds.dart';
+import 'package:study_savvy_app/services/encrypt.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../blocs/bloc_profile.dart';
 import '../blocs/provider/theme_provider.dart';
@@ -59,7 +61,9 @@ class _ProfilePage extends State<ProfilePage> {
             children: [
               Expanded(flex:1,child: Container()),
               Expanded(flex:5,child: Text('Profile',style: Theme.of(context).textTheme.bodyLarge,textAlign: TextAlign.center,),),
-              Expanded(flex:1,child: IconButton(onPressed: (){_showLogoutDialog(context);}, icon: Icon(Icons.logout),alignment: Alignment.centerRight,)),
+              Expanded(flex:1,child: IconButton(onPressed: (){
+                _showLogoutDialog(context);
+                }, icon: Icon(Icons.logout),alignment: Alignment.centerRight,)),
             ],
           ),
         ),
@@ -98,7 +102,6 @@ class _ProfilePage extends State<ProfilePage> {
                                       if (states.contains(MaterialState.pressed)) {
                                         return Theme.of(context).hintColor;
                                       }
-                                      // 其他状态下的背景色
                                       return Colors.transparent;
                                     },
                                   ),
@@ -153,14 +156,13 @@ class _ProfilePage extends State<ProfilePage> {
                             margin: EdgeInsets.only(top:20),
                             color: Color.fromRGBO(118, 118, 128, 0.24),
                             child: TextButton(
-                                onPressed: (){Navigator.pushNamed(context, Routes.API_KEY);},
+                                onPressed: (){context.read<Access_methodBloc>().add(Access_methodEventReset());Navigator.pushNamed(context, Routes.API_KEY);},
                                 style: ButtonStyle(
                                   overlayColor: MaterialStateProperty.resolveWith<Color>(
                                         (Set<MaterialState> states) {
                                       if (states.contains(MaterialState.pressed)) {
                                         return Theme.of(context).hintColor;
                                       }
-                                      // 其他状态下的背景色
                                       return Colors.transparent;
                                     },
                                   ),
@@ -178,14 +180,13 @@ class _ProfilePage extends State<ProfilePage> {
                             margin: EdgeInsets.only(top:5),
                             color: Color.fromRGBO(118, 118, 128, 0.24),
                             child: TextButton(
-                                onPressed: (){Navigator.pushNamed(context, Routes.ACCESS_TOKEN);},
+                                onPressed: (){context.read<Access_methodBloc>().add(Access_methodEventReset());Navigator.pushNamed(context, Routes.ACCESS_TOKEN);},
                                 style: ButtonStyle(
                                   overlayColor: MaterialStateProperty.resolveWith<Color>(
                                         (Set<MaterialState> states) {
                                       if (states.contains(MaterialState.pressed)) {
                                         return Theme.of(context).hintColor;
                                       }
-                                      // 其他状态下的背景色
                                       return Colors.transparent;
                                     },
                                   ),
