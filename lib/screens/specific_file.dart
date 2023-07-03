@@ -64,6 +64,49 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                       margin: EdgeInsets.symmetric(vertical: 10),
                                       width: double.infinity,
                                       padding: EdgeInsets.symmetric(horizontal: 10,vertical: 15),
+                                      decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)),color: Theme.of(context).hintColor),
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                        children: [
+                                          Container(
+                                            margin: EdgeInsets.only(bottom: 10),
+                                            child: Text("Introduce"),
+                                          ),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text("Summarize",style: Theme.of(context).textTheme.headlineMedium,),
+                                              Text("代表AI做出的重點或評分",style: Theme.of(context).textTheme.headlineSmall,),
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text("Details",style: Theme.of(context).textTheme.headlineMedium,),
+                                              Text("代表AI對於每段細節做的評論",style: Theme.of(context).textTheme.headlineSmall,),
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text("Prompt",style: Theme.of(context).textTheme.headlineMedium,),
+                                              Text("代表你個人所下的提示詞(可做更動)",style: Theme.of(context).textTheme.headlineSmall,),
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text("Content",style: Theme.of(context).textTheme.headlineMedium),
+                                              Text("代表文章內容或語音內容(可做更動)",style: Theme.of(context).textTheme.headlineSmall),
+                                            ],
+                                          ),
+                                        ],
+                                      )
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.symmetric(vertical: 10),
+                                      width: double.infinity,
+                                      padding: EdgeInsets.symmetric(horizontal: 10,vertical: 15),
                                       decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)),color: Theme.of(context).brightness==Brightness.light?Colors.grey[300]:Colors.black),
                                       child: Column(
                                         children: [

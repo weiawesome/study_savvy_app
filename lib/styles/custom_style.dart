@@ -25,6 +25,8 @@ class LightStyle {
       labelMedium: TextStyle(color: Colors.black, fontSize:20,fontFamily: 'Play',fontWeight: FontWeight.bold),
       labelSmall: TextStyle(color: Colors.white, fontSize:15,fontFamily: 'Play',fontWeight: FontWeight.bold),
       titleSmall: TextStyle(color: Colors.black, fontSize:15,fontFamily: 'Play',fontWeight: FontWeight.bold),
+      headlineMedium: TextStyle(color: Colors.black, fontSize:17,fontFamily: 'Play',fontWeight: FontWeight.bold),
+      headlineSmall: TextStyle(color: Colors.black, fontSize:13,fontFamily: 'Play',fontWeight: FontWeight.bold),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
@@ -53,6 +55,8 @@ class DarkStyle {
       labelMedium: TextStyle(color: Colors.white, fontSize:20,fontFamily: 'Play',fontWeight: FontWeight.bold),
       labelSmall: TextStyle(color: Colors.black, fontSize:15,fontFamily: 'Play',fontWeight: FontWeight.bold),
       titleSmall: TextStyle(color: Colors.white, fontSize:15,fontFamily: 'Play',fontWeight: FontWeight.bold),
+      headlineMedium: TextStyle(color: Colors.black, fontSize:17,fontFamily: 'Play',fontWeight: FontWeight.bold),
+      headlineSmall: TextStyle(color: Colors.black, fontSize:15,fontFamily: 'Play',fontWeight: FontWeight.bold),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
