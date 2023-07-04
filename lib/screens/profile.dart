@@ -14,16 +14,6 @@ class ProfilePage extends StatefulWidget{
 }
 
 class _ProfilePage extends State<ProfilePage> {
-  void _launchURL() async {
-    const String urlString = 'https://www.google.com';
-    Uri url = Uri.parse(urlString);
-
-    if (await canLaunchUrl(url)) {
-      await launchUrl(url);
-    } else {
-      throw 'Could not launch $urlString';
-    }
-  }
   void _showLogoutDialog(BuildContext context) {
     showDialog(
       context: context,

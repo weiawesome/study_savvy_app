@@ -106,7 +106,7 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                     Container(
                                       margin: EdgeInsets.symmetric(vertical: 10),
                                       width: double.infinity,
-                                      padding: EdgeInsets.symmetric(horizontal: 10,vertical: 15),
+                                      padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
                                       decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)),color: Theme.of(context).brightness==Brightness.light?Colors.grey[300]:Colors.black),
                                       child: Column(
                                         children: [
@@ -129,7 +129,7 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                     Container(
                                       margin: EdgeInsets.symmetric(vertical: 10),
                                       width: double.infinity,
-                                      padding: EdgeInsets.symmetric(horizontal: 10,vertical: 15),
+                                      padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
                                       decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)),color: Theme.of(context).brightness==Brightness.light?Colors.grey[300]:Colors.black),
                                       child: Column(
                                         children:[
@@ -158,7 +158,7 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                     Container(
                                       margin: EdgeInsets.symmetric(vertical: 10),
                                       width: double.infinity,
-                                      padding: EdgeInsets.symmetric(horizontal: 10,vertical: 15),
+                                      padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
                                       decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)),color: Theme.of(context).brightness==Brightness.light?Colors.grey[300]:Colors.black),
                                       child: Column(
                                         children: [
@@ -181,7 +181,7 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                     Container(
                                       margin: EdgeInsets.symmetric(vertical: 10),
                                       width: double.infinity,
-                                      padding: EdgeInsets.symmetric(horizontal: 10,vertical: 15),
+                                      padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
                                       decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)),color: Theme.of(context).brightness==Brightness.light?Colors.grey[300]:Colors.black),
                                       child: Column(
                                         children: [
@@ -205,7 +205,7 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                     Container(
                                       margin: EdgeInsets.symmetric(vertical: 10),
                                       width: double.infinity,
-                                      padding: EdgeInsets.symmetric(horizontal: 10,vertical: 15),
+                                      padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
                                       decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)),color: Theme.of(context).brightness==Brightness.light?Colors.grey[300]:Colors.black),
                                       child: Column(
                                         children: [
@@ -226,7 +226,7 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                     Container(
                                       margin: EdgeInsets.symmetric(vertical: 10),
                                       width: double.infinity,
-                                      padding: EdgeInsets.symmetric(horizontal: 10,vertical: 15),
+                                      padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
                                       decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)),color: Theme.of(context).brightness==Brightness.light?Colors.grey[300]:Colors.black),
                                       child: Column(
                                         children: [

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_savvy_app/blocs/bloc_access_methds.dart';
 import 'package:study_savvy_app/widgets/loading.dart';
+import 'package:url_launcher/url_launcher.dart';
 class API_KEYPage extends StatefulWidget{
   const API_KEYPage({Key?key}):super(key: key);
   @override
@@ -9,6 +10,15 @@ class API_KEYPage extends StatefulWidget{
 }
 
 class _API_KEYPage extends State<API_KEYPage> {
+  void _launchURL() async {
+    const String url = 'https://platform.openai.com/account/api-keys';
+    try{
+      await launchUrl(Uri.parse(url));
+    }
+    catch (e){
+      throw("Errrot to open apikey page "+e.toString());
+    }
+  }
   final _controller= TextEditingController();
   @override
   void dispose() {
@@ -63,7 +73,7 @@ class _API_KEYPage extends State<API_KEYPage> {
                             child: Container(
                               decoration: BoxDecoration(color: Colors.green,borderRadius: BorderRadius.circular(10)),
 
-                              child: TextButton(onPressed: (){}, child: Text('Gain your API_KEY',style: Theme.of(context).textTheme.displayMedium,)),
+                              child: TextButton(onPressed: (){_launchURL();}, child: Text('Gain your API_KEY',style: Theme.of(context).textTheme.displayMedium,)),
                             ),
                           ),
                           Expanded(
@@ -97,7 +107,6 @@ class _API_KEYPage extends State<API_KEYPage> {
                                             ),
                                           )
                                       ),
-
                                     ],
                                   ),
                                 );

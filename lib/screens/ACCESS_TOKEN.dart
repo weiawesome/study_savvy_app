@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../blocs/bloc_access_methds.dart';
 import '../widgets/loading.dart';
 
@@ -10,6 +11,16 @@ class ACCESS_TOKENPage extends StatefulWidget{
 }
 
 class _ACCESS_TOKENPage extends State<ACCESS_TOKENPage> {
+  void _launchURL() async {
+    const String url = 'https://chat.openai.com/api/auth/session';
+    try{
+      await launchUrl(Uri.parse(url));
+    }
+    catch (e){
+      throw("Errrot to open accesstoken page "+e.toString());
+    }
+
+  }
   final _controller= TextEditingController();
   @override
   void dispose() {
@@ -64,7 +75,7 @@ class _ACCESS_TOKENPage extends State<ACCESS_TOKENPage> {
                             flex: 4,
                             child: Container(
                               decoration: BoxDecoration(color: Colors.green,borderRadius: BorderRadius.circular(10)),
-                              child: TextButton(onPressed: (){}, child: Text('Gain your ACCESS_TOKEN',style: Theme.of(context).textTheme.displayMedium,)),
+                              child: TextButton(onPressed: (){_launchURL();}, child: Text('Gain your ACCESS_TOKEN',style: Theme.of(context).textTheme.displayMedium,)),
                             ),
                           ),
                           Expanded(
