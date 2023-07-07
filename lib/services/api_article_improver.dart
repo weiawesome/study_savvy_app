@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:study_savvy_app/utils/exception.dart';
+
 import 'api_routes.dart';
 import 'jwt_storage.dart';
 import 'package:http/http.dart' as http;
@@ -20,18 +22,26 @@ Future<void> predictOCR_graph(File imageData, String text) async {
     ))
     ..headers.addAll(
     {
-      'accept': '*/*',
       'Authorization': 'Bearer '+jwt!
     },
   )).send();
-  print(response.statusCode);
   if (response.statusCode == 200) {
     return ;
-  } else if (response.statusCode == 422){
+  }
+  else if(response.statusCode == 400){
+    throw ClientException("Client's error");
+  }
+  else if(response.statusCode == 404){
+    throw ExistException("Source not exist");
+  }
+  else if (response.statusCode == 422){
     await JwtService.deleteJwt();
-    throw Exception('Failed to load image');
+    throw AuthException("JWT invalid");
+  }
+  else if(response.statusCode == 500){
+    throw ServerException("Server's error");
   }
   else{
-    throw Exception('Failed to load image');
+    throw Exception('Failed to upload in unknown reason');
   }
 }

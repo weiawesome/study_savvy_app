@@ -52,10 +52,10 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                           alignment: Alignment.topLeft,
                           child: BlocBuilder<FileBloc,FileState>(
                             builder: (context,state){
-                              if(!state.status){
+                              if(state.status=="INIT"){
                                 return Loading();
                               }
-                              else{
+                              else if(state.status=="SUCCESS"){
                                 return Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -249,6 +249,9 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                     )
                                   ],
                                 );
+                              }
+                              else{
+                                return Container();
                               }
                             },
                           )

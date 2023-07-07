@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:study_savvy_app/models/model_profile.dart';
 import 'package:http/http.dart' as http;
 import 'package:study_savvy_app/services/encrypt.dart';
+import '../utils/exception.dart';
 import 'api_routes.dart';
 import 'jwt_storage.dart';
 
@@ -14,12 +15,22 @@ Future<Profile> getProfile() async {
   if (response.statusCode == 200) {
     Map<String,dynamic> result=jsonDecode(response.body);
     return Profile.fromJson(result);
-  } else if (response.statusCode == 422){
+  }
+  else if(response.statusCode == 400){
+    throw ClientException("Client's error");
+  }
+  else if(response.statusCode == 404){
+    throw ExistException("Source not exist");
+  }
+  else if (response.statusCode == 422){
     await JwtService.deleteJwt();
-    throw Exception('Failed to load Profile');
+    throw AuthException("JWT invalid");
+  }
+  else if(response.statusCode == 500){
+    throw ServerException("Server's error");
   }
   else{
-    throw Exception('Failed to load Profile');
+    throw Exception('Failed to upload in unknown reason');
   }
 }
 
@@ -34,15 +45,24 @@ Future<void> setApiKey(String apikey) async {
     },
     body: jsonEncode(data.formatApiKey()),
   );
-  print(response.statusCode);
   if (response.statusCode == 200) {
     return ;
-  } else if (response.statusCode == 422){
+  }
+  else if(response.statusCode == 400){
+    throw ClientException("Client's error");
+  }
+  else if(response.statusCode == 404){
+    throw ExistException("Source not exist");
+  }
+  else if (response.statusCode == 422){
     await JwtService.deleteJwt();
-    throw Exception('Failed to set apikey');
+    throw AuthException("JWT invalid");
+  }
+  else if(response.statusCode == 500){
+    throw ServerException("Server's error");
   }
   else{
-    throw Exception('Failed to set apikey');
+    throw Exception('Failed to upload in unknown reason');
   }
 }
 
@@ -59,11 +79,21 @@ Future<void> setAccessToken(String accesstoken) async {
   );
   if (response.statusCode == 200) {
     return ;
-  } else if (response.statusCode == 422){
+  }
+  else if(response.statusCode == 400){
+    throw ClientException("Client's error");
+  }
+  else if(response.statusCode == 404){
+    throw ExistException("Source not exist");
+  }
+  else if (response.statusCode == 422){
     await JwtService.deleteJwt();
-    throw Exception('Failed to set apikey');
+    throw AuthException("JWT invalid");
+  }
+  else if(response.statusCode == 500){
+    throw ServerException("Server's error");
   }
   else{
-    throw Exception('Failed to set apikey');
+    throw Exception('Failed to upload in unknown reason');
   }
 }

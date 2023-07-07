@@ -18,9 +18,9 @@ class _FilesPage extends State<FilesPage> {
   @override
   void initState() {
     super.initState();
-    FilesState? state=context.read<FilesBloc>().state;
-    context.read<FilesBloc>().add(FilesEventLoadMore(state.files));
+    context.read<FilesBloc>().add(FilesEventInit());
     _scrollController.addListener(() {
+      FilesState? state=context.read<FilesBloc>().state;
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
         context.read<FilesBloc>().add(FilesEventLoadMore(state.files));
@@ -29,7 +29,7 @@ class _FilesPage extends State<FilesPage> {
   }
 
   Future<void> _refresh() async {
-    context.read<FilesBloc>().add(FilesEventRefresh());
+    return context.read<FilesBloc>().add(FilesEventRefresh());
   }
 
   Widget build(BuildContext context) {
@@ -46,10 +46,10 @@ class _FilesPage extends State<FilesPage> {
               flex: 9,
               child: BlocBuilder<FilesBloc,FilesState>(
                 builder: (context,state){
-                  if(!state.status){
+                  if(state.status=="INIT"){
                     return Loading();
                   }
-                  else{
+                  else if (state.status=="SUCCESS" || state.status=="PENDING"){
                     return RefreshIndicator(
                       color: Theme.of(context).hintColor,
                       onRefresh: _refresh,
@@ -158,6 +158,9 @@ class _FilesPage extends State<FilesPage> {
                           }
                       ),
                     );
+                  }
+                  else{
+                    return Container();
                   }
                 },
               ),

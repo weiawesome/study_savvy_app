@@ -44,10 +44,10 @@ class _InformationPage extends State<InformationPage> {
                             flex: 8,
                             child: BlocBuilder<ProfileBloc,ProfileState>(
                               builder: (context,state) {
-                                if (!state.status) {
+                                if (state.status=="INIT") {
                                   return Loading();
                                 }
-                                else {
+                                else if(state.status=="SUCCESS"){
                                   return Container(
                                     padding: EdgeInsets.symmetric(horizontal: 20),
                                     child: Column(
@@ -113,6 +113,9 @@ class _InformationPage extends State<InformationPage> {
                                       ],
                                     ),
                                   );
+                                }
+                                else{
+                                  return Container();
                                 }
                               }
                             )

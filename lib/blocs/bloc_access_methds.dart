@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:study_savvy_app/utils/exception.dart';
 import '../services/api_profile.dart';
 
 abstract class Access_methodEvent {}
@@ -32,8 +32,20 @@ class Access_methodBloc extends Bloc<Access_methodEvent,Access_methodState?> {
           await setApiKey(event.apikey);
           emit(Access_methodState("SUCCESS",null));
         }
+        on AuthException catch(e){
+          emit(Access_methodState("FAILURE","AUTH"));
+        }
+        on ServerException catch(e){
+          emit(Access_methodState("FAILURE","SERVER"));
+        }
+        on ClientException catch(e){
+          emit(Access_methodState("FAILURE","CLIENT"));
+        }
+        on ExistException catch(e){
+          emit(Access_methodState("FAILURE","EXIST"));
+        }
         catch(e) {
-          emit(Access_methodState("FAILURE",e.toString()));
+          emit(Access_methodState("FAILURE","UNKNOWN"));
         }
       }
       else if(event is Access_methodEventAccessToken){
@@ -42,8 +54,20 @@ class Access_methodBloc extends Bloc<Access_methodEvent,Access_methodState?> {
           await setAccessToken(event.accesstoken);
           emit(Access_methodState("SUCCESS",null));
         }
+        on AuthException catch(e){
+          emit(Access_methodState("FAILURE","AUTH"));
+        }
+        on ServerException catch(e){
+          emit(Access_methodState("FAILURE","SERVER"));
+        }
+        on ClientException catch(e){
+          emit(Access_methodState("FAILURE","CLIENT"));
+        }
+        on ExistException catch(e){
+          emit(Access_methodState("FAILURE","EXIST"));
+        }
         catch(e) {
-          emit(Access_methodState("FAILURE",e.toString()));
+          emit(Access_methodState("FAILURE","UNKNOWN"));
         }
       }
       else{
