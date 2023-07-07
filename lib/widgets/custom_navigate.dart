@@ -3,12 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_savvy_app/blocs/bloc_files.dart';
 import 'package:study_savvy_app/blocs/bloc_navigator.dart';
 
-class CustomBottomNavigationBar extends StatefulWidget {
+class CustomNavigate extends StatefulWidget {
+  const CustomNavigate({super.key});
+
   @override
-  _CustomBottomNavigationBarState createState() => _CustomBottomNavigationBarState();
+  State<CustomNavigate> createState() => _CustomNavigate();
 }
 
-class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
+class _CustomNavigate extends State<CustomNavigate> {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
@@ -39,8 +41,8 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
       backgroundColor: Theme.of(context).primaryColor,
       showSelectedLabels: false,
       showUnselectedLabels: false,
-      selectedItemColor: Theme.of(context).brightness== Brightness.dark?Color.fromRGBO(217,217,217,1):Colors.black,
-      unselectedItemColor: Color.fromRGBO(118,118,118,1),
+      selectedItemColor: Theme.of(context).brightness== Brightness.dark?const Color.fromRGBO(217,217,217,1):Colors.black,
+      unselectedItemColor: const Color.fromRGBO(118,118,118,1),
       onTap: (index) {
         if (index==2){
           context.read<FilesBloc>().add(FilesEventInit());

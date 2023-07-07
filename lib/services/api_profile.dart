@@ -9,8 +9,8 @@ import 'jwt_storage.dart';
 Future<Profile> getProfile() async {
   String? jwt=await JwtService.getJwt();
   final response = await http.get(
-    Uri.parse(API_Routes.Profile_url),
-    headers: {'Authorization': 'Bearer '+jwt!},
+    Uri.parse(ApiRoutes.profileUrl),
+    headers: {'Authorization': 'Bearer ${jwt!}'},
   );
   if (response.statusCode == 200) {
     Map<String,dynamic> result=jsonDecode(response.body);
@@ -38,10 +38,10 @@ Future<void> setApiKey(String apikey) async {
   String? jwt=await JwtService.getJwt();
   SecureData data=await encrypt(apikey);
   final response = await http.put(
-    Uri.parse(API_Routes.Api_Key_url),
+    Uri.parse(ApiRoutes.apiKeyUrl),
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer '+jwt!
+      'Authorization': 'Bearer ${jwt!}'
     },
     body: jsonEncode(data.formatApiKey()),
   );
@@ -70,10 +70,10 @@ Future<void> setAccessToken(String accesstoken) async {
   String? jwt=await JwtService.getJwt();
   SecureData data=await encrypt(accesstoken);
   final response = await http.put(
-    Uri.parse(API_Routes.Access_Token_url),
+    Uri.parse(ApiRoutes.accessTokenUrl),
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer '+jwt!
+      'Authorization': 'Bearer ${jwt!}'
     },
     body: jsonEncode(data.formatAccessToken()),
   );

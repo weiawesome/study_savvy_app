@@ -6,11 +6,11 @@ import '../utils/exception.dart';
 
 abstract class ArticleEvent {}
 class ArticleEventGraph extends ArticleEvent{
-  final Article_Image article;
+  final ArticleImage article;
   ArticleEventGraph(this.article);
 }
 class ArticleEventText extends ArticleEvent{
-  final Article_Text article;
+  final ArticleText article;
   ArticleEventText(this.article);
 }
 class ArticleEventRefresh extends ArticleEvent{}
@@ -30,7 +30,7 @@ class ArticleBloc extends Bloc<ArticleEvent,ArticleState> {
       else if (event is ArticleEventGraph){
         emit(ArticleState("PENDING",null));
         try{
-          await predictOCR_graph(event.article.image, event.article.prompt);
+          await predictOcrGraph(event.article.image, event.article.prompt);
           emit(ArticleState("SUCCESS",null));  
         }
         on AuthException {

@@ -6,12 +6,12 @@ class Failure extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top:30),
+      margin: const EdgeInsets.only(top:30),
       alignment: Alignment.center,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.error_outline,size: 40,color: Colors.red,),
+          const Icon(Icons.error_outline,size: 40,color: Colors.red,),
           Text(error)
         ],
       ),

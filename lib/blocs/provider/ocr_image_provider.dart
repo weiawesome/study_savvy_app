@@ -3,9 +3,9 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 
 class OCRImageProvider extends ChangeNotifier {
-  String? _path=null;
-  Uint8List? _image = null;
-  File? _file=null;
+  String? _path;
+  Uint8List? _image;
+  File? _file;
 
   get image=>_image;
   get path=>_path;

@@ -3,11 +3,13 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:adv_camera/adv_camera.dart';
 import 'package:provider/provider.dart';
-import 'package:study_savvy_app/blocs/provider/ocrimage_provider.dart';
+import 'package:study_savvy_app/blocs/provider/ocr_image_provider.dart';
 
 class CameraPage extends StatefulWidget {
+  const CameraPage({super.key});
+
   @override
-  _CameraPageState createState() => _CameraPageState();
+  State<CameraPage> createState() => _CameraPageState();
 }
 
 class _CameraPageState extends State<CameraPage> {
@@ -20,7 +22,7 @@ class _CameraPageState extends State<CameraPage> {
   @override
   Widget build(BuildContext context) {
     final ocrImageProvider = Provider.of<OCRImageProvider>(context);
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: double.infinity,
       child: Column(
@@ -31,8 +33,9 @@ class _CameraPageState extends State<CameraPage> {
 
               onCameraCreated: _onCameraCreated,
               onImageCaptured: (path) async {
-                await ocrImageProvider.set(File(path));
-                Navigator.pop(context);
+                await ocrImageProvider.set(File(path)).then((value) => {
+                  Navigator.pop(context)
+                });
                 // Navigator.push(
                 //   context,
                 //   MaterialPageRoute(
@@ -50,11 +53,11 @@ class _CameraPageState extends State<CameraPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     TextButton(
-                      child: flashIcon(),
                       onPressed: _toggleFlash,
+                      child: flashIcon(),
                     ),
                     TextButton(
-                      child: Icon(Icons.circle,size: 40,color: Colors.black),
+                      child: const Icon(Icons.circle,size: 40,color: Colors.black),
                       onPressed: () {
                         _controller.captureImage();
                       },
@@ -69,7 +72,7 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   void _onCameraCreated(AdvCameraController controller) {
-    this._controller = controller;
+    _controller = controller;
   }
   _toggleFlash() {
     setState(() {
@@ -93,13 +96,13 @@ class _CameraPageState extends State<CameraPage> {
   Icon flashIcon() {
     switch (flashType) {
       case FlashType.auto:
-        return Icon(Icons.flash_auto,size: 40,color: Colors.black,);
+        return const Icon(Icons.flash_auto,size: 40,color: Colors.black,);
       case FlashType.on:
-        return Icon(Icons.flash_on,size: 40,color: Colors.black,);
+        return const Icon(Icons.flash_on,size: 40,color: Colors.black,);
       case FlashType.off:
-        return Icon(Icons.flash_off,size: 40,color: Colors.black,);
+        return const Icon(Icons.flash_off,size: 40,color: Colors.black,);
       default:
-        return Icon(Icons.flash_auto,size: 40,color: Colors.black,);
+        return const Icon(Icons.flash_auto,size: 40,color: Colors.black,);
     }
   }
 }
@@ -113,7 +116,7 @@ class DisplayPictureScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Display the Picture')),
+      appBar: AppBar(title: const Text('Display the Picture')),
       body: Center(
         child: Image.memory(imageBytes),
       ),

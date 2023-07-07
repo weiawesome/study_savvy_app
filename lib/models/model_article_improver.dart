@@ -1,12 +1,12 @@
 import 'dart:io';
 
-class Article_Image {
+class ArticleImage {
   final File image;
   final String prompt;
-  Article_Image(this.image, this.prompt);
+  ArticleImage(this.image, this.prompt);
 }
-class Article_Text {
+class ArticleText {
   final String content;
   final String prompt;
-  Article_Text(this.content, this.prompt);
+  ArticleText(this.content, this.prompt);
 }

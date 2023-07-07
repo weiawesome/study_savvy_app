@@ -8,18 +8,18 @@ import '../utils/exception.dart';
 
 abstract class FileEvent {}
 class FileEventOCR extends FileEvent{
-  final String ID;
-  FileEventOCR(this.ID);
+  final String id;
+  FileEventOCR(this.id);
 }
 class FileEventASR extends FileEvent{
-  final String ID;
-  FileEventASR(this.ID);
+  final String id;
+  FileEventASR(this.id);
 }
 class FileEventClear extends FileEvent{}
 class FileState {
   final String status;
   final String? error;
-  final Specific_File? file;
+  final SpecificFile? file;
   final Uint8List? media;
   final String? type;
   FileState(this.status,this.error,this.file,this.media,this.type);
@@ -31,8 +31,8 @@ class FileBloc extends Bloc<FileEvent,FileState> {
     on<FileEvent>((event,emit) async {
       if (event is FileEventOCR){
         try{
-          Specific_File file=await getSpecificFile(event.ID);
-          Uint8List media=await getImage(event.ID);
+          SpecificFile file=await getSpecificFile(event.id);
+          Uint8List media=await getImage(event.id);
           emit(FileState("SUCCESS",null,file, media,"OCR"));  
         }
         on AuthException {
@@ -54,8 +54,8 @@ class FileBloc extends Bloc<FileEvent,FileState> {
       }
       else if (event is FileEventASR){
         try{
-          Specific_File file=await getSpecificFile(event.ID);
-          Uint8List media=await getAudio(event.ID);
+          SpecificFile file=await getSpecificFile(event.id);
+          Uint8List media=await getAudio(event.id);
           emit(FileState("SUCCESS",null,file, media,"ASR"));
         }
         on AuthException {

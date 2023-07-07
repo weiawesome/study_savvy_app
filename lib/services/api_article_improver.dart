@@ -6,12 +6,11 @@ import 'jwt_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 
-Future<void> predictOCR_graph(File imageData, String text) async {
+Future<void> predictOcrGraph(File imageData, String text) async {
   String? jwt=await JwtService.getJwt();
-  print(API_Routes.Article_Improver_url);
   final response = await (http.MultipartRequest(
     'POST',
-    Uri.parse(API_Routes.Article_Improver_url),
+    Uri.parse(ApiRoutes.articleImproverUrl),
   )
     ..fields['prompt']=text
     ..files.add(await http.MultipartFile.fromPath(
@@ -21,7 +20,7 @@ Future<void> predictOCR_graph(File imageData, String text) async {
     ))
     ..headers.addAll(
     {
-      'Authorization': 'Bearer '+jwt!
+      'Authorization': 'Bearer ${jwt!}'
     },
   )).send();
   if (response.statusCode == 200) {

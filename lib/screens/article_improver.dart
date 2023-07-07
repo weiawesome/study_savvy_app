@@ -6,7 +6,7 @@ import 'package:study_savvy_app/blocs/bloc_article_improver.dart';
 import 'package:study_savvy_app/models/model_article_improver.dart';
 import 'package:study_savvy_app/styles/custom_style.dart';
 import 'package:study_savvy_app/widgets/loading.dart';
-import '../blocs/provider/ocrimage_provider.dart';
+import '../blocs/provider/ocr_image_provider.dart';
 import '../services/jwt_storage.dart';
 import 'camera.dart';
 
@@ -30,9 +30,7 @@ class _ArticleImproverPage extends State<ArticleImproverPage>{
       children: [
         Expanded(
           flex: 1,
-          child: Container(
-            child: Text('Writing Improver',style: Theme.of(context).textTheme.bodyLarge,),
-          ),
+          child: Text('Writing Improver',style: Theme.of(context).textTheme.bodyLarge,),
         ),
         BlocBuilder<ArticleBloc,ArticleState>(
             builder: (context,state){
@@ -40,23 +38,23 @@ class _ArticleImproverPage extends State<ArticleImproverPage>{
                 return Expanded(
                   flex: 8,
                   child:Container(
-                    padding: EdgeInsets.symmetric(vertical: 5),
-                    margin: EdgeInsets.symmetric(vertical: 10),
+                    padding: const EdgeInsets.symmetric(vertical: 5),
+                    margin: const EdgeInsets.symmetric(vertical: 10),
                     child: SingleChildScrollView(
                       child: Column(
                           children:[
                             Container(
-                                child: Text('Content',style: Theme.of(context).textTheme.bodyMedium),
-                                alignment: Alignment.centerLeft
+                                alignment: Alignment.centerLeft,
+                                child: Text('Content',style: Theme.of(context).textTheme.bodyMedium)
                             ),
                             Container(
-                              padding: EdgeInsets.all(15),
-                              margin: EdgeInsets.symmetric(vertical: 15),
+                              padding: const EdgeInsets.all(15),
+                              margin: const EdgeInsets.symmetric(vertical: 15),
                               height: 180,
                               decoration: Theme.of(context).brightness == Brightness.dark ? DarkStyle.boxDecoration : LightStyle.boxDecoration,
                               child: SingleChildScrollView(
                                 child: ocrImageProvider.isNull()?
-                                TextField(
+                                const TextField(
                                   maxLines: null,
                                   keyboardType: TextInputType.multiline,
                                   decoration: InputDecoration(
@@ -67,7 +65,7 @@ class _ArticleImproverPage extends State<ArticleImproverPage>{
                                 Stack(
                                     children: [
                                       Image.memory(ocrImageProvider.image as Uint8List),
-                                      IconButton(onPressed: (){ocrImageProvider.clear();}, icon: Icon(Icons.cancel_outlined,size: 30,color: Colors.red,))
+                                      IconButton(onPressed: (){ocrImageProvider.clear();}, icon: const Icon(Icons.cancel_outlined,size: 30,color: Colors.red,))
                                     ]
                                 ),
                               ),
@@ -83,30 +81,30 @@ class _ArticleImproverPage extends State<ArticleImproverPage>{
                                         await JwtService.saveJwt("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4ODE5NjYyMywianRpIjoiYmU4ZGQ2YzctMWRmNC00Nzg0LTgzOTgtZWQ5ODZhNGM5ZGM1IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IndlaTg5MTAxM0BnbWFpbC5jb20iLCJuYmYiOjE2ODgxOTY2MjMsImNzcmYiOiJhNjYzNzFiNS01NWUwLTRjMzAtOGRkNS0zM2E4M2FjZGI2MDkiLCJleHAiOjE2ODk0MDYyMjN9.sXF-_dRljEvsUzH7NdnKSTbQX36NTD_iOncnrcVocYY");
                                       },
                                       tooltip: 'Choose come photos.',
-                                      icon:Icon(Icons.photo),
+                                      icon:const Icon(Icons.photo),
                                       iconSize: 36.0,
                                     ),
                                     IconButton(
                                       onPressed:(){
                                         Navigator.push(
                                           context,
-                                          MaterialPageRoute(builder: (context) => CameraPage()),
+                                          MaterialPageRoute(builder: (context) => const CameraPage()),
                                         );
                                       },
                                       tooltip: 'Take a photo.',
-                                      icon:Icon(Icons.camera_alt_outlined),
+                                      icon:const Icon(Icons.camera_alt_outlined),
                                       iconSize: 36.0,
                                     ),
                                   ],
                                 )
                             ),
                             Container(
-                              child: Text('Prompt',style: Theme.of(context).textTheme.bodyMedium),
                               alignment: Alignment.centerLeft,
+                              child: Text('Prompt',style: Theme.of(context).textTheme.bodyMedium),
                             ),
                             Container(
-                              padding: EdgeInsets.all(15),
-                              margin: EdgeInsets.symmetric(vertical: 15),
+                              padding: const EdgeInsets.all(15),
+                              margin: const EdgeInsets.symmetric(vertical: 15),
                               height: 150,
                               decoration: Theme.of(context).brightness == Brightness.dark ? DarkStyle.boxDecoration : LightStyle.boxDecoration,
                               child: SingleChildScrollView(
@@ -114,7 +112,7 @@ class _ArticleImproverPage extends State<ArticleImproverPage>{
                                   controller: _controller,
                                   maxLines: null,
                                   keyboardType: TextInputType.multiline,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     hintText: "可以寫下作文主題以及你認為需加強部分\n(選填)",
                                     hintMaxLines: 3,
                                     border: InputBorder.none,
@@ -130,13 +128,13 @@ class _ArticleImproverPage extends State<ArticleImproverPage>{
                 );
               }
               else if(state.status=="PENDING"){
-                return Expanded(
+                return const Expanded(
                     flex:9,
                     child: Loading()
                 );
               }
               else if (state.status=='SUCCESS'){
-                return Expanded(
+                return const Expanded(
                   flex:8,
                   child: Center(
                       child:Column(
@@ -150,7 +148,7 @@ class _ArticleImproverPage extends State<ArticleImproverPage>{
                 );
               }
               else{
-                return Expanded(
+                return const Expanded(
                   flex:8,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -173,10 +171,10 @@ class _ArticleImproverPage extends State<ArticleImproverPage>{
                       widthFactor: 0.5,
                       child: ElevatedButton(
                         onPressed: () {
-                          context.read<ArticleBloc>().add(ArticleEventGraph(Article_Image(ocrImageProvider.file,_controller.text)));
+                          context.read<ArticleBloc>().add(ArticleEventGraph(ArticleImage(ocrImageProvider.file,_controller.text)));
                         },
-                        child:Text('Done',textAlign: TextAlign.center,style: TextStyle(color: Colors.white, fontSize:23,fontFamily: 'Play',fontWeight: FontWeight.bold),),
                         style: Theme.of(context).elevatedButtonTheme.style,
+                        child:const Text('Done',textAlign: TextAlign.center,style: TextStyle(color: Colors.white, fontSize:23,fontFamily: 'Play',fontWeight: FontWeight.bold),),
                       )
                   )
               );
@@ -194,8 +192,8 @@ class _ArticleImproverPage extends State<ArticleImproverPage>{
                           ocrImageProvider.clear();
                           context.read<ArticleBloc>().add(ArticleEventRefresh());
                         },
-                        child:Text('Reset',textAlign: TextAlign.center,style: TextStyle(color: Colors.white, fontSize:23,fontFamily: 'Play',fontWeight: FontWeight.bold),),
                         style: Theme.of(context).elevatedButtonTheme.style,
+                        child:const Text('Reset',textAlign: TextAlign.center,style: TextStyle(color: Colors.white, fontSize:23,fontFamily: 'Play',fontWeight: FontWeight.bold),),
                       )
                   )
               );

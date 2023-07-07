@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:typed_data';
 import 'package:flutter/services.dart';
 import 'package:pointycastle/export.dart';
 import 'package:encrypt/encrypt.dart';
@@ -79,6 +78,5 @@ Uint8List decodePEM(String pem) {
   }
 
   pem = pem.replaceAll('\n', '').replaceAll('\r', '');
-  print(pem);
   return base64.decode(pem);
 }

@@ -66,9 +66,9 @@ class FilesBloc extends Bloc<FilesEvent,FilesState> {
       }
       else if (event is FilesEventLoadMore){
         emit(FilesState("PENDING",null,event.files));
-        if(event.files.total_pages>event.files.current_page){
+        if(event.files.totalPages>event.files.currentPage){
           try{
-            Files result=await getFiles((event.files.current_page+1));
+            Files result=await getFiles((event.files.currentPage+1));
             emit(FilesState("SUCCESS",null,combineFiles(event.files, result)));
           }
           on AuthException {
@@ -96,8 +96,8 @@ class FilesBloc extends Bloc<FilesEvent,FilesState> {
       }
     });
   }
-  Files combineFiles(Files original_file,Files new_file){
-    return Files(original_file.files+new_file.files, new_file.current_page, new_file.total_pages);
+  Files combineFiles(Files originalFile,Files newFile){
+    return Files(originalFile.files+newFile.files, newFile.currentPage, newFile.totalPages);
   }
 }
 

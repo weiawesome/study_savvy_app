@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import 'package:study_savvy_app/blocs/bloc_access_methds.dart';
+import 'package:study_savvy_app/blocs/bloc_access_methods.dart';
 import 'package:study_savvy_app/blocs/bloc_article_improver.dart';
 import 'package:study_savvy_app/blocs/bloc_navigator.dart';
 import 'package:study_savvy_app/blocs/bloc_specific_file.dart';
@@ -11,11 +11,9 @@ import 'package:study_savvy_app/utils/routes.dart';
 import 'blocs/bloc_files.dart';
 import 'blocs/bloc_jwt.dart';
 import 'blocs/bloc_profile.dart';
-import 'blocs/provider/ocrimage_provider.dart';
+import 'blocs/provider/ocr_image_provider.dart';
 import 'blocs/provider/theme_provider.dart';
 import 'styles/custom_style.dart';
-import 'package:study_savvy_app/page/sign_in.dart';
-import 'package:study_savvy_app/page/sign_up.dart';
 
 
 void main() {
@@ -46,19 +44,21 @@ void main() {
                 create:  (context) => ProfileBloc(),
               ),
               BlocProvider(
-                create:  (context) => Access_methodBloc(),
+                create:  (context) => AccessMethodBloc(),
               ),
               BlocProvider(
                 create:  (context) => ArticleBloc(),
               )
             ],
-            child: MyApp(),
+            child: const MyApp(),
           )
       )
   );
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
@@ -69,86 +69,9 @@ class MyApp extends StatelessWidget {
       theme: LightStyle.theme,
       darkTheme: DarkStyle.theme,
       themeMode: themeProvider.themeMode,
-      initialRoute: Routes.Home,
+      initialRoute: Routes.home,
       onGenerateRoute: RouteGenerator.generateRoute,
       debugShowCheckedModeBanner: false,
-      home: Container(
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/images/initial.jpg'),
-          fit: BoxFit.contain,
-        )
-      ),
-      child: HomePage(),
-    ),
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-    home: Container(
-      margin: EdgeInsets.only(top: 400.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children:
-        [
-          SizedBox(
-            width: 189,
-            height: 49,
-            child: TextButton(
-              style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.all(Colors.black),
-                backgroundColor: MaterialStateProperty.all(Colors.white),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                      borderRadius: BorderRadius.zero,
-                  )
-                )
-                ),
-              child: new Text(
-                'Sign in',
-                style: TextStyle(fontFamily: 'Play', fontSize: 25),
-              ),
-
-              onPressed: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => SignInPage()));
-              },
-            ),
-          ),
-
-          SizedBox(height: 16), // 用于在两个按钮之间添加间距
-
-          SizedBox(
-            width: 189,
-            height: 49,
-            child: TextButton(
-              style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.all(Colors.black),
-                backgroundColor: MaterialStateProperty.all(Colors.white),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                      borderRadius: BorderRadius.zero,
-                  )
-                )
-                ),
-              child: new Text(
-                'Sign up',
-                style: TextStyle(fontFamily: 'Play', fontSize: 25),
-                ),
-              onPressed: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => SignUpPage()));
-              },
-            ),
-          )
-        ]
-      ),
-    ),
     );
   }
 }

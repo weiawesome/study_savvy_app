@@ -16,7 +16,7 @@ class _InformationPage extends State<InformationPage> {
     return Scaffold(
               body: SafeArea(
                   child: Padding(
-                      padding: EdgeInsets.symmetric(
+                      padding: const EdgeInsets.symmetric(
                           vertical: 10, horizontal: 20),
                       child: Column(
                         children: [
@@ -29,7 +29,7 @@ class _InformationPage extends State<InformationPage> {
                                     child: IconButton(onPressed: () {
                                       Navigator.pop(context);
                                     },
-                                      icon: Icon(Icons.arrow_back_ios_new),
+                                      icon: const Icon(Icons.arrow_back_ios_new),
                                       alignment: Alignment.bottomLeft,)),
                                 Expanded(flex: 5,
                                   child: Text('Information', style: Theme
@@ -46,11 +46,11 @@ class _InformationPage extends State<InformationPage> {
                             child: BlocBuilder<ProfileBloc,ProfileState>(
                               builder: (context,state) {
                                 if (state.status=="INIT") {
-                                  return Loading();
+                                  return const Loading();
                                 }
                                 else if(state.status=="SUCCESS"){
                                   return Container(
-                                    padding: EdgeInsets.symmetric(horizontal: 20),
+                                    padding: const EdgeInsets.symmetric(horizontal: 20),
                                     child: Column(
                                       mainAxisAlignment: MainAxisAlignment
                                           .spaceEvenly,
@@ -129,16 +129,16 @@ class _InformationPage extends State<InformationPage> {
                                     onPressed: () {
                                       Navigator.pop(context);
                                     },
-                                    child: Text(
+                                    style: Theme
+                                        .of(context)
+                                        .elevatedButtonTheme
+                                        .style,
+                                    child: const Text(
                                       'Done', textAlign: TextAlign.center,
                                       style: TextStyle(color: Colors.white,
                                           fontSize: 23,
                                           fontFamily: 'Play',
                                           fontWeight: FontWeight.bold),),
-                                    style: Theme
-                                        .of(context)
-                                        .elevatedButtonTheme
-                                        .style,
                                   )
                               )
                           ),

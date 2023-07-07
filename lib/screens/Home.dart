@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../blocs/bloc_navigator.dart';
-import '../widgets/custom_BottomNavigationBar.dart';
+import '../widgets/custom_navigate.dart';
 
 class HomePage extends StatefulWidget{
   const HomePage({Key?key}):super(key: key);
@@ -18,12 +17,12 @@ class _HomePage extends State<HomePage> {
           builder: (context, state) {
             return SafeArea(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10,horizontal: 20),
+                  padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 20),
                   child:  pageWidgets[state]??Container(),
             ));
           }
       ),
-      bottomNavigationBar:CustomBottomNavigationBar(),
+      bottomNavigationBar:const CustomNavigate(),
     );
   }
 }

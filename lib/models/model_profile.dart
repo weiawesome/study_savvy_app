@@ -8,20 +8,20 @@ class Profile{
         mail=json['mail'],
         gender=json['gender'];
 }
-class Update_Profile{
+class UpdateProfile{
   final String name;
   final String gender;
-  Update_Profile(this.name,this.gender);
+  UpdateProfile(this.name,this.gender);
 }
-class Update_Pwd{
+class UpdatePwd{
   final String pwd;
-  final String new_pwd;
-  Update_Pwd(this.pwd,this.new_pwd);
+  final String newPwd;
+  UpdatePwd(this.pwd,this.newPwd);
 }
 
-class AI_Methods{
+class AIMethods{
   final String token;
-  AI_Methods(this.token);
+  AIMethods(this.token);
 }
 
 

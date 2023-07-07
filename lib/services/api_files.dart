@@ -7,11 +7,11 @@ import 'package:study_savvy_app/services/jwt_storage.dart';
 
 import '../utils/exception.dart';
 
-Future<Uint8List> getImage(String ID) async {
+Future<Uint8List> getImage(String id) async {
   String? jwt=await JwtService.getJwt();
   final response = await http.get(
-    Uri.parse(API_Routes.File_image_url+"/"+ID),
-    headers: {'Authorization': 'Bearer '+jwt!},
+    Uri.parse("${ApiRoutes.fileImageUrl}/$id"),
+    headers: {'Authorization': 'Bearer ${jwt!}'},
   );
   if (response.statusCode == 200) {
     return response.bodyBytes;
@@ -34,11 +34,11 @@ Future<Uint8List> getImage(String ID) async {
   }
 }
 
-Future<Uint8List> getAudio(String ID) async {
+Future<Uint8List> getAudio(String id) async {
   String? jwt=await JwtService.getJwt();
   final response = await http.get(
-    Uri.parse(API_Routes.File_audio_url+"/"+ID),
-    headers: {'Authorization': 'Bearer '+jwt!},
+    Uri.parse("${ApiRoutes.fileAudioUrl}/$id"),
+    headers: {'Authorization': 'Bearer ${jwt!}'},
   );
   if (response.statusCode == 200) {
     return response.bodyBytes;
@@ -61,14 +61,14 @@ Future<Uint8List> getAudio(String ID) async {
   }
 }
 
-Future<Specific_File> getSpecificFile(String ID) async {
+Future<SpecificFile> getSpecificFile(String id) async {
   String? jwt=await JwtService.getJwt();
   final response = await http.get(
-    Uri.parse(API_Routes.File_url+"/"+ID),
-    headers: {'Authorization': 'Bearer '+jwt!},
+    Uri.parse("${ApiRoutes.fileUrl}/$id"),
+    headers: {'Authorization': 'Bearer ${jwt!}'},
   );
   if (response.statusCode == 200) {
-    return Specific_File.fromJson(jsonDecode(response.body));
+    return SpecificFile.fromJson(jsonDecode(response.body));
   }
   else if(response.statusCode == 400){
     throw ClientException("Client's error");
@@ -91,8 +91,8 @@ Future<Specific_File> getSpecificFile(String ID) async {
 Future<Files> getFiles(int page) async {
   String? jwt=await JwtService.getJwt();
   final response = await http.get(
-    Uri.parse(API_Routes.File_url+"?page="+page.toString()),
-    headers: {'Authorization': 'Bearer '+jwt!},
+    Uri.parse("${ApiRoutes.fileUrl}?page=$page"),
+    headers: {'Authorization': 'Bearer ${jwt!}'},
   );
   if (response.statusCode == 200) {
     Map<String,dynamic> result=jsonDecode(response.body);
