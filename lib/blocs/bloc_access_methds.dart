@@ -32,16 +32,16 @@ class Access_methodBloc extends Bloc<Access_methodEvent,Access_methodState?> {
           await setApiKey(event.apikey);
           emit(Access_methodState("SUCCESS",null));
         }
-        on AuthException catch(e){
+        on AuthException {
           emit(Access_methodState("FAILURE","AUTH"));
         }
-        on ServerException catch(e){
+        on ServerException {
           emit(Access_methodState("FAILURE","SERVER"));
         }
-        on ClientException catch(e){
+        on ClientException {
           emit(Access_methodState("FAILURE","CLIENT"));
         }
-        on ExistException catch(e){
+        on ExistException {
           emit(Access_methodState("FAILURE","EXIST"));
         }
         catch(e) {
@@ -54,16 +54,16 @@ class Access_methodBloc extends Bloc<Access_methodEvent,Access_methodState?> {
           await setAccessToken(event.accesstoken);
           emit(Access_methodState("SUCCESS",null));
         }
-        on AuthException catch(e){
+        on AuthException {
           emit(Access_methodState("FAILURE","AUTH"));
         }
-        on ServerException catch(e){
+        on ServerException {
           emit(Access_methodState("FAILURE","SERVER"));
         }
-        on ClientException catch(e){
+        on ClientException {
           emit(Access_methodState("FAILURE","CLIENT"));
         }
-        on ExistException catch(e){
+        on ExistException {
           emit(Access_methodState("FAILURE","EXIST"));
         }
         catch(e) {

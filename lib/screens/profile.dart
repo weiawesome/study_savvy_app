@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:study_savvy_app/blocs/bloc_access_methds.dart';
-import 'package:study_savvy_app/services/encrypt.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../blocs/bloc_profile.dart';
 import '../blocs/provider/theme_provider.dart';
 import '../utils/routes.dart';

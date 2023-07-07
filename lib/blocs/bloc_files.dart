@@ -26,16 +26,16 @@ class FilesBloc extends Bloc<FilesEvent,FilesState> {
           Files result=await getFiles(1);
           emit(FilesState("SUCCESS",null,result));  
         }
-        on AuthException catch(e){
+        on AuthException {
           emit(FilesState("FAILURE","AUTH",Files([],0,0)));
         }
-        on ServerException catch(e){
+        on ServerException {
           emit(FilesState("FAILURE","SERVER", Files([],0,0)));
         }
-        on ClientException catch(e){
+        on ClientException {
           emit(FilesState("FAILURE","CLIENT",Files([],0,0)));
         }
-        on ExistException catch(e){
+        on ExistException {
           emit(FilesState("FAILURE","EXIST",Files([],0,0)));
         }
         catch(e) {
@@ -48,16 +48,16 @@ class FilesBloc extends Bloc<FilesEvent,FilesState> {
           Files result=await getFiles(1);
           emit(FilesState("SUCCESS",null,result));
         }
-        on AuthException catch(e){
+        on AuthException {
           emit(FilesState("FAILURE","AUTH",Files([],0,0)));
         }
-        on ServerException catch(e){
+        on ServerException {
           emit(FilesState("FAILURE","SERVER", Files([],0,0)));
         }
-        on ClientException catch(e){
+        on ClientException {
           emit(FilesState("FAILURE","CLIENT",Files([],0,0)));
         }
-        on ExistException catch(e){
+        on ExistException {
           emit(FilesState("FAILURE","EXIST",Files([],0,0)));
         }
         catch(e) {
@@ -71,16 +71,16 @@ class FilesBloc extends Bloc<FilesEvent,FilesState> {
             Files result=await getFiles((event.files.current_page+1));
             emit(FilesState("SUCCESS",null,combineFiles(event.files, result)));
           }
-          on AuthException catch(e){
+          on AuthException {
             emit(FilesState("FAILURE","AUTH",Files([],0,0)));
           }
-          on ServerException catch(e){
+          on ServerException {
             emit(FilesState("FAILURE","SERVER", Files([],0,0)));
           }
-          on ClientException catch(e){
+          on ClientException {
             emit(FilesState("FAILURE","CLIENT",Files([],0,0)));
           }
-          on ExistException catch(e){
+          on ExistException {
             emit(FilesState("FAILURE","EXIST",Files([],0,0)));
           }
           catch(e) {

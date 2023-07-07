@@ -33,16 +33,16 @@ class ArticleBloc extends Bloc<ArticleEvent,ArticleState> {
           await predictOCR_graph(event.article.image, event.article.prompt);
           emit(ArticleState("SUCCESS",null));  
         }
-        on AuthException catch(e){
+        on AuthException {
           emit(ArticleState("FAILURE","AUTH"));
         }
-        on ServerException catch(e){
+        on ServerException {
           emit(ArticleState("FAILURE","SERVER"));
         }
-        on ClientException catch(e){
+        on ClientException {
           emit(ArticleState("FAILURE","CLIENT"));
         }
-        on ExistException catch(e){
+        on ExistException {
           emit(ArticleState("FAILURE","EXIST"));
         }
         catch(e) {

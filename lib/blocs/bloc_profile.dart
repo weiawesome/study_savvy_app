@@ -22,16 +22,16 @@ class ProfileBloc extends Bloc<ProfileEvent,ProfileState> {
           Profile result=await getProfile();
           emit(ProfileState("SUCCESS",null, result));  
         }
-        on AuthException catch(e){
+        on AuthException {
           emit(ProfileState("FAILURE","AUTH",Profile("","","")));
         }
-        on ServerException catch(e){
+        on ServerException {
           emit(ProfileState("FAILURE","SERVER",Profile("","","")));
         }
-        on ClientException catch(e){
+        on ClientException {
           emit(ProfileState("FAILURE","CLIENT",Profile("","","")));
         }
-        on ExistException catch(e){
+        on ExistException {
           emit(ProfileState("FAILURE","EXIST",Profile("","","")));
         }
         catch(e) {

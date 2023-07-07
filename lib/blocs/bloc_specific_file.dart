@@ -35,16 +35,16 @@ class FileBloc extends Bloc<FileEvent,FileState> {
           Uint8List media=await getImage(event.ID);
           emit(FileState("SUCCESS",null,file, media,"OCR"));  
         }
-        on AuthException catch(e){
+        on AuthException {
           emit(FileState("FAILURE","AUTH", null, null,null));
         }
-        on ServerException catch(e){
+        on ServerException {
           emit(FileState("FAILURE","SERVER", null, null,null));
         }
-        on ClientException catch(e){
+        on ClientException {
           emit(FileState("FAILURE","CLIENT", null, null,null));
         }
-        on ExistException catch(e){
+        on ExistException {
           emit(FileState("FAILURE","EXIST", null, null,null));
         }
         catch(e) {
@@ -58,16 +58,16 @@ class FileBloc extends Bloc<FileEvent,FileState> {
           Uint8List media=await getAudio(event.ID);
           emit(FileState("SUCCESS",null,file, media,"ASR"));
         }
-        on AuthException catch(e){
+        on AuthException {
           emit(FileState("FAILURE","AUTH", null, null,null));
         }
-        on ServerException catch(e){
+        on ServerException {
           emit(FileState("FAILURE","SERVER", null, null,null));
         }
-        on ClientException catch(e){
+        on ClientException {
           emit(FileState("FAILURE","CLIENT", null, null,null));
         }
-        on ExistException catch(e){
+        on ExistException {
           emit(FileState("FAILURE","EXIST", null, null,null));
         }
         catch(e) {
