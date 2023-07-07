@@ -4,6 +4,7 @@ import 'package:study_savvy_app/blocs/bloc_files.dart';
 import 'package:study_savvy_app/blocs/bloc_specific_file.dart';
 import 'package:study_savvy_app/models/model_files.dart';
 import 'package:study_savvy_app/utils/routes.dart';
+import 'package:study_savvy_app/widgets/failure.dart';
 import 'package:study_savvy_app/widgets/loading.dart';
 import '../styles/custom_style.dart';
 
@@ -160,7 +161,7 @@ class _FilesPage extends State<FilesPage> {
                     );
                   }
                   else{
-                    return Container();
+                    return Failure(error: state.error!);
                   }
                 },
               ),

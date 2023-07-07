@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:study_savvy_app/widgets/failure.dart';
 import 'package:study_savvy_app/widgets/loading.dart';
 
 import '../blocs/bloc_profile.dart';
@@ -115,7 +116,7 @@ class _InformationPage extends State<InformationPage> {
                                   );
                                 }
                                 else{
-                                  return Container();
+                                  return Failure(error: state.error!,);
                                 }
                               }
                             )

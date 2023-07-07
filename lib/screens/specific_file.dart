@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_savvy_app/blocs/bloc_specific_file.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:study_savvy_app/services/api_files.dart';
-import 'package:study_savvy_app/services/jwt_storage.dart';
 import 'package:study_savvy_app/widgets/loading.dart';
 class SpecificFilePage extends StatefulWidget{
   const SpecificFilePage({Key?key}):super(key: key);
@@ -269,7 +267,7 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                             style: Theme.of(context).elevatedButtonTheme.style,
                           ),
                           ElevatedButton(
-                            onPressed: () async { await DefaultCacheManager().emptyCache(); await JwtService.saveJwt("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4ODE5NjYyMywianRpIjoiYmU4ZGQ2YzctMWRmNC00Nzg0LTgzOTgtZWQ5ODZhNGM5ZGM1IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IndlaTg5MTAxM0BnbWFpbC5jb20iLCJuYmYiOjE2ODgxOTY2MjMsImNzcmYiOiJhNjYzNzFiNS01NWUwLTRjMzAtOGRkNS0zM2E4M2FjZGI2MDkiLCJleHAiOjE2ODk0MDYyMjN9.sXF-_dRljEvsUzH7NdnKSTbQX36NTD_iOncnrcVocYY");getSpecificFile("2e540dc9-3b25-4f51-b5b2-3583fabc2e53");},
+                            onPressed: () async { await DefaultCacheManager().emptyCache();},
                             child:Text("Delete",textAlign: TextAlign.center,style: TextStyle(color: Colors.redAccent, fontSize:23,fontFamily: 'Play',fontWeight: FontWeight.bold),),
                             style: Theme.of(context).elevatedButtonTheme.style,
                           )
