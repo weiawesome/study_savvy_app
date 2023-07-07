@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:study_savvy_app/blocs/bloc_access_methds.dart';
+import 'package:study_savvy_app/blocs/bloc_article_improver.dart';
 import 'package:study_savvy_app/blocs/bloc_navigator.dart';
 import 'package:study_savvy_app/blocs/bloc_specific_file.dart';
 import 'package:study_savvy_app/utils/routes.dart';
 import 'blocs/bloc_files.dart';
 import 'blocs/bloc_jwt.dart';
 import 'blocs/bloc_profile.dart';
+import 'blocs/provider/ocrimage_provider.dart';
 import 'blocs/provider/theme_provider.dart';
 import 'styles/custom_style.dart';
 import 'package:study_savvy_app/page/sign_in.dart';
@@ -24,6 +26,9 @@ void main() {
             providers: [
               ChangeNotifierProvider(
                 create: (_) => ThemeProvider(),
+              ),
+              ChangeNotifierProvider(
+                create: (_) => OCRImageProvider(),
               ),
               BlocProvider(
                 create: (context) => PageBloc(),
@@ -42,6 +47,9 @@ void main() {
               ),
               BlocProvider(
                 create:  (context) => Access_methodBloc(),
+              ),
+              BlocProvider(
+                create:  (context) => ArticleBloc(),
               )
             ],
             child: MyApp(),

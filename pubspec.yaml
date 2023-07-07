@@ -47,6 +47,9 @@ dependencies:
   pointycastle: ^3.3.0
   asn1lib: any
   file_picker: ^4.3.0
+  video_player: any
+  adv_camera: ^3.1.0
+  http_parser: ^4.0.0
 
 dev_dependencies:
   flutter_test:
