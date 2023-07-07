@@ -53,10 +53,32 @@ class _CameraPageState extends State<CameraPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     TextButton(
+                      style: ButtonStyle(
+                        overlayColor: MaterialStateProperty.resolveWith<Color>(
+                              (Set<MaterialState> states) {
+                            if (states.contains(MaterialState.pressed)) {
+                              return Theme.of(context).hintColor;
+                            }
+                            // 其他状态下的背景色
+                            return Colors.transparent;
+                          },
+                        ),
+                      ),
                       onPressed: _toggleFlash,
                       child: flashIcon(),
                     ),
                     TextButton(
+                      style: ButtonStyle(
+                        overlayColor: MaterialStateProperty.resolveWith<Color>(
+                              (Set<MaterialState> states) {
+                            if (states.contains(MaterialState.pressed)) {
+                              return Theme.of(context).hintColor;
+                            }
+                            // 其他状态下的背景色
+                            return Colors.transparent;
+                          },
+                        ),
+                      ),
                       child: const Icon(Icons.circle,size: 40,color: Colors.black),
                       onPressed: () {
                         _controller.captureImage();

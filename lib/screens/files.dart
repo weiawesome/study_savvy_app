@@ -98,7 +98,6 @@ class _FilesPage extends State<FilesPage> {
                                       if (states.contains(MaterialState.pressed)) {
                                         return Theme.of(context).hintColor;
                                       }
-                                      // 其他状态下的背景色
                                       return Colors.transparent;
                                     },
                                   ),
