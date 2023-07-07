@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_savvy_app/blocs/bloc_specific_file.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:study_savvy_app/widgets/loading.dart';
-
 import '../widgets/failure.dart';
 class SpecificFilePage extends StatefulWidget{
   const SpecificFilePage({Key?key}):super(key: key);
@@ -15,6 +14,8 @@ class SpecificFilePage extends StatefulWidget{
 
 class _SpecificFilePage extends State<SpecificFilePage> {
   late FileBloc bloc;
+  bool init=true;
+  bool playState=false;
   AudioPlayer audioPlayer = AudioPlayer();
   @override
   void initState() {
@@ -238,8 +239,26 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                                   margin: const EdgeInsets.symmetric(vertical: 15),
                                                   padding: const EdgeInsets.symmetric(horizontal: 10),
                                                   child: TextButton(
-                                                    onPressed: () { },
-                                                    child: Icon(Icons.play_circle_fill_rounded,color: Theme.of(context).hintColor,size: 50,),
+                                                    onPressed: () {
+                                                      if(init){
+                                                        audioPlayer.setSourceBytes(state.media!);
+                                                        setState(() {
+                                                          init=false;
+                                                        });
+                                                        audioPlayer.play(audioPlayer.source!);
+                                                      }
+                                                      if(playState){
+                                                        audioPlayer.pause();
+                                                      }
+                                                      else{
+                                                        audioPlayer.resume();
+                                                      }
+                                                      setState(() {
+                                                        playState=!playState;
+                                                      });
+                                                      },
+                                                    child: playState?Icon(Icons.pause_circle_filled_outlined,color: Theme.of(context).hintColor,size: 50,):Icon(Icons.play_circle_fill_rounded,color: Theme.of(context).hintColor,size: 50,),
+
                                                   )
                                               )
                                             ],
