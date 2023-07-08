@@ -11,10 +11,11 @@ import 'blocs/bloc_jwt.dart';
 import 'blocs/bloc_profile.dart';
 import 'blocs/provider/theme_provider.dart';
 import 'styles/custom_style.dart';
-import 'package:study_savvy_app/page/sign_in.dart';
-import 'package:study_savvy_app/page/sign_up.dart';
+import 'package:study_savvy_app/screens/sign_in.dart';
+import 'package:study_savvy_app/screens/sign_up.dart';
 
 
+Color primaryColor = Color(0xFF202124);
 void main() {
   runApp(
       DevicePreview(
@@ -47,6 +48,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
@@ -62,19 +65,20 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
     home: Container(
       alignment: Alignment.center,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/images/initial.jpg'),
-          fit: BoxFit.contain,
-        )
-      ),
-      child: HomePage(),
+      decoration: const BoxDecoration(
+          image: DecorationImage(
+        image: AssetImage('assets/images/initial.jpg'),
+        fit: BoxFit.contain,
+      )),
+      child: const HomePage(),
     ),
     );
   }
 }
 
 class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -108,6 +112,7 @@ class HomePage extends StatelessWidget {
               },
             ),
           ),
+          
 
           SizedBox(height: 16), // 用于在两个按钮之间添加间距
 
@@ -119,22 +124,19 @@ class HomePage extends StatelessWidget {
                 foregroundColor: MaterialStateProperty.all(Colors.black),
                 backgroundColor: MaterialStateProperty.all(Colors.white),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                      borderRadius: BorderRadius.zero,
-                  )
-                )
-                ),
-              child: new Text(
-                'Sign up',
-                style: TextStyle(fontFamily: 'Play', fontSize: 25),
-                ),
-              onPressed: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => SignUpPage()));
-              },
+                    const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.zero,
+                ))),
+            child: const Text(
+              'Sign up',
+              style: TextStyle(fontFamily: 'Play', fontSize: 25),
             ),
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SignUpPage()));
+            },
           )
-
+          )
         ]
       ),
     ),
