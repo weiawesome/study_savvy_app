@@ -30,11 +30,34 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  font_awesome_flutter: 10.5.0
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  provider: ^6.0.0
+  flutter_bloc: ^8.1.2
+  device_preview: ^1.1.0
+  url_launcher: ^6.1.11
+  flutter_secure_storage: ^8.0.0
+  http: any
+  flutter_cache_manager: any
+  audioplayers: ^4.1.0
+  encrypt: ^5.0.1
+  pointycastle: ^3.3.0
+  asn1lib: any
+  file_picker: ^4.3.0
+  video_player: any
+  adv_camera: ^3.1.0
+  http_parser: ^4.0.0
+
+  image_picker: ^0.8.4+5
+  image_cropper: ^1.4.1
+  image: ^3.1.1
+  path_provider: ^2.0.5
+  wechat_assets_picker: ^8.5.0
+
 
 dev_dependencies:
   flutter_test:
@@ -57,7 +80,17 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  assets:
+    - assets/images/initial.jpg
+    - assets/keys/public_key.pem
+    - assets/images/recording.png
 
+  fonts:
+    - family: Play
+      fonts:
+        - asset: fonts/Play-Regular.ttf
+        - asset: fonts/Play-Bold.ttf
+          weight: 700
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
@@ -74,9 +107,7 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
+
   #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic

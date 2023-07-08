@@ -1,115 +1,160 @@
+import 'package:device_preview/device_preview.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
+import 'package:study_savvy_app/blocs/bloc_access_methods.dart';
+import 'package:study_savvy_app/blocs/bloc_article_improver.dart';
+import 'package:study_savvy_app/blocs/bloc_navigator.dart';
+import 'package:study_savvy_app/blocs/bloc_specific_file.dart';
+import 'package:study_savvy_app/utils/routes.dart';
+import 'blocs/bloc_files.dart';
+import 'blocs/bloc_jwt.dart';
+import 'blocs/bloc_password.dart';
+import 'blocs/bloc_profile.dart';
+import 'blocs/provider/ocr_image_provider.dart';
+import 'blocs/provider/theme_provider.dart';
+import 'styles/custom_style.dart';
+import 'package:study_savvy_app/screens/sign_in.dart';
+import 'package:study_savvy_app/screens/sign_up.dart';
+import 'package:study_savvy_app/screens/note_taker.dart';
 
+Color primaryColor = Color(0xFF202124);
 void main() {
-  runApp(const MyApp());
+  runApp(
+      DevicePreview(
+          enabled: !kReleaseMode,
+          builder: (context) => MultiProvider(
+            providers: [
+              ChangeNotifierProvider(
+                create: (_) => ThemeProvider(),
+              ),
+              ChangeNotifierProvider(
+                create: (_) => OCRImageProvider(),
+              ),
+              BlocProvider(
+                create: (context) => PageBloc(),
+              ),
+              BlocProvider(
+                create:  (context) => JWTBloc(),
+              ),
+              BlocProvider(
+                create:  (context) => FileBloc(),
+              ),
+              BlocProvider(
+                create:  (context) => FilesBloc(),
+              ),
+              BlocProvider(
+                create:  (context) => ProfileBloc(),
+              ),
+              BlocProvider(
+                create:  (context) => AccessMethodBloc(),
+              ),
+              BlocProvider(
+                create:  (context) => ArticleBloc(),
+              ),
+              BlocProvider(
+                create:  (context) => PasswordBloc(),
+              )
+            ],
+            child: const MyApp(),
+          )
+      )
+  );
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      locale: DevicePreview.locale(context),
+      builder: DevicePreview.appBuilder,
+      title: 'Study-Savvy',
+      theme: LightStyle.theme,
+      darkTheme: DarkStyle.theme,
+      themeMode: themeProvider.themeMode,
+      onGenerateRoute: RouteGenerator.generateRoute,
+      debugShowCheckedModeBanner: false,
+    home: Container(
+      alignment: Alignment.center,
+      decoration: const BoxDecoration(
+          image: DecorationImage(
+        image: AssetImage('assets/images/initial.jpg'),
+        fit: BoxFit.cover,
+      )),
+      child: const HomePage(),
+    ),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+    return MaterialApp(
+    home: Container(
+      margin: EdgeInsets.only(top: 400.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children:
+        [
+          SizedBox(
+            width: 189,
+            height: 49,
+            child: TextButton(
+              style: ButtonStyle(
+                foregroundColor: MaterialStateProperty.all(Colors.black),
+                backgroundColor: MaterialStateProperty.all(Colors.white),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                      borderRadius: BorderRadius.zero,
+                  )
+                )
+                ),
+              child: new Text(
+                'Sign in',
+                style: TextStyle(fontFamily: 'Play', fontSize: 25),
+              ),
+
+              onPressed: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => SignInPage()));
+              },
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+          ),
+
+
+          SizedBox(height: 16), // 用于在两个按钮之间添加间距
+
+          SizedBox(
+            width: 189,
+            height: 49,
+            child: TextButton(
+              style: ButtonStyle(
+                foregroundColor: MaterialStateProperty.all(Colors.black),
+                backgroundColor: MaterialStateProperty.all(Colors.white),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.zero,
+                ))),
+            child: const Text(
+              'Sign up',
+              style: TextStyle(fontFamily: 'Play', fontSize: 25),
             ),
-          ],
-        ),
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SignUpPage()));
+            },
+          )
+          )
+        ]
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+    ),
     );
   }
 }
