@@ -88,7 +88,7 @@ class FileBloc extends Bloc<FileEvent,FileState> {
         emit(FileState("INIT",null,null,null,null,null));
       }
       else if(event is FileEventDelete){
-        emit(FileState("INIT",null,null,null,null,null));
+        emit(FileState("PENDING",null,null,null,null,null));
         try{
           await deleteSpecificFile(event.id);
           emit(FileState("SUCCESS_OTHER","Success to delete",null,null,null,null));
@@ -110,7 +110,7 @@ class FileBloc extends Bloc<FileEvent,FileState> {
         }
       }
       else if(event is FileEventEditOCR){
-        emit(FileState("INIT",null,null,null,null,null));
+        emit(FileState("PENDING",null,null,null,null,null));
         try{
           await editSpecificFileOCR(event.file);
           emit(FileState("SUCCESS_OTHER","Success to upload",null,null,null,null));
@@ -132,7 +132,7 @@ class FileBloc extends Bloc<FileEvent,FileState> {
         }
       }
       else if(event is FileEventEditASR){
-        emit(FileState("INIT",null,null,null,null,null));
+        emit(FileState("PENDING",null,null,null,null,null));
         try{
           await editSpecificFileASR(event.file);
           emit(FileState("SUCCESS_OTHER","Success to upload",null,null,null,null));

@@ -59,7 +59,7 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                           alignment: Alignment.topLeft,
                           child: BlocBuilder<FileBloc,FileState>(
                             builder: (context,state){
-                              if(state.status=="INIT"){
+                              if(state.status=="INIT" || state.status=="PENDING"){
                                 return const Loading();
                               }
                               else if(state.status=="SUCCESS"){
@@ -322,11 +322,6 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                     else{
                                       context.read<FileBloc>().add(FileEventEditASR(file));
                                     }
-
-
-                                    // await DefaultCacheManager().emptyCache().then((value) =>{
-                                    // Navigator.pop(context)
-                                    // });
 
                                   },
                                   style: Theme.of(context).elevatedButtonTheme.style,

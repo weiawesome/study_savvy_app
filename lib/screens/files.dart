@@ -5,6 +5,7 @@ import 'package:study_savvy_app/blocs/bloc_specific_file.dart';
 import 'package:study_savvy_app/utils/routes.dart';
 import 'package:study_savvy_app/widgets/failure.dart';
 import 'package:study_savvy_app/widgets/loading.dart';
+import 'package:study_savvy_app/widgets/success.dart';
 import '../styles/custom_style.dart';
 
 class FilesPage extends StatefulWidget{
@@ -15,6 +16,7 @@ class FilesPage extends StatefulWidget{
 
 class _FilesPage extends State<FilesPage> {
   final _scrollController = ScrollController();
+  bool sendState=false;
   @override
   void initState() {
     super.initState();
@@ -31,7 +33,6 @@ class _FilesPage extends State<FilesPage> {
   Future<void> _refresh() async {
     return context.read<FilesBloc>().add(FilesEventRefresh());
   }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -70,13 +71,64 @@ class _FilesPage extends State<FilesPage> {
                                       context.read<FileBloc>().add(FileEventASR((state.files.files[index]).id));
                                     }
                                   }
+                                  else if((state.files.files[index]).status=='FAILURE'){
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: const Text('刪除錯誤檔案'),
+                                          content: BlocBuilder<FileBloc,FileState>(
+                                            builder: (context,state){
+                                              if(state.status=="INIT"){
+                                                return const Text('這份檔案執行失敗\n目前無法開啟，是否刪除?');
+                                              }
+                                              else if(state.status=="PENDING"){
+                                                return const Loading();
+                                              }
+                                              else if(state.status=="FAILURE"){
+                                                return Failure(error: state.message!);
+                                              }
+                                              else{
+                                                return Success(message: state.message!);
+                                              }
+                                            },
+                                          ),
+                                          actions: sendState?[
+                                            TextButton(
+                                            child: const Text('確定'),
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                          ]:<Widget>[
+                                            TextButton(
+                                              child: const Text('取消'),
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                            ),
+                                            TextButton(
+                                              child: const Text('刪除'),
+                                              onPressed: () {
+                                                sendState=true;
+                                                context.read<FileBloc>().add(FileEventDelete((state.files.files[index]).id));
+                                              },
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    ).then((value) => {
+                                      context.read<FileBloc>().add(FileEventClear()),
+                                      sendState=false
+                                    });
+                                  }
                                   else{
                                     showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
                                         return AlertDialog(
                                           title: const Text('錯誤'),
-                                          content: const Text('這份檔案正在執行或失敗\n目前無法開啟'),
+                                          content: const Text('這份檔案正在執行\n目前無法開啟'),
                                           actions: <Widget>[
                                             TextButton(
                                               child: const Text('确定'),
