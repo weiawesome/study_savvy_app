@@ -115,3 +115,95 @@ Future<Files> getFiles(int page) async {
     throw Exception('Failed to upload in unknown reason');
   }
 }
+
+Future<void> deleteSpecificFile(String id) async {
+  String? jwt=await JwtService.getJwt();
+  final response = await http.delete(
+    Uri.parse("${ApiRoutes.fileUrl}/$id"),
+    headers: {'Authorization': 'Bearer ${jwt!}'},
+  );
+  if (response.statusCode == 201) {
+    return ;
+  }
+  else if(response.statusCode == 400){
+    throw ClientException("Client's error");
+  }
+  else if(response.statusCode == 404){
+    throw ExistException("Source not exist");
+  }
+  else if (response.statusCode == 422){
+    await JwtService.deleteJwt();
+    throw AuthException("JWT invalid");
+  }
+  else if(response.statusCode == 500){
+    throw ServerException("Server's error");
+  }
+  else{
+    throw Exception('Failed to upload in unknown reason');
+  }
+}
+
+Future<void> editSpecificFileOCR(EditFile file) async {
+  String? jwt=await JwtService.getJwt();
+  final String id=file.id;
+  final response = await http.put(
+    Uri.parse("${ApiRoutes.fileNlpEditOCRUrl}/$id"),
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${jwt!}'
+    },
+    body: jsonEncode(file.toJson())
+  );
+
+  if (response.statusCode == 200) {
+    return ;
+  }
+  else if(response.statusCode == 400){
+    throw ClientException("Client's error");
+  }
+  else if(response.statusCode == 404){
+    throw ExistException("Source not exist");
+  }
+  else if (response.statusCode == 422){
+    await JwtService.deleteJwt();
+    throw AuthException("JWT invalid");
+  }
+  else if(response.statusCode == 500){
+    throw ServerException("Server's error");
+  }
+  else{
+    throw Exception('Failed to upload in unknown reason');
+  }
+}
+
+Future<void> editSpecificFileASR(EditFile file) async {
+  String? jwt=await JwtService.getJwt();
+  final String id=file.id;
+  final response = await http.put(
+    Uri.parse("${ApiRoutes.fileNlpEditASRUrl}/$id"),
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${jwt!}'
+    },
+    body: jsonEncode(file.toJson())
+  );
+  if (response.statusCode == 200) {
+    return ;
+  }
+  else if(response.statusCode == 400){
+    throw ClientException("Client's error");
+  }
+  else if(response.statusCode == 404){
+    throw ExistException("Source not exist");
+  }
+  else if (response.statusCode == 422){
+    await JwtService.deleteJwt();
+    throw AuthException("JWT invalid");
+  }
+  else if(response.statusCode == 500){
+    throw ServerException("Server's error");
+  }
+  else{
+    throw Exception('Failed to upload in unknown reason');
+  }
+}

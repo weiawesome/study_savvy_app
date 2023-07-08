@@ -30,3 +30,13 @@ class SpecificFile{
         summarize =json['summarize'] as String,
         details =json['details'];
 }
+
+class EditFile{
+  final String id;
+  final String prompt;
+  final String content;
+  EditFile(this.id,this.prompt,this.content);
+  Map<String,String> toJson(){
+    return {"prompt":prompt,"content":content};
+  }
+}

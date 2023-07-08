@@ -3,9 +3,11 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_savvy_app/blocs/bloc_specific_file.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:study_savvy_app/models/model_files.dart';
 import 'package:study_savvy_app/widgets/loading.dart';
 import '../widgets/failure.dart';
+import '../widgets/success.dart';
+// import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 class SpecificFilePage extends StatefulWidget{
   const SpecificFilePage({Key?key}):super(key: key);
   @override
@@ -13,6 +15,8 @@ class SpecificFilePage extends StatefulWidget{
 }
 
 class _SpecificFilePage extends State<SpecificFilePage> {
+  final _promptController= TextEditingController();
+  final _contentController= TextEditingController();
   late FileBloc bloc;
   bool init=true;
   bool playState=false;
@@ -59,6 +63,8 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                 return const Loading();
                               }
                               else if(state.status=="SUCCESS"){
+                                _promptController.text=state.file!.prompt;
+                                _contentController.text=state.file!.content;
                                 return Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -174,7 +180,15 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                                   decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),color: Theme.of(context).brightness==Brightness.light?Colors.black:Colors.grey[300]),
                                                   padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 10),
                                                   alignment: Alignment.topLeft,
-                                                  child: Text(state.file!.prompt,style: Theme.of(context).textTheme.labelSmall,maxLines: null,),
+                                                  child: TextField(
+                                                    controller: _promptController,
+                                                    keyboardType: TextInputType.multiline,
+                                                    style: Theme.of(context).textTheme.labelSmall,
+                                                    decoration: const InputDecoration(
+                                                      border: InputBorder.none,
+                                                    ),
+                                                    maxLines: null,
+                                                  ),
                                                 )
                                               ],
                                           ),
@@ -197,7 +211,13 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                                 decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),color: Theme.of(context).brightness==Brightness.light?Colors.black:Colors.grey[300]),
                                                 padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 10),
                                                 alignment: Alignment.topLeft,
-                                                child: Text(state.file!.content,style: Theme.of(context).textTheme.labelSmall,maxLines: null,),
+                                                child: TextField(
+                                                  controller: _contentController,
+                                                  decoration: const InputDecoration(
+                                                    border: InputBorder.none,
+                                                  ),
+                                                  style: Theme.of(context).textTheme.labelSmall,
+                                                  maxLines: null,),
                                               )
                                             ],
                                           ),
@@ -271,32 +291,67 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                   ],
                                 );
                               }
+                              else if(state.status=="FAILURE"){
+                                return Failure(error: state.message!,);
+                              }
+                              else if(state.status=="SUCCESS_OTHER"){
+                                return Success(message: state.message!,);
+                              }
                               else{
-                                return Failure(error: state.error!,);
+                                return Container();
                               }
                             },
                           )
                       ),
                     )
                   ),
-                  Expanded(
-                      flex: 1,
-                      child:Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          ElevatedButton(
-                            onPressed: () { Navigator.pop(context); },
-                            style: Theme.of(context).elevatedButtonTheme.style,
-                            child:const Text("ReGenerate",textAlign: TextAlign.center,style: TextStyle(color: Colors.white, fontSize:23,fontFamily: 'Play',fontWeight: FontWeight.bold),),
-                          ),
-                          ElevatedButton(
-                            onPressed: () async { await DefaultCacheManager().emptyCache();},
-                            style: Theme.of(context).elevatedButtonTheme.style,
-                            child:const Text("Delete",textAlign: TextAlign.center,style: TextStyle(color: Colors.redAccent, fontSize:23,fontFamily: 'Play',fontWeight: FontWeight.bold),),
-                          )
-                        ],
-                      )
+                  BlocBuilder<FileBloc,FileState>(
+                    builder: (context,state){
+                      if(state.status=="SUCCESS"){
+                        return Expanded(
+                            flex: 1,
+                            child:Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () async {
+                                    EditFile file=EditFile(state.id!,_promptController.text.toString(),_contentController.text.toString());
+                                    if(state.type=="OCR"){
+                                      context.read<FileBloc>().add(FileEventEditOCR(file));
+                                    }
+                                    else{
+                                      context.read<FileBloc>().add(FileEventEditASR(file));
+                                    }
+
+
+                                    // await DefaultCacheManager().emptyCache().then((value) =>{
+                                    // Navigator.pop(context)
+                                    // });
+
+                                  },
+                                  style: Theme.of(context).elevatedButtonTheme.style,
+                                  child:const Text("ReGenerate",textAlign: TextAlign.center,style: TextStyle(color: Colors.white, fontSize:23,fontFamily: 'Play',fontWeight: FontWeight.bold),),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () async {
+                                    context.read<FileBloc>().add(FileEventDelete(state.id!));
+                                  },
+                                  style: Theme.of(context).elevatedButtonTheme.style,
+                                  child:const Text("Delete",textAlign: TextAlign.center,style: TextStyle(color: Colors.redAccent, fontSize:23,fontFamily: 'Play',fontWeight: FontWeight.bold),),
+                                )
+                              ],
+                            )
+                        );
+                      }
+                      else{
+                        return Expanded(
+                            flex:1,
+                            child: Container()
+                        );
+                      }
+                    },
                   ),
+
                 ],
               )
           )
