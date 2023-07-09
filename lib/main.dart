@@ -17,7 +17,7 @@ import 'blocs/provider/theme_provider.dart';
 import 'styles/custom_style.dart';
 import 'package:study_savvy_app/screens/sign_in.dart';
 import 'package:study_savvy_app/screens/sign_up.dart';
-
+import 'package:study_savvy_app/screens/note_taker.dart';
 
 Color primaryColor = Color(0xFF202124);
 void main() {
@@ -83,7 +83,7 @@ class MyApp extends StatelessWidget {
       decoration: const BoxDecoration(
           image: DecorationImage(
         image: AssetImage('assets/images/initial.jpg'),
-        fit: BoxFit.contain,
+        fit: BoxFit.cover,
       )),
       child: const HomePage(),
     ),

@@ -83,6 +83,8 @@ flutter:
   assets:
     - assets/images/initial.jpg
     - assets/keys/public_key.pem
+    - assets/images/recording.png
+
   fonts:
     - family: Play
       fonts:
