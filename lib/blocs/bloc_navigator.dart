@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:study_savvy_app/screens/article_improver.dart';
-import 'package:study_savvy_app/screens/files.dart';
-import 'package:study_savvy_app/screens/profile.dart';
+import 'package:study_savvy_app/screens/article_improver/article_improver.dart';
+import 'package:study_savvy_app/screens/files/files.dart';
+import 'package:study_savvy_app/screens/profile/profile.dart';
 
 enum PageState { audio,articleImprover,files,profile }
 

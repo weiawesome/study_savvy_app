@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:study_savvy_app/models/model_profile.dart';
 import 'package:http/http.dart' as http;
 import 'package:study_savvy_app/services/encrypt.dart';
-import '../utils/exception.dart';
+import 'package:study_savvy_app/utils/exception.dart';
 import 'api_routes.dart';
 import 'jwt_storage.dart';
 

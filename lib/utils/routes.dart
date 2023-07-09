@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:study_savvy_app/screens/access_token.dart';
-import 'package:study_savvy_app/screens/api_key.dart';
-import 'package:study_savvy_app/screens/camera.dart';
+import 'package:study_savvy_app/screens/profile/access_token.dart';
+import 'package:study_savvy_app/screens/profile/api_key.dart';
+import 'package:study_savvy_app/screens/article_improver/camera.dart';
 import 'package:study_savvy_app/screens/home.dart';
-import 'package:study_savvy_app/screens/information_setting.dart';
-import 'package:study_savvy_app/screens/password_setting.dart';
-import 'package:study_savvy_app/screens/specific_file.dart';
+import 'package:study_savvy_app/screens/profile/information_setting.dart';
+import 'package:study_savvy_app/screens/profile/password_setting.dart';
+import 'package:study_savvy_app/screens/files/specific_file.dart';
 
 class Routes {
   static const home='/home';

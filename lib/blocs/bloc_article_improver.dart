@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_savvy_app/models/model_article_improver.dart';
 import 'package:study_savvy_app/services/api_article_improver.dart';
 
-import '../utils/exception.dart';
+import 'package:study_savvy_app/utils/exception.dart';
 
 abstract class ArticleEvent {}
 class ArticleEventGraph extends ArticleEvent{

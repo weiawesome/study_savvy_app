@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:study_savvy_app/blocs/bloc_access_methods.dart';
-import '../blocs/bloc_profile.dart';
-import '../blocs/provider/theme_provider.dart';
-import '../services/jwt_storage.dart';
-import '../utils/routes.dart';
+import 'package:study_savvy_app/blocs/bloc_profile.dart';
+import 'package:study_savvy_app/blocs/provider/theme_provider.dart';
+import 'package:study_savvy_app/services/jwt_storage.dart';
+import 'package:study_savvy_app/utils/routes.dart';
 
 class ProfilePage extends StatefulWidget{
   const ProfilePage({Key?key}):super(key: key);

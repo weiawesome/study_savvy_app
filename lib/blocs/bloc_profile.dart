@@ -1,8 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_savvy_app/models/model_profile.dart';
 import 'package:study_savvy_app/services/api_profile.dart';
-
-import '../utils/exception.dart';
+import 'package:study_savvy_app/utils/exception.dart';
 
 abstract class ProfileEvent {}
 class ProfileEventGet extends ProfileEvent{}

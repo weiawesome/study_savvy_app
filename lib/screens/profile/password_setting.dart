@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_savvy_app/blocs/bloc_password.dart';
 import 'package:study_savvy_app/widgets/loading.dart';
 import 'package:study_savvy_app/widgets/success.dart';
+import 'package:study_savvy_app/models/model_profile.dart';
+import 'package:study_savvy_app/widgets/failure.dart';
 
-import '../models/model_profile.dart';
-import '../widgets/failure.dart';
 class PasswordPage extends StatefulWidget{
   const PasswordPage({Key?key}):super(key: key);
   @override

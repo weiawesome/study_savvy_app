@@ -6,7 +6,7 @@ import 'package:study_savvy_app/utils/routes.dart';
 import 'package:study_savvy_app/widgets/failure.dart';
 import 'package:study_savvy_app/widgets/loading.dart';
 import 'package:study_savvy_app/widgets/success.dart';
-import '../styles/custom_style.dart';
+import 'package:study_savvy_app/styles/custom_style.dart';
 
 class FilesPage extends StatefulWidget{
   const FilesPage({Key?key}):super(key: key);

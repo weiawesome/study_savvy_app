@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../blocs/bloc_access_methods.dart';
-import '../widgets/loading.dart';
+import 'package:study_savvy_app/blocs/bloc_access_methods.dart';
+import 'package:study_savvy_app/widgets/loading.dart';
 
 class AccessTokenPage extends StatefulWidget{
   const AccessTokenPage({Key?key}):super(key: key);

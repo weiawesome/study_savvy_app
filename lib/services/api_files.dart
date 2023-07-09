@@ -4,8 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:study_savvy_app/models/model_files.dart';
 import 'package:study_savvy_app/services/api_routes.dart';
 import 'package:study_savvy_app/services/jwt_storage.dart';
-
-import '../utils/exception.dart';
+import 'package:study_savvy_app/utils/exception.dart';
 
 Future<Uint8List> getImage(String id) async {
   String? jwt=await JwtService.getJwt();

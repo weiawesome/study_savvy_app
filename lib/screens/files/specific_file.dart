@@ -5,9 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_savvy_app/blocs/bloc_specific_file.dart';
 import 'package:study_savvy_app/models/model_files.dart';
 import 'package:study_savvy_app/widgets/loading.dart';
-import '../widgets/failure.dart';
-import '../widgets/success.dart';
-// import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:study_savvy_app/widgets/failure.dart';
+import 'package:study_savvy_app/widgets/success.dart';
+
 class SpecificFilePage extends StatefulWidget{
   const SpecificFilePage({Key?key}):super(key: key);
   @override

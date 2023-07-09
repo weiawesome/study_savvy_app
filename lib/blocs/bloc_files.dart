@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_savvy_app/services/api_files.dart';
-import '../models/model_files.dart';
-import '../utils/exception.dart';
+import 'package:study_savvy_app/models/model_files.dart';
+import 'package:study_savvy_app/utils/exception.dart';
 
 abstract class FilesEvent {}
 class FilesEventInit extends FilesEvent{}
