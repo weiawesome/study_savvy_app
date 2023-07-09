@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:study_savvy_app/blocs/bloc_access_methods.dart';
 import '../blocs/bloc_profile.dart';
@@ -297,6 +298,58 @@ class _ProfilePage extends State<ProfilePage> {
                                     );
                                   },
                                 );
+                              },
+                            ),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(top:5),
+                            color: const Color.fromRGBO(118, 118, 128, 0.24),
+                            child: TextButton(
+                              style: ButtonStyle(
+                                overlayColor: MaterialStateProperty.resolveWith<Color>(
+                                      (Set<MaterialState> states) {
+                                    if (states.contains(MaterialState.pressed)) {
+                                      return Theme.of(context).hintColor;
+                                    }
+                                    return Colors.transparent;
+                                  },
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("Empty Cache",style: Theme.of(context).textTheme.displaySmall),
+                                  const Icon(Icons.navigate_next_rounded,size: 25,color: Colors.black,)
+                                ],
+                              ),
+                              onPressed: () async {
+                                await DefaultCacheManager().emptyCache();
+                              },
+                            ),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(top:5),
+                            color: const Color.fromRGBO(118, 118, 128, 0.24),
+                            child: TextButton(
+                              style: ButtonStyle(
+                                overlayColor: MaterialStateProperty.resolveWith<Color>(
+                                      (Set<MaterialState> states) {
+                                    if (states.contains(MaterialState.pressed)) {
+                                      return Theme.of(context).hintColor;
+                                    }
+                                    return Colors.transparent;
+                                  },
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("一鍵登入(未來會刪除)",style: Theme.of(context).textTheme.displaySmall),
+                                  const Icon(Icons.navigate_next_rounded,size: 25,color: Colors.black,)
+                                ],
+                              ),
+                              onPressed: () async {
+                                await JwtService.saveJwt("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4ODE5NjYyMywianRpIjoiYmU4ZGQ2YzctMWRmNC00Nzg0LTgzOTgtZWQ5ODZhNGM5ZGM1IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IndlaTg5MTAxM0BnbWFpbC5jb20iLCJuYmYiOjE2ODgxOTY2MjMsImNzcmYiOiJhNjYzNzFiNS01NWUwLTRjMzAtOGRkNS0zM2E4M2FjZGI2MDkiLCJleHAiOjE2ODk0MDYyMjN9.sXF-_dRljEvsUzH7NdnKSTbQX36NTD_iOncnrcVocYY");
                               },
                             ),
                           ),
