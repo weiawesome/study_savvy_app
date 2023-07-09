@@ -66,9 +66,9 @@ Future<void> setApiKey(String apikey) async {
   }
 }
 
-Future<void> setAccessToken(String accesstoken) async {
+Future<void> setAccessToken(String accessToken) async {
   String? jwt=await JwtService.getJwt();
-  SecureData data=await encrypt(accesstoken);
+  SecureData data=await encrypt(accessToken);
   final response = await http.put(
     Uri.parse(ApiRoutes.accessTokenUrl),
     headers: {
