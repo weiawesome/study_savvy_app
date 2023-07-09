@@ -107,6 +107,7 @@ class _ProfilePage extends State<ProfilePage> {
               Expanded(flex:1,child: Container()),
               Expanded(flex:5,child: Text('Profile',style: Theme.of(context).textTheme.bodyLarge,textAlign: TextAlign.center,),),
               Expanded(flex:1,child: IconButton(onPressed: (){
+                context.read<OnlineBloc>().add(OnlineEventCheck());
                 showLogoutDialog(context);
                 }, icon: const Icon(Icons.logout),alignment: Alignment.centerRight,)),
             ],
@@ -171,7 +172,7 @@ class _ProfilePage extends State<ProfilePage> {
                                       if (states.contains(MaterialState.pressed)) {
                                         return Theme.of(context).hintColor;
                                       }
-                                      // 其他状态下的背景色
+                                      
                                       return Colors.transparent;
                                     },
                                   ),
@@ -245,7 +246,6 @@ class _ProfilePage extends State<ProfilePage> {
                                 )
                             ),
                           ),
-
                         ],
                       ),
                     ),
@@ -267,7 +267,6 @@ class _ProfilePage extends State<ProfilePage> {
                                     if (states.contains(MaterialState.pressed)) {
                                       return Theme.of(context).hintColor;
                                     }
-                                    // 其他状态下的背景色
                                     return Colors.transparent;
                                   },
                                 ),

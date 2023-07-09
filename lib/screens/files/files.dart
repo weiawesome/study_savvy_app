@@ -16,7 +16,6 @@ class FilesPage extends StatefulWidget{
 
 class _FilesPage extends State<FilesPage> {
   final _scrollController = ScrollController();
-  bool sendState=false;
   @override
   void initState() {
     super.initState();
@@ -75,51 +74,69 @@ class _FilesPage extends State<FilesPage> {
                                     showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
-                                        return AlertDialog(
-                                          title: const Text('刪除錯誤檔案'),
-                                          content: BlocBuilder<FileBloc,FileState>(
-                                            builder: (context,state){
-                                              if(state.status=="INIT"){
-                                                return const Text('這份檔案執行失敗\n目前無法開啟，是否刪除?');
+                                        return BlocBuilder<FileBloc,FileState>(
+                                            builder: (context,stateFile){
+                                              if(stateFile.status=="INIT"){
+                                                return AlertDialog(
+                                                  title: const Text('刪除錯誤檔案'),
+                                                  content: const Text('這份檔案執行失敗\n目前無法開啟，是否刪除?'),
+                                                  actions: <Widget>[
+                                                    TextButton(
+                                                      child: const Text('取消'),
+                                                      onPressed: () {
+                                                        Navigator.of(context).pop();
+                                                      },
+                                                    ),
+                                                    TextButton(
+                                                      child: const Text('刪除'),
+                                                      onPressed: () {
+                                                        context.read<FileBloc>().add(FileEventDelete((state.files.files[index]).id));
+                                                      },
+                                                    ),
+                                                  ],
+                                                );
                                               }
-                                              else if(state.status=="PENDING"){
-                                                return const Loading();
+                                              else if(stateFile.status=="PENDING"){
+                                                return const AlertDialog(
+                                                  title: Text('刪除錯誤檔案'),
+                                                  content: Loading()
+                                                );
                                               }
-                                              else if(state.status=="FAILURE"){
-                                                return Failure(error: state.message!);
+                                              else if(stateFile.status=="FAILURE"){
+                                                return AlertDialog(
+                                                  title: const Text('刪除錯誤檔案'),
+                                                  content: Failure(error: stateFile.message!),
+                                                  actions: [
+                                                    TextButton(
+                                                      child: const Text('確定'),
+                                                      onPressed: () {
+                                                        Navigator.of(context).pop();
+                                                      },
+                                                    ),
+                                                  ]
+                                                );
+                                              }
+                                              else if(stateFile.status=='SUCCESS_OTHER'){
+                                                return AlertDialog(
+                                                  title: const Text('刪除錯誤檔案'),
+                                                  content: Success(message: stateFile.message!),
+                                                  actions: [
+                                                    TextButton(
+                                                      child: const Text('確定'),
+                                                      onPressed: () {
+                                                        Navigator.of(context).pop();
+                                                      },
+                                                    ),
+                                                  ]
+                                                );
                                               }
                                               else{
-                                                return Success(message: state.message!);
+                                                return Container();
                                               }
-                                            },
-                                          ),
-                                          actions: sendState?[
-                                            TextButton(
-                                            child: const Text('確定'),
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                          ),
-                                          ]:<Widget>[
-                                            TextButton(
-                                              child: const Text('取消'),
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                              },
-                                            ),
-                                            TextButton(
-                                              child: const Text('刪除'),
-                                              onPressed: () {
-                                                sendState=true;
-                                                context.read<FileBloc>().add(FileEventDelete((state.files.files[index]).id));
-                                              },
-                                            ),
-                                          ],
-                                        );
+                                        });
                                       },
                                     ).then((value) => {
-                                      context.read<FileBloc>().add(FileEventClear()),
-                                      sendState=false
+                                      context.read<FileBloc>().add(FileEventClear())
                                     });
                                   }
                                   else{
