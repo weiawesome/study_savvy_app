@@ -97,3 +97,37 @@ Future<void> setAccessToken(String accesstoken) async {
     throw Exception('Failed to upload in unknown reason');
   }
 }
+
+Future<void> resetPassword(UpdatePwd data) async {
+  String? jwt=await JwtService.getJwt();
+  final response = await http.post(
+    Uri.parse(ApiRoutes.passwordEditUrl),
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${jwt!}'
+    },
+    body: jsonEncode(data.formatJson()),
+  );
+  if (response.statusCode == 200) {
+    return ;
+  }
+  else if(response.statusCode == 400){
+    throw ClientException("Client's error");
+  }
+  else if(response.statusCode==401){
+    throw PasswordException("Password's error");
+  }
+  else if(response.statusCode == 404){
+    throw ExistException("Source not exist");
+  }
+  else if (response.statusCode == 422){
+    await JwtService.deleteJwt();
+    throw AuthException("JWT invalid");
+  }
+  else if(response.statusCode == 500){
+    throw ServerException("Server's error");
+  }
+  else{
+    throw Exception('Failed to upload in unknown reason');
+  }
+}

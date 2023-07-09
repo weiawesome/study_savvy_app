@@ -14,9 +14,15 @@ class UpdateProfile{
   UpdateProfile(this.name,this.gender);
 }
 class UpdatePwd{
-  final String pwd;
+  final String oldPwd;
   final String newPwd;
-  UpdatePwd(this.pwd,this.newPwd);
+  UpdatePwd(this.oldPwd,this.newPwd);
+  Map<String,String> formatJson(){
+    return {
+      "oldPwd": oldPwd,
+      "newPwd": newPwd
+    };
+  }
 }
 
 class AIMethods{
