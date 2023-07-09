@@ -51,6 +51,13 @@ dependencies:
   adv_camera: ^3.1.0
   http_parser: ^4.0.0
 
+  image_picker: ^0.8.4+5
+  image_cropper: ^1.4.1
+  image: ^3.1.1
+  path_provider: ^2.0.5
+  wechat_assets_picker: ^8.5.0
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

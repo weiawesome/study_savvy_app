@@ -9,7 +9,11 @@ import 'package:study_savvy_app/styles/custom_style.dart';
 import 'package:study_savvy_app/widgets/loading.dart';
 import '../blocs/provider/ocr_image_provider.dart';
 import '../services/jwt_storage.dart';
-import 'camera.dart';
+import '../utils/routes.dart';
+import 'package:image/image.dart' as img_package;
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
+import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
 
 class ArticleImproverPage extends StatefulWidget{
@@ -27,6 +31,53 @@ class _ArticleImproverPage extends State<ArticleImproverPage>{
   @override
   Widget build(BuildContext context) {
     final ocrImageProvider = Provider.of<OCRImageProvider>(context);
+    List<AssetEntity> images = <AssetEntity>[];
+
+    Future<void> processImages() async {
+      List<img_package.Image> loadedImages = [];
+      for (AssetEntity asset in images) {
+        final Uint8List? imageData = await asset.originBytes;
+        if (imageData != null) {
+          img_package.Image img = img_package.decodeImage(imageData)!;
+          loadedImages.add(img_package.copyResize(img, width: 720));
+        }
+      }
+
+      final combined = img_package.Image(
+          loadedImages[0].width,
+          loadedImages.fold<int>(
+              0, (previousValue, element) => previousValue + element.height));
+
+      int offset = 0;
+      for (img_package.Image img in loadedImages) {
+        img_package.copyInto(combined, img, dstY: offset);
+        offset += img.height;
+      }
+
+      final directory = await getApplicationDocumentsDirectory();
+      final filePath = '${directory.path}/combined.jpg';
+      File(filePath).writeAsBytesSync(img_package.encodeJpg(combined));
+      ocrImageProvider.set(File(filePath));
+    }
+
+    Future<void> loadAssets() async {
+      List<AssetEntity>? resultList = await AssetPicker.pickAssets(
+        context,
+        pickerConfig: const AssetPickerConfig(
+          maxAssets: 2,
+          gridCount: 4,
+        ),
+      );
+
+      if (!mounted) return;
+
+      if (resultList != null) {
+        setState(() {
+          images = resultList;
+        });
+        await processImages();
+      }
+    }
     return Column(
       children: [
         Expanded(
@@ -78,20 +129,22 @@ class _ArticleImproverPage extends State<ArticleImproverPage>{
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     IconButton(
-                                      onPressed:() async {
-                                        await JwtService.saveJwt("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4ODE5NjYyMywianRpIjoiYmU4ZGQ2YzctMWRmNC00Nzg0LTgzOTgtZWQ5ODZhNGM5ZGM1IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IndlaTg5MTAxM0BnbWFpbC5jb20iLCJuYmYiOjE2ODgxOTY2MjMsImNzcmYiOiJhNjYzNzFiNS01NWUwLTRjMzAtOGRkNS0zM2E4M2FjZGI2MDkiLCJleHAiOjE2ODk0MDYyMjN9.sXF-_dRljEvsUzH7NdnKSTbQX36NTD_iOncnrcVocYY");
-                                        await DefaultCacheManager().emptyCache();
-                                      },
+                                        onPressed: () async {
+                                          await JwtService.saveJwt("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4ODE5NjYyMywianRpIjoiYmU4ZGQ2YzctMWRmNC00Nzg0LTgzOTgtZWQ5ODZhNGM5ZGM1IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IndlaTg5MTAxM0BnbWFpbC5jb20iLCJuYmYiOjE2ODgxOTY2MjMsImNzcmYiOiJhNjYzNzFiNS01NWUwLTRjMzAtOGRkNS0zM2E4M2FjZGI2MDkiLCJleHAiOjE2ODk0MDYyMjN9.sXF-_dRljEvsUzH7NdnKSTbQX36NTD_iOncnrcVocYY");
+                                          await DefaultCacheManager().emptyCache();
+                                        },
+                                        icon: const Icon(Icons.adb_outlined,size: 36,)
+                                    ),
+
+                                    IconButton(
+                                      onPressed:loadAssets,
                                       tooltip: 'Choose come photos.',
                                       icon:const Icon(Icons.photo),
                                       iconSize: 36.0,
                                     ),
                                     IconButton(
                                       onPressed:(){
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(builder: (context) => const CameraPage()),
-                                        );
+                                        Navigator.pushNamed(context, Routes.camera);
                                       },
                                       tooltip: 'Take a photo.',
                                       icon:const Icon(Icons.camera_alt_outlined),

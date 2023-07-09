@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:study_savvy_app/screens/access_token.dart';
 import 'package:study_savvy_app/screens/api_key.dart';
+import 'package:study_savvy_app/screens/camera.dart';
 import 'package:study_savvy_app/screens/home.dart';
 import 'package:study_savvy_app/screens/information_setting.dart';
 import 'package:study_savvy_app/screens/password_setting.dart';
@@ -12,7 +13,8 @@ class Routes {
   static const password='/password';
   static const apikey='/api_key';
   static const accessToken='/access_token';
-  static const specificFile='/specificfile';
+  static const specificFile='/specific_file';
+  static const camera='/camera';
 }
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -29,6 +31,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const AccessTokenPage());
       case Routes.specificFile:
         return MaterialPageRoute(builder: (_) => const SpecificFilePage());
+      case Routes.camera:
+        return MaterialPageRoute(builder: (_) => const CameraPage());
       default:
         return MaterialPageRoute(builder: (_) => const HomePage());
     }
