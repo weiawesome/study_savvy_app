@@ -7,6 +7,7 @@ class ApiRoutes{
   static const String apiKeyUrl="${apiBaseUrl}Access_method/api_key";
   static const String accessTokenUrl="${apiBaseUrl}Access_method/access_token";
   static const String articleImproverUrl="${apiBaseUrl}predict/OCR";
+  static const String articleImproverTextUrl="${apiBaseUrl}predict/OCR/text";
   static const String fileNlpEditOCRUrl="${apiBaseUrl}NLP_edit/OCR";
   static const String fileNlpEditASRUrl="${apiBaseUrl}NLP_edit/ASR";
 }

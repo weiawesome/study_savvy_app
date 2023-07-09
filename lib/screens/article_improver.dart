@@ -22,11 +22,34 @@ class ArticleImproverPage extends StatefulWidget{
   State<ArticleImproverPage> createState()=> _ArticleImproverPage();
 }
 class _ArticleImproverPage extends State<ArticleImproverPage>{
-  final _controller= TextEditingController();
+  final _promptController= TextEditingController();
+  final _contentController= TextEditingController();
   @override
   void dispose() {
-    _controller.dispose();
+    _promptController.dispose();
+    _contentController.dispose();
     super.dispose();
+  }
+  void _showAlertDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Warn',style: Theme.of(context).textTheme.displayMedium),
+          content: Text("Content 內容不得為空 至少選擇圖檔或是文字",style: Theme.of(context).textTheme.displaySmall),
+          actions: <Widget>[
+            TextButton(
+              child: Text('confirm',style: Theme.of(context).textTheme.displaySmall),
+              onPressed: () async {
+                await JwtService.deleteJwt().then((value) => {
+                  Navigator.of(context).pop()
+                });
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
   @override
   Widget build(BuildContext context) {
@@ -106,10 +129,11 @@ class _ArticleImproverPage extends State<ArticleImproverPage>{
                               decoration: Theme.of(context).brightness == Brightness.dark ? DarkStyle.boxDecoration : LightStyle.boxDecoration,
                               child: SingleChildScrollView(
                                 child: ocrImageProvider.isNull()?
-                                const TextField(
+                                TextField(
+                                  controller: _contentController,
                                   maxLines: null,
                                   keyboardType: TextInputType.multiline,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     hintText: "可以在這寫下你的作文或使用照片",
                                     border: InputBorder.none,
                                   ),
@@ -164,7 +188,7 @@ class _ArticleImproverPage extends State<ArticleImproverPage>{
                               decoration: Theme.of(context).brightness == Brightness.dark ? DarkStyle.boxDecoration : LightStyle.boxDecoration,
                               child: SingleChildScrollView(
                                 child: TextField(
-                                  controller: _controller,
+                                  controller: _promptController,
                                   maxLines: null,
                                   keyboardType: TextInputType.multiline,
                                   decoration: const InputDecoration(
@@ -226,7 +250,18 @@ class _ArticleImproverPage extends State<ArticleImproverPage>{
                       widthFactor: 0.5,
                       child: ElevatedButton(
                         onPressed: () {
-                          context.read<ArticleBloc>().add(ArticleEventGraph(ArticleImage(ocrImageProvider.file,_controller.text)));
+                          if(ocrImageProvider.file==null){
+                            if(_contentController.text==""){
+                              _showAlertDialog(context);
+                            }
+                            else{
+                              context.read<ArticleBloc>().add(ArticleEventText(ArticleText(_contentController.text,_promptController.text)));
+                            }
+                          }
+                          else{
+                            context.read<ArticleBloc>().add(ArticleEventGraph(ArticleImage(ocrImageProvider.file,_promptController.text)));
+                          }
+
                         },
                         style: Theme.of(context).elevatedButtonTheme.style,
                         child:const Text('Done',textAlign: TextAlign.center,style: TextStyle(color: Colors.white, fontSize:23,fontFamily: 'Play',fontWeight: FontWeight.bold),),

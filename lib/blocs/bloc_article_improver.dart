@@ -30,8 +30,30 @@ class ArticleBloc extends Bloc<ArticleEvent,ArticleState> {
       else if (event is ArticleEventGraph){
         emit(ArticleState("PENDING",null));
         try{
-          await predictOcrGraph(event.article.image, event.article.prompt);
+          await predictOcrGraph(event.article);
           emit(ArticleState("SUCCESS",null));  
+        }
+        on AuthException {
+          emit(ArticleState("FAILURE","AUTH"));
+        }
+        on ServerException {
+          emit(ArticleState("FAILURE","SERVER"));
+        }
+        on ClientException {
+          emit(ArticleState("FAILURE","CLIENT"));
+        }
+        on ExistException {
+          emit(ArticleState("FAILURE","EXIST"));
+        }
+        catch(e) {
+          emit(ArticleState("FAILURE","UNKNOWN"));
+        }
+      }
+      else if (event is ArticleEventText){
+        emit(ArticleState("PENDING",null));
+        try{
+          await predictOcrText(event.article);
+          emit(ArticleState("SUCCESS",null));
         }
         on AuthException {
           emit(ArticleState("FAILURE","AUTH"));

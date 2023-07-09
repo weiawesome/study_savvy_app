@@ -202,7 +202,7 @@ class _ProfilePage extends State<ProfilePage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Text('Personal Setting',style: Theme.of(context).textTheme.displayMedium),
+                          Text('Preference Setting',style: Theme.of(context).textTheme.displayMedium),
                           Container(
                             margin: const EdgeInsets.only(top:20),
                             color: const Color.fromRGBO(118, 118, 128, 0.24),

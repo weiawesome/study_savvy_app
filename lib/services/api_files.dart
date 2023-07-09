@@ -152,7 +152,7 @@ Future<void> editSpecificFileOCR(EditFile file) async {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${jwt!}'
     },
-    body: jsonEncode(file.toJson())
+    body: jsonEncode(file.formatJson())
   );
 
   if (response.statusCode == 200) {
@@ -185,7 +185,7 @@ Future<void> editSpecificFileASR(EditFile file) async {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${jwt!}'
     },
-    body: jsonEncode(file.toJson())
+    body: jsonEncode(file.formatJson())
   );
   if (response.statusCode == 200) {
     return ;

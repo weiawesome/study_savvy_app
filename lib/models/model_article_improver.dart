@@ -9,4 +9,10 @@ class ArticleText {
   final String content;
   final String prompt;
   ArticleText(this.content, this.prompt);
+  Map<String,String> formatJson(){
+    return {
+      "content":content,
+      "prompt":prompt
+    };
+  }
 }

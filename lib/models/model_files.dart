@@ -36,7 +36,7 @@ class EditFile{
   final String prompt;
   final String content;
   EditFile(this.id,this.prompt,this.content);
-  Map<String,String> toJson(){
+  Map<String,String> formatJson(){
     return {"prompt":prompt,"content":content};
   }
 }
