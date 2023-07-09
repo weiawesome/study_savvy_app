@@ -31,6 +31,8 @@ class _SpecificFilePage extends State<SpecificFilePage> {
     audioPlayer.stop();
     audioPlayer.dispose();
     bloc.add(FileEventClear());
+    _contentController.dispose();
+    _promptController.dispose();
     super.dispose();
   }
   @override

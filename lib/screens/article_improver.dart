@@ -280,6 +280,8 @@ class _ArticleImproverPage extends State<ArticleImproverPage>{
                       child: ElevatedButton(
                         onPressed: () {
                           ocrImageProvider.clear();
+                          _promptController.text="";
+                          _contentController.text="";
                           context.read<ArticleBloc>().add(ArticleEventRefresh());
                         },
                         style: Theme.of(context).elevatedButtonTheme.style,
