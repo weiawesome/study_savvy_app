@@ -131,3 +131,32 @@ Future<void> resetPassword(UpdatePwd data) async {
     throw Exception('Failed to upload in unknown reason');
   }
 }
+
+Future<void> logout() async {
+  String? jwt=await JwtService.getJwt();
+  final response = await http.delete(
+    Uri.parse(ApiRoutes.passwordEditUrl),
+    headers: {
+      'Authorization': 'Bearer ${jwt!}'
+    },
+  );
+  if (response.statusCode == 201) {
+    return ;
+  }
+  else if(response.statusCode == 400){
+    throw ClientException("Client's error");
+  }
+  else if(response.statusCode == 404){
+    throw ExistException("Source not exist");
+  }
+  else if (response.statusCode == 422){
+    await JwtService.deleteJwt();
+    throw AuthException("JWT invalid");
+  }
+  else if(response.statusCode == 500){
+    throw ServerException("Server's error");
+  }
+  else{
+    throw Exception('Failed to upload in unknown reason');
+  }
+}

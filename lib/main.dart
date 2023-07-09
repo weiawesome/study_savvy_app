@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:study_savvy_app/blocs/bloc_access_methods.dart';
 import 'package:study_savvy_app/blocs/bloc_article_improver.dart';
 import 'package:study_savvy_app/blocs/bloc_navigator.dart';
+import 'package:study_savvy_app/blocs/bloc_online.dart';
 import 'package:study_savvy_app/blocs/bloc_specific_file.dart';
 import 'package:study_savvy_app/utils/routes.dart';
 import 'blocs/bloc_files.dart';
@@ -52,6 +53,9 @@ void main() {
               ),
               BlocProvider(
                 create:  (context) => PasswordBloc(),
+              ),
+              BlocProvider(
+                create:  (context) => OnlineBloc(),
               )
             ],
             child: const MyApp(),
@@ -62,7 +66,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
@@ -73,6 +76,7 @@ class MyApp extends StatelessWidget {
       theme: LightStyle.theme,
       darkTheme: DarkStyle.theme,
       themeMode: themeProvider.themeMode,
+      initialRoute: Routes.home,
       onGenerateRoute: RouteGenerator.generateRoute,
       debugShowCheckedModeBanner: false,
     );

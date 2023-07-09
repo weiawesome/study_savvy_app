@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:study_savvy_app/blocs/bloc_access_methods.dart';
+import 'package:study_savvy_app/blocs/bloc_online.dart';
 import 'package:study_savvy_app/blocs/bloc_profile.dart';
 import 'package:study_savvy_app/blocs/provider/theme_provider.dart';
 import 'package:study_savvy_app/services/jwt_storage.dart';
 import 'package:study_savvy_app/utils/routes.dart';
+import 'package:study_savvy_app/widgets/failure.dart';
+import 'package:study_savvy_app/widgets/loading.dart';
+import 'package:study_savvy_app/widgets/success.dart';
 
 class ProfilePage extends StatefulWidget{
   const ProfilePage({Key?key}):super(key: key);
@@ -14,36 +19,84 @@ class ProfilePage extends StatefulWidget{
 }
 
 class _ProfilePage extends State<ProfilePage> {
-  void _showLogoutDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Logout',style: Theme.of(context).textTheme.displayMedium),
-          actions: <Widget>[
-            TextButton(
-              child: Text('cancel',style: Theme.of(context).textTheme.displaySmall,),
-              onPressed: () {
-                Navigator.of(context).pop();  
-              },
-            ),
-            TextButton(
-              child: Text('confirm',style: Theme.of(context).textTheme.displaySmall),
-              onPressed: () async {
-                await JwtService.deleteJwt().then((value) => {
-                  Navigator.of(context).pop()
-                });
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
+    void showLogoutDialog(BuildContext context) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return BlocBuilder<OnlineBloc,OnlineState>(
+              builder: (context,state){
+                if(state.status==null){
+                  return AlertDialog(
+                    title: Text('Logout',style: Theme.of(context).textTheme.displayMedium),
+                    content: const Loading(),
+                    actions: <Widget>[
+                      TextButton(
+                        child: Text('close',style: Theme.of(context).textTheme.displaySmall,),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                }
+                else if(state.status==true && state.message==null){
+                  return AlertDialog(
+                    title: Text('Logout',style: Theme.of(context).textTheme.displayMedium),
+                    actions: <Widget>[
+                      TextButton(
+                        child: Text('cancel',style: Theme.of(context).textTheme.displaySmall,),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                      TextButton(
+                        child: Text('confirm',style: Theme.of(context).textTheme.displaySmall,),
+                        onPressed: () {
+                          context.read<OnlineBloc>().add(OnlineEventLogout());
+                        },
+                      ),
+                    ],
+                  );
+                }
+                else if(state.status==true){
+                  return AlertDialog(
+                    title: Text('Logout',style: Theme.of(context).textTheme.displayMedium),
+                    content: Failure(error: state.message!,),
+                    actions: <Widget>[
+                      TextButton(
+                        child: Text('confirm',style: Theme.of(context).textTheme.displaySmall,),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                }
+                else{
+                  return AlertDialog(
+                    title: Text('Logout',style: Theme.of(context).textTheme.displayMedium),
+                    content: const Success(message: "Success to logout",),
+                    actions: <Widget>[
+                      TextButton(
+                        child: Text('confirm',style: Theme.of(context).textTheme.displaySmall,),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                }
+              }
+          );
+        },
+      ).then((value){
+        bool? status=context.read<OnlineBloc>().state.status;
+        context.read<OnlineBloc>().add(OnlineEventReset(status));
+      });
+    }
     return Column(
       children: [
         Expanded(
@@ -54,7 +107,7 @@ class _ProfilePage extends State<ProfilePage> {
               Expanded(flex:1,child: Container()),
               Expanded(flex:5,child: Text('Profile',style: Theme.of(context).textTheme.bodyLarge,textAlign: TextAlign.center,),),
               Expanded(flex:1,child: IconButton(onPressed: (){
-                _showLogoutDialog(context);
+                showLogoutDialog(context);
                 }, icon: const Icon(Icons.logout),alignment: Alignment.centerRight,)),
             ],
           ),

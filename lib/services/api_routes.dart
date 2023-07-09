@@ -3,6 +3,7 @@ class ApiRoutes{
   static const String fileImageUrl="${apiBaseUrl}files/resources/graph";
   static const String fileAudioUrl="${apiBaseUrl}files/resources/audio";
   static const String fileUrl="${apiBaseUrl}files";
+  static const String logoutUrl="${apiBaseUrl}logout";
   static const String profileUrl="${apiBaseUrl}information";
   static const String passwordEditUrl="${apiBaseUrl}information/password";
   static const String apiKeyUrl="${apiBaseUrl}Access_method/api_key";

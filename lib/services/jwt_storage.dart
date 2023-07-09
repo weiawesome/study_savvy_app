@@ -18,4 +18,7 @@ class JwtService {
   static Future<void> deleteJwt() async {
     await _storage.delete(key: _jwtKey);
   }
+  static Future<bool?> hasJwt() async {
+    return _storage.containsKey(key: _jwtKey);
+  }
 }
