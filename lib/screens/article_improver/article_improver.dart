@@ -88,6 +88,8 @@ class _ArticleImproverPage extends State<ArticleImproverPage>{
         pickerConfig: const AssetPickerConfig(
           maxAssets: 2,
           gridCount: 4,
+          requestType: RequestType.image,
+          keepScrollOffset: true
         ),
       );
 
