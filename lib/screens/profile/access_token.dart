@@ -151,7 +151,6 @@ class _AccessTokenPage extends State<AccessTokenPage> {
                                 child: ElevatedButton(
                                   onPressed: () {
                                     context.read<AccessMethodBloc>().add(AccessMethodEventAccessToken(_controller.text));
-                                    Navigator.pop(context);
                                   },
                                   style: Theme.of(context).elevatedButtonTheme.style,
                                   child:const Text('Done',textAlign: TextAlign.center,style: TextStyle(color: Colors.white, fontSize:23,fontFamily: 'Play',fontWeight: FontWeight.bold),),
