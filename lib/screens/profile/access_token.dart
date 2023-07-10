@@ -102,7 +102,7 @@ class _AccessTokenPage extends State<AccessTokenPage> {
                                               controller: _controller,
                                               maxLines: 1,
                                               decoration: const InputDecoration(
-                                                hintText: "API_KEY",
+                                                hintText: "Access_Token",
                                                 hintMaxLines: 1,
                                                 border: InputBorder.none,
                                               ),
@@ -150,7 +150,7 @@ class _AccessTokenPage extends State<AccessTokenPage> {
                                 widthFactor: 0.5,
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    context.read<AccessMethodBloc>().add(AccessMethodEventApiKey(_controller.text));
+                                    context.read<AccessMethodBloc>().add(AccessMethodEventAccessToken(_controller.text));
                                     Navigator.pop(context);
                                   },
                                   style: Theme.of(context).elevatedButtonTheme.style,

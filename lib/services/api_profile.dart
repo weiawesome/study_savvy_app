@@ -135,7 +135,7 @@ Future<void> resetPassword(UpdatePwd data) async {
 Future<void> logout() async {
   String? jwt=await JwtService.getJwt();
   final response = await http.delete(
-    Uri.parse(ApiRoutes.passwordEditUrl),
+    Uri.parse(ApiRoutes.logoutUrl),
     headers: {
       'Authorization': 'Bearer ${jwt!}'
     },
