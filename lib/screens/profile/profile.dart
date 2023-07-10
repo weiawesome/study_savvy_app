@@ -155,7 +155,7 @@ class _ProfilePage extends State<ProfilePage> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text("Personal Information",style: Theme.of(context).textTheme.displaySmall),
+                                    Text("Information",style: Theme.of(context).textTheme.displaySmall),
                                     const Icon(Icons.navigate_next_rounded,size: 25,color: Colors.black,)
                                   ],
                                 )
