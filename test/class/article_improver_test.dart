@@ -21,7 +21,7 @@ void main() {
     });
   });
 
-  group('ArticleImage', () {
+  group('ArticleText', () {
     test('ArticleText object value test', () {
       const String testContent = 'Test content';
       const String testPrompt = 'Test prompt';
