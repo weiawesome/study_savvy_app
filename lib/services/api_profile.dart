@@ -100,7 +100,7 @@ Future<void> setAccessToken(String accessToken) async {
 
 Future<void> resetPassword(UpdatePwd data) async {
   String? jwt=await JwtService.getJwt();
-  final response = await http.post(
+  final response = await http.put(
     Uri.parse(ApiRoutes.passwordEditUrl),
     headers: {
       'Content-Type': 'application/json',
@@ -140,6 +140,7 @@ Future<void> logout() async {
       'Authorization': 'Bearer ${jwt!}'
     },
   );
+  print(response.statusCode);
   if (response.statusCode == 201) {
     return ;
   }

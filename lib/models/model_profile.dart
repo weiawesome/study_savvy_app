@@ -19,8 +19,8 @@ class UpdatePwd{
   UpdatePwd(this.oldPwd,this.newPwd);
   Map<String,String> formatJson(){
     return {
-      "oldPwd": oldPwd,
-      "newPwd": newPwd
+      "original_pwd": oldPwd,
+      "new_pwd": newPwd
     };
   }
 }

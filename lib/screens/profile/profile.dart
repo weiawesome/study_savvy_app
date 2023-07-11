@@ -4,6 +4,7 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:study_savvy_app/blocs/bloc_access_methods.dart';
 import 'package:study_savvy_app/blocs/bloc_online.dart';
+import 'package:study_savvy_app/blocs/bloc_password.dart';
 import 'package:study_savvy_app/blocs/bloc_profile.dart';
 import 'package:study_savvy_app/blocs/provider/theme_provider.dart';
 import 'package:study_savvy_app/services/jwt_storage.dart';
@@ -165,14 +166,16 @@ class _ProfilePage extends State<ProfilePage> {
                             margin: const EdgeInsets.only(top:5),
                             color: const Color.fromRGBO(118, 118, 128, 0.24),
                             child: TextButton(
-                                onPressed: (){Navigator.pushNamed(context, Routes.password);},
+                                onPressed: (){
+                                  context.read<PasswordBloc>().add(PasswordEventReset());
+                                  Navigator.pushNamed(context, Routes.password);
+                                  },
                                 style: ButtonStyle(
                                   overlayColor: MaterialStateProperty.resolveWith<Color>(
                                         (Set<MaterialState> states) {
                                       if (states.contains(MaterialState.pressed)) {
                                         return Theme.of(context).hintColor;
                                       }
-                                      
                                       return Colors.transparent;
                                     },
                                   ),

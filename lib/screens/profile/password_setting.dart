@@ -203,19 +203,6 @@ class _PasswordPage extends State<PasswordPage> {
                       else if(state.status=="PENDING"){
                         return Container();
                       }
-                      else if(state.status=="FAILURE" || state.status=="FAILURE"){
-                        return Expanded(
-                            flex: 1,
-                            child:FractionallySizedBox(
-                                widthFactor: 0.5,
-                                child: ElevatedButton(
-                                  onPressed: () { submitForm(); },
-                                  style: Theme.of(context).elevatedButtonTheme.style,
-                                  child:const Text('Done',textAlign: TextAlign.center,style: TextStyle(color: Colors.white, fontSize:23,fontFamily: 'Play',fontWeight: FontWeight.bold),),
-                                )
-                            )
-                        );
-                      }
                       else{
                         return Container();
                       }
