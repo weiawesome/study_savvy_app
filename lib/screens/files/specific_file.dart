@@ -19,7 +19,7 @@ class _SpecificFilePage extends State<SpecificFilePage> {
   final _contentController= TextEditingController();
   late FileBloc bloc;
   bool init=true;
-  bool playState=false;
+  bool? playState=false;
   AudioPlayer audioPlayer = AudioPlayer();
   @override
   void initState() {
@@ -161,8 +161,6 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                               )
                                             ],
                                           ),
-
-
                                         ],
                                       ),
                                     ),
@@ -226,8 +224,7 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                         ],
                                       ),
                                     ),
-                                    state.type=="OCR"?
-                                    Container(
+                                    if (state.type=="OCR") Container(
                                       margin: const EdgeInsets.symmetric(vertical: 10),
                                       width: double.infinity,
                                       padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
@@ -241,14 +238,13 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                               Container(
                                                   margin: const EdgeInsets.symmetric(vertical: 15),
                                                   padding: const EdgeInsets.symmetric(horizontal: 10),
-                                                  child: Image.memory(state.media as Uint8List)
+                                                  child: state.media==null?const Failure(error: "No Image Source"):Image.memory(state.media as Uint8List)
                                               )
                                             ],
                                           ),
                                         ],
                                       ),
-                                    ):
-                                    Container(
+                                    ) else Container(
                                       margin: const EdgeInsets.symmetric(vertical: 10),
                                       width: double.infinity,
                                       padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
@@ -265,23 +261,37 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                                   child: TextButton(
                                                     onPressed: () {
                                                       if(init){
-                                                        audioPlayer.setSourceBytes(state.media!);
-                                                        setState(() {
-                                                          init=false;
-                                                        });
-                                                        audioPlayer.play(audioPlayer.source!);
-                                                      }
-                                                      if(playState){
-                                                        audioPlayer.pause();
+                                                        try{
+                                                          audioPlayer.setSourceBytes(state.media!);
+                                                          audioPlayer.play(audioPlayer.source!);
+                                                          setState(() {
+                                                            init=false;
+                                                            playState=true;
+                                                          });
+                                                        }
+                                                        catch (e){
+                                                          setState(() {
+                                                            playState=null;
+                                                          });
+                                                        }
                                                       }
                                                       else{
-                                                        audioPlayer.resume();
+                                                        if(playState==true){
+                                                          audioPlayer.pause();
+                                                          setState(() {
+                                                            playState=false;
+                                                          });
+                                                        }
+                                                        else if(playState==false){
+                                                          audioPlayer.resume();
+                                                          setState(() {
+                                                            playState=true;
+                                                          });
+                                                        }
                                                       }
-                                                      setState(() {
-                                                        playState=!playState;
-                                                      });
+
                                                       },
-                                                    child: playState?Icon(Icons.pause_circle_filled_outlined,color: Theme.of(context).hintColor,size: 50,):Icon(Icons.play_circle_fill_rounded,color: Theme.of(context).hintColor,size: 50,),
+                                                    child: playState==null?const Failure(error: "Error to play"):playState==true?Icon(Icons.pause_circle_filled_outlined,color: Theme.of(context).hintColor,size: 50,):Icon(Icons.play_circle_fill_rounded,color: Theme.of(context).hintColor,size: 50,),
 
                                                   )
                                               )

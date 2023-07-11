@@ -6,7 +6,7 @@ import 'package:study_savvy_app/services/api_routes.dart';
 import 'package:study_savvy_app/services/jwt_storage.dart';
 import 'package:study_savvy_app/utils/exception.dart';
 
-Future<Uint8List> getImage(String id) async {
+Future<Uint8List?> getImage(String id) async {
   String? jwt=await JwtService.getJwt();
   final response = await http.get(
     Uri.parse("${ApiRoutes.fileImageUrl}/$id"),
@@ -14,6 +14,9 @@ Future<Uint8List> getImage(String id) async {
   );
   if (response.statusCode == 200) {
     return response.bodyBytes;
+  }
+  else if (response.statusCode==203){
+    return null;
   }
   else if(response.statusCode == 400){
     throw ClientException("Client's error");

@@ -43,7 +43,7 @@ class FileBloc extends Bloc<FileEvent,FileState> {
       if (event is FileEventOCR){
         try{
           SpecificFile file=await getSpecificFile(event.id);
-          Uint8List media=await getImage(event.id);
+          Uint8List? media=await getImage(event.id);
           emit(FileState("SUCCESS",null,file, media,"OCR",event.id));
         }
         on AuthException {

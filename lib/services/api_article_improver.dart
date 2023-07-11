@@ -49,7 +49,7 @@ Future<void> predictOcrGraph(ArticleImage data) async {
 
 Future<void> predictOcrText(ArticleText data) async {
   String? jwt=await JwtService.getJwt();
-  final response = await http.put(
+  final response = await http.post(
     Uri.parse(ApiRoutes.articleImproverTextUrl),
     headers: {
       'Content-Type': 'application/json',
