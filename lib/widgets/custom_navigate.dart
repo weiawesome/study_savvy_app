@@ -44,9 +44,6 @@ class _CustomNavigate extends State<CustomNavigate> {
       selectedItemColor: Theme.of(context).brightness== Brightness.dark?const Color.fromRGBO(217,217,217,1):Colors.black,
       unselectedItemColor: const Color.fromRGBO(118,118,118,1),
       onTap: (index) {
-        if (index==2){
-          context.read<FilesBloc>().add(FilesEventInit());
-        }
         context.read<PageBloc>().add(pageEvents[index]);
       },
       currentIndex: pageIndex[context.watch<PageBloc>().state]??0,
