@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_savvy_app/blocs/bloc_specific_file.dart';
 import 'package:study_savvy_app/models/model_files.dart';
+import 'package:study_savvy_app/styles/custom_style.dart';
 import 'package:study_savvy_app/widgets/loading.dart';
 import 'package:study_savvy_app/widgets/failure.dart';
 import 'package:study_savvy_app/widgets/success.dart';
@@ -75,7 +76,7 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                       margin: const EdgeInsets.symmetric(vertical: 10),
                                       width: double.infinity,
                                       padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 15),
-                                      decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),border: Border.all(color: Colors.black12,width: 2)),
+                                      decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),border: Border.all(color: Theme.of(context).brightness==Brightness.light?LightStyle.borderColor:DarkStyle.borderColor,)),
                                       child: Column(
                                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                                         children: [
@@ -118,7 +119,7 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                       margin: const EdgeInsets.symmetric(vertical: 10),
                                       width: double.infinity,
                                       padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
-                                      decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),color: Theme.of(context).brightness==Brightness.light?Colors.grey[300]:Colors.black),
+                                      decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),border: Border.all(color: Theme.of(context).brightness==Brightness.light?LightStyle.borderColor:DarkStyle.borderColor,)),
                                       child: Column(
                                         children: [
                                           ExpansionTile(
@@ -141,7 +142,7 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                       margin: const EdgeInsets.symmetric(vertical: 10),
                                       width: double.infinity,
                                       padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
-                                      decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),color: Theme.of(context).brightness==Brightness.light?Colors.grey[300]:Colors.black),
+                                      decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),border: Border.all(color: Theme.of(context).brightness==Brightness.light?LightStyle.borderColor:DarkStyle.borderColor,)),
                                       child: Column(
                                         children:[
                                           ExpansionTile(
@@ -168,7 +169,7 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                       margin: const EdgeInsets.symmetric(vertical: 10),
                                       width: double.infinity,
                                       padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
-                                      decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),color: Theme.of(context).brightness==Brightness.light?Colors.grey[300]:Colors.black),
+                                      decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),border: Border.all(color: Theme.of(context).brightness==Brightness.light?LightStyle.borderColor:DarkStyle.borderColor,)),
                                       child: Column(
                                         children: [
                                           ExpansionTile(
@@ -199,7 +200,7 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                       margin: const EdgeInsets.symmetric(vertical: 10),
                                       width: double.infinity,
                                       padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
-                                      decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),color: Theme.of(context).brightness==Brightness.light?Colors.grey[300]:Colors.black),
+                                      decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),border: Border.all(color: Theme.of(context).brightness==Brightness.light?LightStyle.borderColor:DarkStyle.borderColor,)),
                                       child: Column(
                                         children: [
                                           ExpansionTile(
@@ -228,7 +229,7 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                       margin: const EdgeInsets.symmetric(vertical: 10),
                                       width: double.infinity,
                                       padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
-                                      decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),color: Theme.of(context).brightness==Brightness.light?Colors.grey[300]:Colors.black),
+                                      decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),border: Border.all(color: Theme.of(context).brightness==Brightness.light?LightStyle.borderColor:DarkStyle.borderColor,)),
                                       child: Column(
                                         children: [
                                           ExpansionTile(
@@ -248,7 +249,7 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                       margin: const EdgeInsets.symmetric(vertical: 10),
                                       width: double.infinity,
                                       padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
-                                      decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),color: Theme.of(context).brightness==Brightness.light?Colors.grey[300]:Colors.black),
+                                      decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),border: Border.all(color: Theme.of(context).brightness==Brightness.light?LightStyle.borderColor:DarkStyle.borderColor,)),
                                       child: Column(
                                         children: [
                                           ExpansionTile(
