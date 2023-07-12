@@ -91,7 +91,6 @@ void main() {
       expect(files.currentPage, testCurrentPage);
       expect(files.totalPages, testTotalPage);
     });
-
     test('Files object fromJson method test (num of files 10)', () {
       List<Map<String,String>> testFiles = List<Map<String,String>>.generate(10, (index) {
         var map={'file_id': 'Test id $index', 'file_type': 'Test type $index', 'status': 'Test status $index', 'file_time': 'Test time $index'};
@@ -116,6 +115,113 @@ void main() {
       }
       expect(files.currentPage, testCurrentPage);
       expect(files.totalPages, testTotalPage);
+    });
+  });
+  group('SpecificFile', () {
+    test('SpecificFiles object value test (num of files 1000)', () {
+      List<String> testDetails = List<String>.generate(1000, (index) {
+        return "Test $index";
+      });
+      const String testContent="Test content";
+      const String testPrompt="Test prompt";
+      const String testSummarize="Test summarize";
+
+      final specificFile = SpecificFile(testContent,testPrompt,testSummarize,testDetails);
+
+      for (int i = 0; i < specificFile.details.length; i++) {
+        expect(specificFile.details[i], "Test $i");
+      }
+
+      expect(specificFile.content,testContent);
+      expect(specificFile.prompt,testPrompt);
+      expect(specificFile.summarize,testSummarize);
+    });
+    test('SpecificFiles object value test (num of files 10)', () {
+      List<String> testDetails = List<String>.generate(10, (index) {
+        return "Test $index";
+      });
+      const String testContent="Test content";
+      const String testPrompt="Test prompt";
+      const String testSummarize="Test summarize";
+
+      final specificFile = SpecificFile(testContent,testPrompt,testSummarize,testDetails);
+
+      for (int i = 0; i < specificFile.details.length; i++) {
+        expect(specificFile.details[i], "Test $i");
+      }
+
+      expect(specificFile.content,testContent);
+      expect(specificFile.prompt,testPrompt);
+      expect(specificFile.summarize,testSummarize);
+    });
+    test('SpecificFiles object value test (num of files 0)', () {
+      List<String> testDetails = List<String>.generate(0, (index) {
+        return "Test $index";
+      });
+      const String testContent="Test content";
+      const String testPrompt="Test prompt";
+      const String testSummarize="Test summarize";
+
+      final specificFile = SpecificFile(testContent,testPrompt,testSummarize,testDetails);
+
+      for (int i = 0; i < specificFile.details.length; i++) {
+        expect(specificFile.details[i], "Test $i");
+      }
+
+      expect(specificFile.content,testContent);
+      expect(specificFile.prompt,testPrompt);
+      expect(specificFile.summarize,testSummarize);
+    });
+    test('SpecificFiles object fromJson method test (num of files 10)', () {
+      List<String> testDetails = List<String>.generate(10, (index) {
+        return "Test $index";
+      });
+      const String testContent="Test content";
+      const String testPrompt="Test prompt";
+      const String testSummarize="Test summarize";
+
+      var testJson={
+        'content': testContent,
+        'prompt': testPrompt,
+        'summarize': testSummarize,
+        'details': testDetails
+      };
+
+      final specificFiles = SpecificFile.fromJson(testJson);
+
+      for (int i = 0; i < specificFiles.details.length; i++) {
+        expect(specificFiles.details[i], 'Test $i');
+      }
+      expect(specificFiles.content, testContent);
+      expect(specificFiles.prompt, testPrompt);
+      expect(specificFiles.summarize, testSummarize);
+    });
+  });
+
+  group('EditFile', () {
+
+    test('EditFile object value test', () {
+      const String testId="Test id";
+      const String testContent="Test content";
+      const String testPrompt="Test prompt";
+
+      final editFile = EditFile(testId, testPrompt, testContent);
+
+      expect(editFile.id,testId);
+      expect(editFile.content,testContent);
+      expect(editFile.prompt,testPrompt);
+
+    });
+
+    test('EditFile object formatJson method test', () {
+      const String testId="Test id";
+      const String testContent="Test content";
+      const String testPrompt="Test prompt";
+
+      final editFile = EditFile(testId, testPrompt, testContent);
+
+      expect(editFile.formatJson(), {'prompt': testPrompt, 'content': testContent});
+
     });
   });
 }
