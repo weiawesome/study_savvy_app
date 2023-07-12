@@ -50,67 +50,19 @@ class _InformationPage extends State<InformationPage> {
                                 }
                                 else if(state.status=="SUCCESS"){
                                   return Container(
+                                    width: double.infinity,
                                     padding: const EdgeInsets.symmetric(horizontal: 20),
                                     child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       mainAxisAlignment: MainAxisAlignment
                                           .spaceEvenly,
                                       children: [
-                                        Row(
-                                          children: [
-                                            Expanded(
-                                                flex: 3,
-                                                child: Text('Email:', style: Theme
-                                                    .of(context)
-                                                    .textTheme
-                                                    .displayMedium,)
-                                            ),
-                                            Expanded(
-                                              flex: 7,
-                                              child: Text(state.profile.mail, style: Theme
-                                                  .of(context)
-                                                  .textTheme
-                                                  .displaySmall,),
-                                            ),
-
-
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            Expanded(
-                                                flex: 3,
-                                                child: Text('Name:', style: Theme
-                                                    .of(context)
-                                                    .textTheme
-                                                    .displayMedium,)
-                                            ),
-                                            Expanded(
-                                              flex: 7,
-                                              child: Text(state.profile.name, style: Theme
-                                                  .of(context)
-                                                  .textTheme
-                                                  .displaySmall,),
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            Expanded(
-                                                flex: 3,
-                                                child: Text('Gender:', style: Theme
-                                                    .of(context)
-                                                    .textTheme
-                                                    .displayMedium,)
-                                            ),
-                                            Expanded(
-                                              flex: 7,
-                                              child: Text(state.profile.gender, style: Theme
-                                                  .of(context)
-                                                  .textTheme
-                                                  .displaySmall,),
-                                            ),
-                                          ],
-                                        ),
+                                        Text('Email:', style: Theme.of(context).textTheme.displayMedium,),
+                                        Text(state.profile.mail, style: Theme.of(context).textTheme.displaySmall),
+                                        Text('Name:', style: Theme.of(context).textTheme.displayMedium,),
+                                        Text(state.profile.name, style: Theme.of(context).textTheme.displaySmall),
+                                        Text('Gender:', style: Theme.of(context).textTheme.displayMedium,),
+                                        Text(state.profile.gender, style: Theme.of(context).textTheme.displaySmall),
                                       ],
                                     ),
                                   );
