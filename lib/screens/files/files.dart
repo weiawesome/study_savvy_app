@@ -22,16 +22,16 @@ class _FilesPage extends State<FilesPage> {
     super.initState();
     context.read<FilesBloc>().add(FilesEventInit());
     _scrollController.addListener(() {
-      FilesState? state=context.read<FilesBloc>().state;
-      if (_scrollController.position.pixels ==
-          _scrollController.position.maxScrollExtent) {
+      if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
+        FilesState? state=context.read<FilesBloc>().state;
         context.read<FilesBloc>().add(FilesEventLoadMore(state.files));
       }
     });
   }
 
   Future<void> _refresh() async {
-    return context.read<FilesBloc>().add(FilesEventRefresh());
+    context.read<FilesBloc>().add(FilesEventRefresh());
+    return await Future.delayed(const Duration(seconds: 2));
   }
   @override
   Widget build(BuildContext context) {
@@ -178,7 +178,7 @@ class _FilesPage extends State<FilesPage> {
                                   padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 15),
                                   height: 100,
                                   margin: const EdgeInsets.symmetric(vertical: 5),
-                                  decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),border: Border.all(width: 1),color:Theme.of(context).brightness == Brightness.dark ? DarkStyle.fileBoxColor:LightStyle.fileBoxColor),
+                                  decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),border: Border.all(color: Theme.of(context).brightness==Brightness.light?LightStyle.borderColor:DarkStyle.borderColor)),
                                   child: Row(
                                     children: [
                                       Expanded(

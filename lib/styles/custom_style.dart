@@ -10,7 +10,6 @@ class LightStyle {
       width: 1,
     ),
   );
-  static const Color fileBoxColor= Color.fromRGBO(236, 236, 236, 0.80);
 
   static final ThemeData theme = ThemeData(
     primarySwatch: primarySwatch,
@@ -42,7 +41,6 @@ class DarkStyle {
   static const Color primaryDark = Color(0xFF202124);
   static const Color borderColor = Colors.white30;
   static const BoxDecoration boxDecoration= BoxDecoration(color: Color.fromRGBO(118, 118, 128, 0.24));
-  static const Color fileBoxColor= Colors.black;
 
   static final ThemeData theme = ThemeData(
     primaryColor: primaryDark,
