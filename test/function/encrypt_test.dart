@@ -17,7 +17,6 @@ void main() {
 
     test('parsePublicKeyFromPemFile function', () async {
       final fakeBundle = TestAssetBundle();
-      ServicesBinding.instance.defaultBinaryMessenger.setAssetBundle(fakeBundle);
       final publicKey = await parsePublicKeyFromPemFile('assets/keys/public_key.pem');
 
       expect(publicKey, isNotNull);
