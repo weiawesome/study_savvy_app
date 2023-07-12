@@ -43,6 +43,7 @@ class DarkStyle {
   static const BoxDecoration boxDecoration= BoxDecoration(color: Color.fromRGBO(118, 118, 128, 0.24));
 
   static final ThemeData theme = ThemeData(
+    primarySwatch: primarySwatch,
     primaryColor: primaryDark,
     brightness: Brightness.dark,
     textTheme: const TextTheme(

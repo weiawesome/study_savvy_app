@@ -58,7 +58,7 @@ class _FilesPage extends State<FilesPage> {
                       onRefresh: _refresh,
                       showChildOpacityTransition: false,
                       child: ListView.builder(
-                          physics: const AlwaysScrollableScrollPhysics(),
+                          physics: const BouncingScrollPhysics(),
                           controller: _scrollController,
                           itemCount: state.files.files.length,
                           itemBuilder: (context, index) {
