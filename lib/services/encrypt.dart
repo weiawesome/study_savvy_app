@@ -9,23 +9,17 @@ import 'package:study_savvy_app/models/model_profile.dart';
 Future<SecureData> encrypt(String text) async {
 
   final plainText = text;
-  final key = Key.fromSecureRandom(32); // AES需要的鑰匙長度是256位
-  final iv = IV.fromSecureRandom(16); // AES CBC模式需要的IV長度是128位
+  final key = Key.fromSecureRandom(32);
+  final iv = IV.fromSecureRandom(16);
 
-  final encrypter = Encrypter(AES(key, mode: AESMode.ecb)); // 更改模式為ECB
+  final encryptAES = Encrypter(AES(key, mode: AESMode.ecb));
+  final encrypted = encryptAES.encrypt(plainText, iv: iv);
 
-
-  // 用AES CBC模式對資料進行加密
-  final encrypted = encrypter.encrypt(plainText, iv: iv);
-
-  // 從文件中讀取RSA公鑰
   final publicKey = await parsePublicKeyFromPemFile('assets/keys/public_key.pem');
 
-  // 用RSA OAEP模式對AES金鑰進行加密
-  final rsaEncrypter = Encrypter(RSA(publicKey: publicKey,encoding: RSAEncoding.OAEP));
-  final encryptedKey = rsaEncrypter.encrypt(key.base64);
+  final encryptRSA = Encrypter(RSA(publicKey: publicKey,encoding: RSAEncoding.OAEP));
+  final encryptedKey = encryptRSA.encrypt(key.base64);
 
-  // 最後將加密的資料和金鑰轉為Base64形式
   final encodedEncryptedData = base64.encode(encrypted.bytes);
   final encodedEncryptedKey = encryptedKey.base64;
 
