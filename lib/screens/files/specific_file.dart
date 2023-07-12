@@ -135,7 +135,7 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                               children: [
                                                 Container(
                                                   margin: const EdgeInsets.symmetric(vertical: 15),
-                                                  decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),color: Theme.of(context).brightness==Brightness.light?Colors.black:Colors.grey[300]),
+                                                  decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),color: Theme.of(context).brightness==Brightness.light?Colors.black38:Colors.grey[300]),
                                                   padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 10),
                                                   alignment: Alignment.topLeft,
                                                   child: Text(state.file!.summarize,style: Theme.of(context).textTheme.labelSmall,maxLines: null,),
@@ -160,7 +160,7 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                                   children: state.file!.details.map((item){
                                                     return Container(
                                                       margin: const EdgeInsets.symmetric(vertical: 15),
-                                                      decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),color: Theme.of(context).brightness==Brightness.light?Colors.black:Colors.grey[300]),
+                                                      decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),color: Theme.of(context).brightness==Brightness.light?Colors.black38:Colors.grey[300]),
                                                       padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 10),
                                                       alignment: Alignment.topLeft,
                                                       child: Text(item,style: Theme.of(context).textTheme.labelSmall,maxLines: null,),
@@ -185,7 +185,7 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                                 children: [
                                                   Container(
                                                     margin: const EdgeInsets.symmetric(vertical: 15),
-                                                    decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),color: Theme.of(context).brightness==Brightness.light?Colors.black:Colors.grey[300]),
+                                                    decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),color: Theme.of(context).brightness==Brightness.light?Colors.black38:Colors.grey[300]),
                                                     padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 10),
                                                     alignment: Alignment.topLeft,
                                                     child: TextField(
@@ -216,7 +216,7 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                               children: [
                                                 Container(
                                                   margin: const EdgeInsets.symmetric(vertical: 15),
-                                                  decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),color: Theme.of(context).brightness==Brightness.light?Colors.black:Colors.grey[300]),
+                                                  decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),color: Theme.of(context).brightness==Brightness.light?Colors.black38:Colors.grey[300]),
                                                   padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 10),
                                                   alignment: Alignment.topLeft,
                                                   child: TextField(
@@ -342,7 +342,6 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                       else{
                                         context.read<FileBloc>().add(FileEventEditASR(file));
                                       }
-
                                     },
                                     style: Theme.of(context).elevatedButtonTheme.style,
                                     child:const Text("ReGenerate",textAlign: TextAlign.center,style: TextStyle(color: Colors.white, fontSize:23,fontFamily: 'Play',fontWeight: FontWeight.bold),),
