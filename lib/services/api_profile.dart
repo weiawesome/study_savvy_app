@@ -140,7 +140,6 @@ Future<void> logout() async {
       'Authorization': 'Bearer ${jwt!}'
     },
   );
-  print(response.statusCode);
   if (response.statusCode == 201) {
     return ;
   }
