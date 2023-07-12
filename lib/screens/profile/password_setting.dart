@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_savvy_app/blocs/bloc_password.dart';
+import 'package:study_savvy_app/styles/custom_style.dart';
 import 'package:study_savvy_app/widgets/loading.dart';
 import 'package:study_savvy_app/widgets/success.dart';
 import 'package:study_savvy_app/models/model_profile.dart';
@@ -54,117 +55,95 @@ class _PasswordPage extends State<PasswordPage> {
                           if(state.status=="INIT"){
                             return Expanded(
                               flex: 8,
-                              child:Form(
-                                key: _formKey,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                            flex:4,
-                                            child: Text('Password:',style: Theme.of(context).textTheme.displayMedium,)
+                              child:SingleChildScrollView(
+                                child: Form(
+                                  key: _formKey,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                          margin: const EdgeInsets.symmetric(vertical: 20),
+                                          child: Text('Original Password:',style: Theme.of(context).textTheme.displayMedium,)
+                                      ),
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                                        decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),border: Border.all(color: Theme.of(context).brightness==Brightness.light?LightStyle.borderColor:DarkStyle.borderColor,)),
+                                        child: TextFormField(
+                                          controller: oldPasswordController,
+                                          maxLines: 1,
+                                          decoration: const InputDecoration(
+                                            hintText: "Enter the Password",
+                                            hintMaxLines: 3,
+                                            border: InputBorder.none,
+                                          ),
+                                          obscureText: true,
+                                          validator: (value) {
+                                            if (value == null || value.isEmpty) {
+                                              return 'Empty error';
+                                            }
+                                            return null;
+                                          },
                                         ),
-                                        Expanded(
-                                            flex:6,
-                                            child: Container(
-                                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),border: Border.all(width: 1)),
-                                              padding: const EdgeInsets.symmetric(horizontal: 10),
-                                              child: TextFormField(
-                                                controller: oldPasswordController,
-                                                maxLines: 1,
-                                                decoration: const InputDecoration(
-                                                  hintText: "Enter the Password",
-                                                  hintMaxLines: 3,
-                                                  border: InputBorder.none,
-                                                ),
-                                                obscureText: true,
-                                                validator: (value) {
-                                                  if (value == null || value.isEmpty) {
-                                                    return 'Empty error';
-                                                  }
-                                                  return null;
-                                                },
-                                              ),
-                                            )
+                                      ),
+                                      Container(
+                                          margin: const EdgeInsets.symmetric(vertical: 20),
+                                          child: Text('New Password:',style: Theme.of(context).textTheme.displayMedium,)
+                                      ),
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                                        decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),border: Border.all(color: Theme.of(context).brightness==Brightness.light?LightStyle.borderColor:DarkStyle.borderColor,)),
+                                        child: TextFormField(
+                                          controller: newPasswordController,
+                                          maxLines: 1,
+                                          decoration: const InputDecoration(
+                                            hintText: "Enter new Password",
+                                            hintMaxLines: 1,
+                                            border: InputBorder.none,
+                                          ),
+                                          obscureText: true,
+                                          validator: (value) {
+                                            if (value == null || value.isEmpty) {
+                                              return 'Empty Error';
+                                            }
+                                            else if(value==oldPasswordController.text){
+                                              return 'Same with old Error';
+                                            }
+                                            return null;
+                                          },
                                         ),
-
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                            flex:4,
-                                            child: Text('New\nPassword:',style: Theme.of(context).textTheme.displayMedium,)
+                                      ),
+                                      Container(
+                                          margin: const EdgeInsets.symmetric(vertical: 20),
+                                          child: Text('Confirm New Password:',style: Theme.of(context).textTheme.displayMedium,)
+                                      ),
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                                        decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),border: Border.all(color: Theme.of(context).brightness==Brightness.light?LightStyle.borderColor:DarkStyle.borderColor,)),
+                                        child: TextFormField(
+                                          controller: confirmPasswordController,
+                                          maxLines: 1,
+                                          decoration: const InputDecoration(
+                                            hintText: "Confirm new Password",
+                                            hintMaxLines: 3,
+                                            border: InputBorder.none,
+                                          ),
+                                          obscureText: true,
+                                          validator: (value) {
+                                            if (value == null || value.isEmpty) {
+                                              return 'Empty Error';
+                                            }
+                                            else if (value != newPasswordController.text) {
+                                              return 'Match Error';
+                                            }
+                                            return null;
+                                          },
+                                          onChanged: (value) {
+                                            _formKey.currentState!.validate();  // Re-validate the form when the new password changes
+                                          },
                                         ),
-                                        Expanded(
-                                            flex:6,
-                                            child: Container(
-                                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),border: Border.all(width: 1)),
-                                              padding: const EdgeInsets.symmetric(horizontal: 10),
-                                              child: TextFormField(
-                                                controller: newPasswordController,
-                                                maxLines: 1,
-                                                decoration: const InputDecoration(
-                                                  hintText: "Enter new Password",
-                                                  hintMaxLines: 1,
-                                                  border: InputBorder.none,
-                                                ),
-                                                obscureText: true,
-                                                validator: (value) {
-                                                  if (value == null || value.isEmpty) {
-                                                    return 'Empty Error';
-                                                  }
-                                                  else if(value==oldPasswordController.text){
-                                                    return 'Same with old Error';
-                                                  }
-                                                  return null;
-                                                },
-                                              ),
-                                            )
-                                        ),
-
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                            flex:4,
-                                            child: Text('Confirm\nNew\nPassword:',style: Theme.of(context).textTheme.displayMedium,)
-                                        ),
-                                        Expanded(
-                                            flex:6,
-                                            child: Container(
-                                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),border: Border.all(width: 1)),
-                                              padding: const EdgeInsets.symmetric(horizontal: 10),
-                                              child: TextFormField(
-                                                controller: confirmPasswordController,
-                                                maxLines: 1,
-                                                decoration: const InputDecoration(
-                                                  hintText: "Confirm new Password",
-                                                  hintMaxLines: 3,
-                                                  border: InputBorder.none,
-                                                ),
-                                                obscureText: true,
-                                                validator: (value) {
-                                                  if (value == null || value.isEmpty) {
-                                                    return 'Empty Error';
-                                                  }
-                                                  else if (value != newPasswordController.text) {
-                                                    return 'Match Error';
-                                                  }
-                                                  return null;
-                                                },
-                                                onChanged: (value) {
-                                                  _formKey.currentState!.validate();  // Re-validate the form when the new password changes
-                                                },
-                                              ),
-                                            )
-                                        ),
-
-                                      ],
-                                    ),
-                                  ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             );
