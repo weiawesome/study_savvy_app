@@ -102,191 +102,199 @@ class _ArticleImproverPage extends State<ArticleImproverPage>{
         await processImages();
       }
     }
-    return Column(
-      children: [
-        Expanded(
-          flex: 1,
-          child: Text('Writing Improver',style: Theme.of(context).textTheme.bodyLarge,),
-        ),
-        BlocBuilder<ArticleBloc,ArticleState>(
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: Column(
+        children: [
+          Expanded(
+            flex: 1,
+            child: Text('Writing Improver',style: Theme.of(context).textTheme.bodyLarge,),
+          ),
+          BlocBuilder<ArticleBloc,ArticleState>(
+              builder: (context,state){
+                if(state.status=="INIT"){
+                  return Expanded(
+                    flex: 8,
+                    child:Container(
+                      padding: const EdgeInsets.symmetric(vertical: 5),
+                      margin: const EdgeInsets.symmetric(vertical: 10),
+                      child: SingleChildScrollView(
+                        child: Column(
+                            children:[
+                              Container(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text('Content',style: Theme.of(context).textTheme.bodyMedium)
+                              ),
+                              Container(
+                                padding: const EdgeInsets.all(15),
+                                margin: const EdgeInsets.symmetric(vertical: 15),
+                                height: 180,
+                                decoration: Theme.of(context).brightness == Brightness.dark ? DarkStyle.boxDecoration : LightStyle.boxDecoration,
+                                child: SingleChildScrollView(
+                                  child: ocrImageProvider.isNull()?
+                                  TextField(
+                                    controller: _contentController,
+                                    maxLines: null,
+                                    keyboardType: TextInputType.multiline,
+                                    decoration: const InputDecoration(
+                                      hintText: "可以在這寫下你的作文或使用照片",
+                                      border: InputBorder.none,
+                                    ),
+                                  ):
+                                  Stack(
+                                      children: [
+                                        Image.memory(ocrImageProvider.image as Uint8List),
+                                        IconButton(onPressed: (){ocrImageProvider.clear();}, icon: const Icon(Icons.cancel_outlined,size: 30,color: Colors.red,))
+                                      ]
+                                  ),
+                                ),
+                              ),
+
+                              Container(
+                                  alignment: AlignmentDirectional.centerEnd,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      IconButton(
+                                        onPressed:loadAssets,
+                                        tooltip: 'Choose come photos.',
+                                        icon:const Icon(Icons.photo),
+                                        iconSize: 36.0,
+                                      ),
+                                      IconButton(
+                                        onPressed:(){
+                                          Navigator.pushNamed(context, Routes.camera);
+                                        },
+                                        tooltip: 'Take a photo.',
+                                        icon:const Icon(Icons.camera_alt_outlined),
+                                        iconSize: 36.0,
+                                      ),
+                                    ],
+                                  )
+                              ),
+                              Container(
+                                alignment: Alignment.centerLeft,
+                                child: Text('Prompt',style: Theme.of(context).textTheme.bodyMedium),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.all(15),
+                                margin: const EdgeInsets.symmetric(vertical: 15),
+                                height: 150,
+                                decoration: Theme.of(context).brightness == Brightness.dark ? DarkStyle.boxDecoration : LightStyle.boxDecoration,
+                                child: SingleChildScrollView(
+                                  child: TextField(
+                                    controller: _promptController,
+                                    maxLines: null,
+                                    keyboardType: TextInputType.multiline,
+                                    decoration: const InputDecoration(
+                                      hintText: "可以寫下作文主題以及你認為需加強部分\n(選填)",
+                                      hintMaxLines: 3,
+                                      border: InputBorder.none,
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                            ]
+                        ),
+                      ),
+                    ),
+                  );
+                }
+                else if(state.status=="PENDING"){
+                  return const Expanded(
+                      flex:9,
+                      child: Loading()
+                  );
+                }
+                else if (state.status=='SUCCESS'){
+                  return const Expanded(
+                    flex:8,
+                    child: Center(
+                        child:Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.check_circle_outline,size:40),
+                            Text("Success to upload")
+                          ],
+                        )
+                    ),
+                  );
+                }
+                else{
+                  return const Expanded(
+                    flex:8,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Center(
+                            child:Icon(Icons.warning_rounded,size:40,color: Colors.red,)
+                        ),
+                        Text("Fail to upload")
+                      ],
+                    )
+                  );
+                }
+          }),
+          BlocBuilder<ArticleBloc,ArticleState>(
             builder: (context,state){
               if(state.status=="INIT"){
                 return Expanded(
-                  flex: 8,
-                  child:Container(
-                    padding: const EdgeInsets.symmetric(vertical: 5),
-                    margin: const EdgeInsets.symmetric(vertical: 10),
-                    child: SingleChildScrollView(
-                      child: Column(
-                          children:[
-                            Container(
-                                alignment: Alignment.centerLeft,
-                                child: Text('Content',style: Theme.of(context).textTheme.bodyMedium)
-                            ),
-                            Container(
-                              padding: const EdgeInsets.all(15),
-                              margin: const EdgeInsets.symmetric(vertical: 15),
-                              height: 180,
-                              decoration: Theme.of(context).brightness == Brightness.dark ? DarkStyle.boxDecoration : LightStyle.boxDecoration,
-                              child: SingleChildScrollView(
-                                child: ocrImageProvider.isNull()?
-                                TextField(
-                                  controller: _contentController,
-                                  maxLines: null,
-                                  keyboardType: TextInputType.multiline,
-                                  decoration: const InputDecoration(
-                                    hintText: "可以在這寫下你的作文或使用照片",
-                                    border: InputBorder.none,
-                                  ),
-                                ):
-                                Stack(
-                                    children: [
-                                      Image.memory(ocrImageProvider.image as Uint8List),
-                                      IconButton(onPressed: (){ocrImageProvider.clear();}, icon: const Icon(Icons.cancel_outlined,size: 30,color: Colors.red,))
-                                    ]
-                                ),
-                              ),
-                            ),
+                    flex: 1,
+                    child:FractionallySizedBox(
+                        widthFactor: 0.5,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            if(ocrImageProvider.file==null){
+                              if(_contentController.text==""){
+                                _showAlertDialog(context);
+                              }
+                              else{
+                                context.read<ArticleBloc>().add(ArticleEventText(ArticleText(_contentController.text,_promptController.text)));
+                              }
+                            }
+                            else{
+                              context.read<ArticleBloc>().add(ArticleEventGraph(ArticleImage(ocrImageProvider.file,_promptController.text)));
+                            }
 
-                            Container(
-                                alignment: AlignmentDirectional.centerEnd,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    IconButton(
-                                      onPressed:loadAssets,
-                                      tooltip: 'Choose come photos.',
-                                      icon:const Icon(Icons.photo),
-                                      iconSize: 36.0,
-                                    ),
-                                    IconButton(
-                                      onPressed:(){
-                                        Navigator.pushNamed(context, Routes.camera);
-                                      },
-                                      tooltip: 'Take a photo.',
-                                      icon:const Icon(Icons.camera_alt_outlined),
-                                      iconSize: 36.0,
-                                    ),
-                                  ],
-                                )
-                            ),
-                            Container(
-                              alignment: Alignment.centerLeft,
-                              child: Text('Prompt',style: Theme.of(context).textTheme.bodyMedium),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.all(15),
-                              margin: const EdgeInsets.symmetric(vertical: 15),
-                              height: 150,
-                              decoration: Theme.of(context).brightness == Brightness.dark ? DarkStyle.boxDecoration : LightStyle.boxDecoration,
-                              child: SingleChildScrollView(
-                                child: TextField(
-                                  controller: _promptController,
-                                  maxLines: null,
-                                  keyboardType: TextInputType.multiline,
-                                  decoration: const InputDecoration(
-                                    hintText: "可以寫下作文主題以及你認為需加強部分\n(選填)",
-                                    hintMaxLines: 3,
-                                    border: InputBorder.none,
-                                  ),
-                                ),
-                              ),
-                            ),
-
-                          ]
-                      ),
-                    ),
-                  ),
+                          },
+                          style: Theme.of(context).elevatedButtonTheme.style,
+                          child:const Text('Done',textAlign: TextAlign.center,style: TextStyle(color: Colors.white, fontSize:23,fontFamily: 'Play',fontWeight: FontWeight.bold),),
+                        )
+                    )
                 );
               }
               else if(state.status=="PENDING"){
-                return const Expanded(
-                    flex:9,
-                    child: Loading()
-                );
-              }
-              else if (state.status=='SUCCESS'){
-                return const Expanded(
-                  flex:8,
-                  child: Center(
-                      child:Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.check_circle_outline,size:40),
-                          Text("Success to upload")
-                        ],
-                      )
-                  ),
-                );
+                return Container();
               }
               else{
-                return const Expanded(
-                  flex:8,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Center(
-                          child:Icon(Icons.warning_rounded,size:40,color: Colors.red,)
-                      ),
-                      Text("Fail to upload")
-                    ],
-                  )
+                return Expanded(
+                    flex: 1,
+                    child:FractionallySizedBox(
+                        widthFactor: 0.5,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            ocrImageProvider.clear();
+                            _promptController.text="";
+                            _contentController.text="";
+                            context.read<ArticleBloc>().add(ArticleEventRefresh());
+                          },
+                          style: Theme.of(context).elevatedButtonTheme.style,
+                          child:const Text('Reset',textAlign: TextAlign.center,style: TextStyle(color: Colors.white, fontSize:23,fontFamily: 'Play',fontWeight: FontWeight.bold),),
+                        )
+                    )
                 );
               }
-        }),
-        BlocBuilder<ArticleBloc,ArticleState>(
-          builder: (context,state){
-            if(state.status=="INIT"){
-              return Expanded(
-                  flex: 1,
-                  child:FractionallySizedBox(
-                      widthFactor: 0.5,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          if(ocrImageProvider.file==null){
-                            if(_contentController.text==""){
-                              _showAlertDialog(context);
-                            }
-                            else{
-                              context.read<ArticleBloc>().add(ArticleEventText(ArticleText(_contentController.text,_promptController.text)));
-                            }
-                          }
-                          else{
-                            context.read<ArticleBloc>().add(ArticleEventGraph(ArticleImage(ocrImageProvider.file,_promptController.text)));
-                          }
+            }
+          ),
 
-                        },
-                        style: Theme.of(context).elevatedButtonTheme.style,
-                        child:const Text('Done',textAlign: TextAlign.center,style: TextStyle(color: Colors.white, fontSize:23,fontFamily: 'Play',fontWeight: FontWeight.bold),),
-                      )
-                  )
-              );
-            }
-            else if(state.status=="PENDING"){
-              return Container();
-            }
-            else{
-              return Expanded(
-                  flex: 1,
-                  child:FractionallySizedBox(
-                      widthFactor: 0.5,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          ocrImageProvider.clear();
-                          _promptController.text="";
-                          _contentController.text="";
-                          context.read<ArticleBloc>().add(ArticleEventRefresh());
-                        },
-                        style: Theme.of(context).elevatedButtonTheme.style,
-                        child:const Text('Reset',textAlign: TextAlign.center,style: TextStyle(color: Colors.white, fontSize:23,fontFamily: 'Play',fontWeight: FontWeight.bold),),
-                      )
-                  )
-              );
-            }
-          }
-        ),
-
-      ],
+        ],
+      ),
     );
   }
 
