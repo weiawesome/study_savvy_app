@@ -137,7 +137,10 @@ class _ProfilePage extends State<ProfilePage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Text('Information Setting',style: Theme.of(context).textTheme.displayMedium),
+                          Container(
+                            margin: const EdgeInsets.only(bottom: 5),
+                            child: Text('Information Setting',style: Theme.of(context).textTheme.displayMedium)
+                          ),
                           TextButton(
                               onPressed: (){Navigator.pushNamed(context, Routes.information,);context.read<ProfileBloc>().add(ProfileEventGet());},
                               style: ButtonStyle(
@@ -181,7 +184,6 @@ class _ProfilePage extends State<ProfilePage> {
                                 ],
                               )
                           ),
-
                         ],
                       ),
                     ),
@@ -192,7 +194,10 @@ class _ProfilePage extends State<ProfilePage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Text('CHAT-GPT method',style: Theme.of(context).textTheme.displayMedium),
+                          Container(
+                              margin: const EdgeInsets.only(bottom: 5),
+                              child: Text('CHAT-GPT method',style: Theme.of(context).textTheme.displayMedium)
+                          ),
                           TextButton(
                               onPressed: (){context.read<AccessMethodBloc>().add(AccessMethodEventReset());Navigator.pushNamed(context, Routes.apikey);},
                               style: ButtonStyle(
@@ -243,7 +248,10 @@ class _ProfilePage extends State<ProfilePage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Text('Preference Setting',style: Theme.of(context).textTheme.displayMedium),
+                          Container(
+                              margin: const EdgeInsets.only(bottom: 5),
+                              child: Text('Preference Setting',style: Theme.of(context).textTheme.displayMedium)
+                          ),
                           TextButton(
                             style: ButtonStyle(
                               overlayColor: MaterialStateProperty.resolveWith<Color>(
