@@ -24,7 +24,8 @@ class OnlineBloc extends Bloc<OnlineEvent,OnlineState> {
         emit(OnlineState(null,null));
         try{
           await logout();
-          await JwtService.deleteJwt();
+          JwtService jwtService=JwtService();
+          await jwtService.deleteJwt();
           emit(OnlineState(false,null));
         }
         on AuthException {
@@ -55,7 +56,8 @@ class OnlineBloc extends Bloc<OnlineEvent,OnlineState> {
         }
       }
       else if(event is OnlineEventCheck){
-        bool? status=await JwtService.hasJwt();
+        JwtService jwtService=JwtService();
+        bool? status=await jwtService.hasJwt();
         emit(OnlineState(status==true,null));
       }
       else{

@@ -7,7 +7,8 @@ import 'api_routes.dart';
 import 'jwt_storage.dart';
 
 Future<Profile> getProfile() async {
-  String? jwt=await JwtService.getJwt();
+  JwtService jwtService=JwtService();
+  String? jwt=await jwtService.getJwt();
   final response = await http.get(
     Uri.parse(ApiRoutes.profileUrl),
     headers: {'Authorization': 'Bearer ${jwt!}'},
@@ -23,7 +24,7 @@ Future<Profile> getProfile() async {
     throw ExistException("Source not exist");
   }
   else if (response.statusCode == 422){
-    await JwtService.deleteJwt();
+    await jwtService.deleteJwt();
     throw AuthException("JWT invalid");
   }
   else if(response.statusCode == 500){
@@ -35,7 +36,8 @@ Future<Profile> getProfile() async {
 }
 
 Future<void> setApiKey(String apikey) async {
-  String? jwt=await JwtService.getJwt();
+  JwtService jwtService=JwtService();
+  String? jwt=await jwtService.getJwt();
   SecureData data=await encrypt(apikey);
   final response = await http.put(
     Uri.parse(ApiRoutes.apiKeyUrl),
@@ -55,7 +57,7 @@ Future<void> setApiKey(String apikey) async {
     throw ExistException("Source not exist");
   }
   else if (response.statusCode == 422){
-    await JwtService.deleteJwt();
+    await jwtService.deleteJwt();
     throw AuthException("JWT invalid");
   }
   else if(response.statusCode == 500){
@@ -67,7 +69,8 @@ Future<void> setApiKey(String apikey) async {
 }
 
 Future<void> setAccessToken(String accessToken) async {
-  String? jwt=await JwtService.getJwt();
+  JwtService jwtService=JwtService();
+  String? jwt=await jwtService.getJwt();
   SecureData data=await encrypt(accessToken);
   final response = await http.put(
     Uri.parse(ApiRoutes.accessTokenUrl),
@@ -87,7 +90,7 @@ Future<void> setAccessToken(String accessToken) async {
     throw ExistException("Source not exist");
   }
   else if (response.statusCode == 422){
-    await JwtService.deleteJwt();
+    await jwtService.deleteJwt();
     throw AuthException("JWT invalid");
   }
   else if(response.statusCode == 500){
@@ -99,7 +102,8 @@ Future<void> setAccessToken(String accessToken) async {
 }
 
 Future<void> resetPassword(UpdatePwd data) async {
-  String? jwt=await JwtService.getJwt();
+  JwtService jwtService=JwtService();
+  String? jwt=await jwtService.getJwt();
   final response = await http.put(
     Uri.parse(ApiRoutes.passwordEditUrl),
     headers: {
@@ -121,7 +125,7 @@ Future<void> resetPassword(UpdatePwd data) async {
     throw ExistException("Source not exist");
   }
   else if (response.statusCode == 422){
-    await JwtService.deleteJwt();
+    await jwtService.deleteJwt();
     throw AuthException("JWT invalid");
   }
   else if(response.statusCode == 500){
@@ -133,7 +137,8 @@ Future<void> resetPassword(UpdatePwd data) async {
 }
 
 Future<void> logout() async {
-  String? jwt=await JwtService.getJwt();
+  JwtService jwtService=JwtService();
+  String? jwt=await jwtService.getJwt();
   final response = await http.delete(
     Uri.parse(ApiRoutes.logoutUrl),
     headers: {
@@ -150,7 +155,7 @@ Future<void> logout() async {
     throw ExistException("Source not exist");
   }
   else if (response.statusCode == 422){
-    await JwtService.deleteJwt();
+    await jwtService.deleteJwt();
     throw AuthException("JWT invalid");
   }
   else if(response.statusCode == 500){

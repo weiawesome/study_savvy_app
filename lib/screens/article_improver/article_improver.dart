@@ -7,7 +7,6 @@ import 'package:study_savvy_app/models/model_article_improver.dart';
 import 'package:study_savvy_app/styles/custom_style.dart';
 import 'package:study_savvy_app/widgets/loading.dart';
 import 'package:study_savvy_app/blocs/provider/ocr_image_provider.dart';
-import 'package:study_savvy_app/services/jwt_storage.dart';
 import 'package:study_savvy_app/utils/routes.dart';
 import 'package:image/image.dart' as img_package;
 import 'package:path_provider/path_provider.dart';
@@ -39,10 +38,8 @@ class _ArticleImproverPage extends State<ArticleImproverPage>{
           actions: <Widget>[
             TextButton(
               child: Text('confirm',style: Theme.of(context).textTheme.displaySmall),
-              onPressed: () async {
-                await JwtService.deleteJwt().then((value) => {
-                  Navigator.of(context).pop()
-                });
+              onPressed: (){
+                Navigator.pop(context);
               },
             ),
           ],

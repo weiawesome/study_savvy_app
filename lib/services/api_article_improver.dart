@@ -8,7 +8,8 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 
 Future<void> predictOcrGraph(ArticleImage data) async {
-  String? jwt=await JwtService.getJwt();
+  JwtService jwtService=JwtService();
+  String? jwt=await jwtService.getJwt();
   File imageData=data.image;
   String text=data.prompt;
   final response = await (http.MultipartRequest(
@@ -36,7 +37,7 @@ Future<void> predictOcrGraph(ArticleImage data) async {
     throw ExistException("Source not exist");
   }
   else if (response.statusCode == 422){
-    await JwtService.deleteJwt();
+    await jwtService.deleteJwt();
     throw AuthException("JWT invalid");
   }
   else if(response.statusCode == 500){
@@ -48,7 +49,8 @@ Future<void> predictOcrGraph(ArticleImage data) async {
 }
 
 Future<void> predictOcrText(ArticleText data) async {
-  String? jwt=await JwtService.getJwt();
+  JwtService jwtService=JwtService();
+  String? jwt=await jwtService.getJwt();
   final response = await http.post(
     Uri.parse(ApiRoutes.articleImproverTextUrl),
     headers: {
@@ -67,7 +69,7 @@ Future<void> predictOcrText(ArticleText data) async {
     throw ExistException("Source not exist");
   }
   else if (response.statusCode == 422){
-    await JwtService.deleteJwt();
+    await jwtService.deleteJwt();
     throw AuthException("JWT invalid");
   }
   else if(response.statusCode == 500){

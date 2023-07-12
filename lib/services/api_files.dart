@@ -7,7 +7,8 @@ import 'package:study_savvy_app/services/jwt_storage.dart';
 import 'package:study_savvy_app/utils/exception.dart';
 
 Future<Uint8List?> getImage(String id) async {
-  String? jwt=await JwtService.getJwt();
+  JwtService jwtService=JwtService();
+  String? jwt=await jwtService.getJwt();
   final response = await http.get(
     Uri.parse("${ApiRoutes.fileImageUrl}/$id"),
     headers: {'Authorization': 'Bearer ${jwt!}'},
@@ -25,7 +26,7 @@ Future<Uint8List?> getImage(String id) async {
     throw ExistException("Source not exist");
   }
   else if (response.statusCode == 422){
-    await JwtService.deleteJwt();
+    await jwtService.deleteJwt();
     throw AuthException("JWT invalid");
   }
   else if(response.statusCode == 500){
@@ -37,7 +38,8 @@ Future<Uint8List?> getImage(String id) async {
 }
 
 Future<Uint8List> getAudio(String id) async {
-  String? jwt=await JwtService.getJwt();
+  JwtService jwtService=JwtService();
+  String? jwt=await jwtService.getJwt();
   final response = await http.get(
     Uri.parse("${ApiRoutes.fileAudioUrl}/$id"),
     headers: {'Authorization': 'Bearer ${jwt!}'},
@@ -52,7 +54,7 @@ Future<Uint8List> getAudio(String id) async {
     throw ExistException("Source not exist");
   }
   else if (response.statusCode == 422){
-    await JwtService.deleteJwt();
+    await jwtService.deleteJwt();
     throw AuthException("JWT invalid");
   }
   else if(response.statusCode == 500){
@@ -64,7 +66,8 @@ Future<Uint8List> getAudio(String id) async {
 }
 
 Future<SpecificFile> getSpecificFile(String id) async {
-  String? jwt=await JwtService.getJwt();
+  JwtService jwtService=JwtService();
+  String? jwt=await jwtService.getJwt();
   final response = await http.get(
     Uri.parse("${ApiRoutes.fileUrl}/$id"),
     headers: {'Authorization': 'Bearer ${jwt!}'},
@@ -79,7 +82,7 @@ Future<SpecificFile> getSpecificFile(String id) async {
     throw ExistException("Source not exist");
   }
   else if (response.statusCode == 422){
-    await JwtService.deleteJwt();
+    await jwtService.deleteJwt();
     throw AuthException("JWT invalid");
   }
   else if(response.statusCode == 500){
@@ -91,7 +94,8 @@ Future<SpecificFile> getSpecificFile(String id) async {
 }
 
 Future<Files> getFiles(int page) async {
-  String? jwt=await JwtService.getJwt();
+  JwtService jwtService=JwtService();
+  String? jwt=await jwtService.getJwt();
   final response = await http.get(
     Uri.parse("${ApiRoutes.fileUrl}?page=$page"),
     headers: {'Authorization': 'Bearer ${jwt!}'},
@@ -107,7 +111,8 @@ Future<Files> getFiles(int page) async {
     throw ExistException("Source not exist");
   }
   else if (response.statusCode == 422){
-    await JwtService.deleteJwt();
+    JwtService jwtService=JwtService();
+    await jwtService.deleteJwt();
     throw AuthException("JWT invalid");
   }
   else if(response.statusCode == 500){
@@ -119,7 +124,8 @@ Future<Files> getFiles(int page) async {
 }
 
 Future<void> deleteSpecificFile(String id) async {
-  String? jwt=await JwtService.getJwt();
+  JwtService jwtService=JwtService();
+  String? jwt=await jwtService.getJwt();
   final response = await http.delete(
     Uri.parse("${ApiRoutes.fileUrl}/$id"),
     headers: {'Authorization': 'Bearer ${jwt!}'},
@@ -134,7 +140,7 @@ Future<void> deleteSpecificFile(String id) async {
     throw ExistException("Source not exist");
   }
   else if (response.statusCode == 422){
-    await JwtService.deleteJwt();
+    await jwtService.deleteJwt();
     throw AuthException("JWT invalid");
   }
   else if(response.statusCode == 500){
@@ -146,7 +152,8 @@ Future<void> deleteSpecificFile(String id) async {
 }
 
 Future<void> editSpecificFileOCR(EditFile file) async {
-  String? jwt=await JwtService.getJwt();
+  JwtService jwtService=JwtService();
+  String? jwt=await jwtService.getJwt();
   final String id=file.id;
   final response = await http.put(
     Uri.parse("${ApiRoutes.fileNlpEditOCRUrl}/$id"),
@@ -167,7 +174,7 @@ Future<void> editSpecificFileOCR(EditFile file) async {
     throw ExistException("Source not exist");
   }
   else if (response.statusCode == 422){
-    await JwtService.deleteJwt();
+    await jwtService.deleteJwt();
     throw AuthException("JWT invalid");
   }
   else if(response.statusCode == 500){
@@ -179,7 +186,8 @@ Future<void> editSpecificFileOCR(EditFile file) async {
 }
 
 Future<void> editSpecificFileASR(EditFile file) async {
-  String? jwt=await JwtService.getJwt();
+  JwtService jwtService=JwtService();
+  String? jwt=await jwtService.getJwt();
   final String id=file.id;
   final response = await http.put(
     Uri.parse("${ApiRoutes.fileNlpEditASRUrl}/$id"),
@@ -199,7 +207,7 @@ Future<void> editSpecificFileASR(EditFile file) async {
     throw ExistException("Source not exist");
   }
   else if (response.statusCode == 422){
-    await JwtService.deleteJwt();
+    await jwtService.deleteJwt();
     throw AuthException("JWT invalid");
   }
   else if(response.statusCode == 500){

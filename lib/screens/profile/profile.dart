@@ -377,7 +377,8 @@ class _ProfilePage extends State<ProfilePage> {
                               ],
                             ),
                             onPressed: () async {
-                              await JwtService.saveJwt("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4OTA4MzcyNCwianRpIjoiNDEyMjc2ZDItNTQ4Ny00Y2ZjLThlOTUtMzJhOGY3OGQ5NjcxIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IndlaTg5MTAxM0BnbWFpbC5jb20iLCJuYmYiOjE2ODkwODM3MjQsImNzcmYiOiIxMjQ2NzhkZi1hMmZmLTQ0OGUtYTIzNC05ZjBlMzg5MGY5ODUiLCJleHAiOjE2OTAyOTMzMjR9.jxzlctZbhb25-lqR4X33C2U2_aWkWrSKnG2R0DqAejA");
+                              JwtService jwtService=JwtService();
+                              await jwtService.saveJwt("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4OTA4MzcyNCwianRpIjoiNDEyMjc2ZDItNTQ4Ny00Y2ZjLThlOTUtMzJhOGY3OGQ5NjcxIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IndlaTg5MTAxM0BnbWFpbC5jb20iLCJuYmYiOjE2ODkwODM3MjQsImNzcmYiOiIxMjQ2NzhkZi1hMmZmLTQ0OGUtYTIzNC05ZjBlMzg5MGY5ODUiLCJleHAiOjE2OTAyOTMzMjR9.jxzlctZbhb25-lqR4X33C2U2_aWkWrSKnG2R0DqAejA");
                             },
                           ),
 

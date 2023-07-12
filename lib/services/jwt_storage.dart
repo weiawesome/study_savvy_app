@@ -4,21 +4,26 @@ class JwtService {
   static AndroidOptions _getAndroidOptions() => const AndroidOptions(
     encryptedSharedPreferences: true,
   );
-  static final _storage = FlutterSecureStorage(aOptions: _getAndroidOptions());
+  final FlutterSecureStorage _storage;
+
+  JwtService({FlutterSecureStorage? storage})
+      : _storage = storage ?? FlutterSecureStorage(aOptions: _getAndroidOptions());
+
+
   static const _jwtKey = 'jwt';
 
-  static Future<void> saveJwt(String jwt) async {
+  Future<void> saveJwt(String jwt) async {
     await _storage.write(key: _jwtKey, value: jwt);
   }
 
-  static Future<String?> getJwt() async {
+  Future<String?> getJwt() async {
     return _storage.read(key: _jwtKey);
   }
 
-  static Future<void> deleteJwt() async {
+  Future<void> deleteJwt() async {
     await _storage.delete(key: _jwtKey);
   }
-  static Future<bool?> hasJwt() async {
+  Future<bool?> hasJwt() async {
     return _storage.containsKey(key: _jwtKey);
   }
 }

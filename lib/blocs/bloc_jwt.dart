@@ -8,11 +8,13 @@ class JWTBloc extends Bloc<JWTEvent,String?> {
   JWTBloc(): super(null){
     on<JWTEvent>((event,emit) async {
       if (event is JWTEventGet){
-        String? jwt = await JwtService.getJwt();
+        JwtService jwtService=JwtService();
+        String? jwt = await jwtService.getJwt();
         emit(jwt);
       }
       else{
-        await JwtService.deleteJwt();
+        JwtService jwtService=JwtService();
+        await jwtService.deleteJwt();
         emit(null);
       }
     });
