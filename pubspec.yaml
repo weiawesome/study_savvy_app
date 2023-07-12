@@ -56,6 +56,7 @@ dependencies:
   image: ^3.1.1
   path_provider: ^2.0.5
   wechat_assets_picker: ^8.5.0
+  liquid_pull_to_refresh: ^3.0.1
 
 
 dev_dependencies:

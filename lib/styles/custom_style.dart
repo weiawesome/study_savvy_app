@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class LightStyle {
-  static const MaterialColor primarySwatch = Colors.blue;
+  static const MaterialColor primarySwatch = Colors.grey;
   static const Color primaryLight = Color(0xFFFBFCFF);
   static BoxDecoration boxDecoration= BoxDecoration(
     border: Border.all(
@@ -37,7 +37,7 @@ class LightStyle {
 }
 
 class DarkStyle {
-  static const MaterialColor primarySwatch = Colors.blue;
+  static const MaterialColor primarySwatch = Colors.grey;
   static const Color primaryDark = Color(0xFF202124);
   static const BoxDecoration boxDecoration= BoxDecoration(color: Color.fromRGBO(118, 118, 128, 0.24));
   static const Color fileBoxColor= Colors.black;

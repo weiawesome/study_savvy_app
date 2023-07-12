@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:study_savvy_app/blocs/bloc_files.dart';
 import 'package:study_savvy_app/blocs/bloc_specific_file.dart';
 import 'package:study_savvy_app/utils/routes.dart';
@@ -51,9 +52,11 @@ class _FilesPage extends State<FilesPage> {
                     return const Loading();
                   }
                   else if (state.status=="SUCCESS" || state.status=="PENDING"){
-                    return RefreshIndicator(
+                    return LiquidPullToRefresh(
+                      animSpeedFactor:1.5,
                       color: Theme.of(context).hintColor,
                       onRefresh: _refresh,
+                      showChildOpacityTransition: false,
                       child: ListView.builder(
                           physics: const AlwaysScrollableScrollPhysics(),
                           controller: _scrollController,
