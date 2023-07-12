@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:study_savvy_app/styles/custom_style.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:study_savvy_app/blocs/bloc_access_methods.dart';
 import 'package:study_savvy_app/widgets/loading.dart';
@@ -81,8 +82,8 @@ class _AccessTokenPage extends State<AccessTokenPage> {
                             Expanded(
                               flex: 4,
                               child: Container(
-                                decoration: BoxDecoration(color: Colors.green,borderRadius: BorderRadius.circular(10)),
-                                child: TextButton(onPressed: (){_launchURL();}, child: Text('Gain your ACCESS_TOKEN',style: Theme.of(context).textTheme.displayMedium,)),
+                                decoration: BoxDecoration(border: Border.all(color: Theme.of(context).brightness==Brightness.light?LightStyle.borderColor:DarkStyle.borderColor),borderRadius: BorderRadius.circular(10)),
+                                child: TextButton(onPressed: (){_launchURL();}, child: Text('Gain your ACCESS_TOKEN',style: Theme.of(context).textTheme.displaySmall,)),
                               ),
                             ),
                             Expanded(
