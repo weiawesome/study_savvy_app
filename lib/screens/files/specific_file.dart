@@ -26,6 +26,12 @@ class _SpecificFilePage extends State<SpecificFilePage> {
   void initState() {
     super.initState();
     bloc=BlocProvider.of<FileBloc>(context);
+    context.read<FileBloc>().stream.listen((FileState state) {
+      if(state.status=="SUCCESS"){
+       _promptController.text=state.file!.prompt;
+       _contentController.text=state.file!.content;
+      }
+    });
   }
   @override
   void dispose() {
@@ -73,8 +79,6 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                   return const Loading();
                                 }
                                 else if(state.status=="SUCCESS"){
-                                  _promptController.text=state.file!.prompt;
-                                  _contentController.text=state.file!.content;
                                   return Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -125,7 +129,7 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                       Container(
                                         margin: const EdgeInsets.symmetric(vertical: 10),
                                         width: double.infinity,
-                                        padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+                                        padding: const EdgeInsets.symmetric(horizontal: 10),
                                         decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),border: Border.all(color: Theme.of(context).brightness==Brightness.light?LightStyle.borderColor:DarkStyle.borderColor,)),
                                         child: Column(
                                           children: [
@@ -135,10 +139,10 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                               children: [
                                                 Container(
                                                   margin: const EdgeInsets.symmetric(vertical: 15),
-                                                  decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),color: Theme.of(context).brightness==Brightness.light?Colors.black38:Colors.grey[300]),
-                                                  padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 10),
+                                                  decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),border: Border.all(color: Theme.of(context).brightness==Brightness.light?LightStyle.borderColor:DarkStyle.borderColor,)),
+                                                  padding: const EdgeInsets.symmetric(vertical:10,horizontal: 10),
                                                   alignment: Alignment.topLeft,
-                                                  child: Text(state.file!.summarize,style: Theme.of(context).textTheme.labelSmall,maxLines: null,),
+                                                  child: Text(state.file!.summarize,style: Theme.of(context).textTheme.headlineSmall,maxLines: null,),
                                                 )
                                               ],
                                             ),
@@ -148,7 +152,7 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                       Container(
                                         margin: const EdgeInsets.symmetric(vertical: 10),
                                         width: double.infinity,
-                                        padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+                                        padding: const EdgeInsets.symmetric(horizontal: 10),
                                         decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),border: Border.all(color: Theme.of(context).brightness==Brightness.light?LightStyle.borderColor:DarkStyle.borderColor,)),
                                         child: Column(
                                           children:[
@@ -159,11 +163,11 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                                 Column(
                                                   children: state.file!.details.map((item){
                                                     return Container(
-                                                      margin: const EdgeInsets.symmetric(vertical: 15),
-                                                      decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),color: Theme.of(context).brightness==Brightness.light?Colors.black38:Colors.grey[300]),
-                                                      padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 10),
+                                                      margin: const EdgeInsets.symmetric(vertical: 5),
+                                                      decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),border: Border.all(color: Theme.of(context).brightness==Brightness.light?LightStyle.borderColor:DarkStyle.borderColor,)),
+                                                      padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 10),
                                                       alignment: Alignment.topLeft,
-                                                      child: Text(item,style: Theme.of(context).textTheme.labelSmall,maxLines: null,),
+                                                      child: Text(item,style: Theme.of(context).textTheme.headlineSmall,maxLines: null,),
                                                     );
                                                   }).toList(),
                                                 )
@@ -175,7 +179,7 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                       Container(
                                         margin: const EdgeInsets.symmetric(vertical: 10),
                                         width: double.infinity,
-                                        padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+                                        padding: const EdgeInsets.symmetric(horizontal: 10),
                                         decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),border: Border.all(color: Theme.of(context).brightness==Brightness.light?LightStyle.borderColor:DarkStyle.borderColor,)),
                                         child: Column(
                                           children: [
@@ -185,8 +189,8 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                                 children: [
                                                   Container(
                                                     margin: const EdgeInsets.symmetric(vertical: 15),
-                                                    decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),color: Theme.of(context).brightness==Brightness.light?Colors.black38:Colors.grey[300]),
-                                                    padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 10),
+                                                    decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),border: Border.all(color: Theme.of(context).brightness==Brightness.light?LightStyle.borderColor:DarkStyle.borderColor,)),
+                                                    padding: const EdgeInsets.symmetric(horizontal: 10),
                                                     alignment: Alignment.topLeft,
                                                     child: TextField(
                                                       controller: _promptController,
@@ -206,7 +210,7 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                       Container(
                                         margin: const EdgeInsets.symmetric(vertical: 10),
                                         width: double.infinity,
-                                        padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+                                        padding: const EdgeInsets.symmetric(horizontal: 10),
                                         decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),border: Border.all(color: Theme.of(context).brightness==Brightness.light?LightStyle.borderColor:DarkStyle.borderColor,)),
                                         child: Column(
                                           children: [
@@ -216,15 +220,15 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                               children: [
                                                 Container(
                                                   margin: const EdgeInsets.symmetric(vertical: 15),
-                                                  decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),color: Theme.of(context).brightness==Brightness.light?Colors.black38:Colors.grey[300]),
-                                                  padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 10),
+                                                  decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),border: Border.all(color: Theme.of(context).brightness==Brightness.light?LightStyle.borderColor:DarkStyle.borderColor,)),
+                                                  padding: const EdgeInsets.symmetric(horizontal: 10),
                                                   alignment: Alignment.topLeft,
                                                   child: TextField(
                                                     controller: _contentController,
                                                     decoration: const InputDecoration(
                                                       border: InputBorder.none,
                                                     ),
-                                                    style: Theme.of(context).textTheme.labelSmall,
+                                                    style: Theme.of(context).textTheme.headlineSmall,
                                                     maxLines: null,),
                                                 )
                                               ],
@@ -235,7 +239,7 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                       if (state.type=="OCR") Container(
                                         margin: const EdgeInsets.symmetric(vertical: 10),
                                         width: double.infinity,
-                                        padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+                                        padding: const EdgeInsets.symmetric(horizontal: 10),
                                         decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),border: Border.all(color: Theme.of(context).brightness==Brightness.light?LightStyle.borderColor:DarkStyle.borderColor,)),
                                         child: Column(
                                           children: [
@@ -255,7 +259,7 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                       ) else Container(
                                         margin: const EdgeInsets.symmetric(vertical: 10),
                                         width: double.infinity,
-                                        padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+                                        padding: const EdgeInsets.symmetric(horizontal: 10),
                                         decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),border: Border.all(color: Theme.of(context).brightness==Brightness.light?LightStyle.borderColor:DarkStyle.borderColor,)),
                                         child: Column(
                                           children: [
