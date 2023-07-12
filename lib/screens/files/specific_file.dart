@@ -75,7 +75,7 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                       margin: const EdgeInsets.symmetric(vertical: 10),
                                       width: double.infinity,
                                       padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 15),
-                                      decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),color: Theme.of(context).hintColor),
+                                      decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),border: Border.all(color: Colors.black12,width: 2)),
                                       child: Column(
                                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                                         children: [
