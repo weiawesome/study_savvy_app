@@ -195,7 +195,7 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                                     child: TextField(
                                                       controller: _promptController,
                                                       keyboardType: TextInputType.multiline,
-                                                      style: Theme.of(context).textTheme.labelSmall,
+                                                      style: Theme.of(context).textTheme.headlineSmall,
                                                       decoration: const InputDecoration(
                                                         border: InputBorder.none,
                                                       ),
