@@ -17,6 +17,7 @@ import 'package:study_savvy_app/screens/article_improver/article_improver.dart';
 import 'package:study_savvy_app/screens/files/files.dart';
 import 'package:study_savvy_app/screens/home.dart';
 import 'package:study_savvy_app/screens/profile/profile.dart';
+import 'package:study_savvy_app/widgets/custom_navigate.dart';
 
 void main(){
   testWidgets('Bottom-navigator test', (WidgetTester tester) async {
@@ -62,6 +63,7 @@ void main(){
     ));
 
     expect(find.byType(HomePage),findsOneWidget);
+    expect(find.byType(CustomNavigate),findsOneWidget);
 
     await tester.tap(find.byIcon(Icons.feed_outlined));
     await tester.pump();
