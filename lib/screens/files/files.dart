@@ -22,8 +22,8 @@ class _FilesPage extends State<FilesPage> {
     super.initState();
     context.read<FilesBloc>().add(FilesEventInit());
     _scrollController.addListener(() {
+      FilesState? state=context.read<FilesBloc>().state;
       if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
-        FilesState? state=context.read<FilesBloc>().state;
         context.read<FilesBloc>().add(FilesEventLoadMore(state.files));
       }
     });
@@ -60,8 +60,11 @@ class _FilesPage extends State<FilesPage> {
                       child: ListView.builder(
                           physics: const BouncingScrollPhysics(),
                           controller: _scrollController,
-                          itemCount: state.files.files.length,
+                          itemCount: state.status=="PENDING"?state.files.files.length+1:state.files.files.length,
                           itemBuilder: (context, index) {
+                            if(index==state.files.files.length){
+                              return const Loading();
+                            }
                             return TextButton(
                                 onPressed: (){
                                   if ((state.files.files[index]).status=='SUCCESS'){
