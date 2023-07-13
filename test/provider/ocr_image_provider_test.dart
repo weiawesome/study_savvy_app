@@ -9,6 +9,7 @@ import 'ocr_image_provider_test.mocks.dart';
 @GenerateMocks([File])
 void main(){
   group('OCRImageProvider Test', () {
+
     test('Initial state is null', () {
       final ocrImageProvider = OCRImageProvider();
       expect(ocrImageProvider.image, null);
@@ -16,6 +17,7 @@ void main(){
       expect(ocrImageProvider.file, null);
       expect(ocrImageProvider.isNull(), true);
     });
+
     test('Set method sets image, path, file and calls notifyListeners(Length of Image is 1000)', () async {
       final testFile = MockFile();
       const String testPath= "Test path";
@@ -64,6 +66,7 @@ void main(){
       expect(ocrImageProvider.file, testFile);
       expect(ocrImageProvider.isNull(), false);
     });
+
     test('Clear method clear image, path, file and calls notifyListeners(Length of Image is 10)', () async {
       final testFile = MockFile();
       const String testPath= "Test path";
