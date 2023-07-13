@@ -16,6 +16,9 @@ class ArticleImproverService {
 
   Future<void> predictOcrGraph(ArticleImage data) async {
     String? jwt=await jwtService.getJwt();
+    if(jwt==null){
+      throw AuthException("JWT invalid");
+    }
     File imageData=data.image;
     String text=data.prompt;
     final response = await httpClient.send(http.MultipartRequest(
@@ -56,6 +59,9 @@ class ArticleImproverService {
 
   Future<void> predictOcrText(ArticleText data) async {
     String? jwt=await jwtService.getJwt();
+    if(jwt==null){
+      throw AuthException("JWT invalid");
+    }
     final response = await httpClient.post(
       Uri.parse(ApiRoutes.articleImproverTextUrl),
       headers: {

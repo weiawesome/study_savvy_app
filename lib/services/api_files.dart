@@ -15,6 +15,9 @@ class FilesService {
 
   Future<Uint8List?> getImage(String id) async {
     String? jwt=await jwtService.getJwt();
+    if(jwt==null){
+      throw AuthException("JWT invalid");
+    }
     final response = await httpClient.get(
       Uri.parse("${ApiRoutes.fileImageUrl}/$id"),
       headers: {'Authorization': 'Bearer ${jwt!}'},
@@ -45,6 +48,9 @@ class FilesService {
 
   Future<Uint8List> getAudio(String id) async {
     String? jwt=await jwtService.getJwt();
+    if(jwt==null){
+      throw AuthException("JWT invalid");
+    }
     final response = await httpClient.get(
       Uri.parse("${ApiRoutes.fileAudioUrl}/$id"),
       headers: {'Authorization': 'Bearer ${jwt!}'},
@@ -72,6 +78,9 @@ class FilesService {
 
   Future<SpecificFile> getSpecificFile(String id) async {
     String? jwt=await jwtService.getJwt();
+    if(jwt==null){
+      throw AuthException("JWT invalid");
+    }
     final response = await httpClient.get(
       Uri.parse("${ApiRoutes.fileUrl}/$id"),
       headers: {'Authorization': 'Bearer ${jwt!}'},
@@ -99,6 +108,9 @@ class FilesService {
 
   Future<Files> getFiles(int page) async {
     String? jwt=await jwtService.getJwt();
+    if(jwt==null){
+      throw AuthException("JWT invalid");
+    }
     final response = await httpClient.get(
       Uri.parse("${ApiRoutes.fileUrl}?page=$page"),
       headers: {'Authorization': 'Bearer ${jwt!}'},
@@ -128,6 +140,9 @@ class FilesService {
 
   Future<void> deleteSpecificFile(String id) async {
     String? jwt=await jwtService.getJwt();
+    if(jwt==null){
+      throw AuthException("JWT invalid");
+    }
     final response = await httpClient.delete(
       Uri.parse("${ApiRoutes.fileUrl}/$id"),
       headers: {'Authorization': 'Bearer ${jwt!}'},
@@ -155,6 +170,9 @@ class FilesService {
 
   Future<void> editSpecificFileOCR(EditFile file) async {
     String? jwt=await jwtService.getJwt();
+    if(jwt==null){
+      throw AuthException("JWT invalid");
+    }
     final String id=file.id;
     final response = await httpClient.put(
         Uri.parse("${ApiRoutes.fileNlpEditOCRUrl}/$id"),
@@ -188,6 +206,9 @@ class FilesService {
 
   Future<void> editSpecificFileASR(EditFile file) async {
     String? jwt=await jwtService.getJwt();
+    if(jwt==null){
+      throw AuthException("JWT invalid");
+    }
     final String id=file.id;
     final response = await httpClient.put(
         Uri.parse("${ApiRoutes.fileNlpEditASRUrl}/$id"),

@@ -14,6 +14,9 @@ class ProfileService {
   
   Future<Profile> getProfile() async {
     String? jwt=await jwtService.getJwt();
+    if(jwt==null){
+      throw AuthException("JWT invalid");
+    }
     final response = await httpClient.get(
       Uri.parse(ApiRoutes.profileUrl),
       headers: {'Authorization': 'Bearer ${jwt!}'},
@@ -42,6 +45,9 @@ class ProfileService {
 
   Future<void> setApiKey(String apikey) async {
     String? jwt=await jwtService.getJwt();
+    if(jwt==null){
+      throw AuthException("JWT invalid");
+    }
     SecureData data=await encrypt(apikey);
     final response = await httpClient.put(
       Uri.parse(ApiRoutes.apiKeyUrl),
@@ -74,6 +80,9 @@ class ProfileService {
 
   Future<void> setAccessToken(String accessToken) async {
     String? jwt=await jwtService.getJwt();
+    if(jwt==null){
+      throw AuthException("JWT invalid");
+    }
     SecureData data=await encrypt(accessToken);
     final response = await httpClient.put(
       Uri.parse(ApiRoutes.accessTokenUrl),
@@ -106,6 +115,9 @@ class ProfileService {
 
   Future<void> resetPassword(UpdatePwd data) async {
     String? jwt=await jwtService.getJwt();
+    if(jwt==null){
+      throw AuthException("JWT invalid");
+    }
     final response = await httpClient.put(
       Uri.parse(ApiRoutes.passwordEditUrl),
       headers: {
@@ -140,6 +152,9 @@ class ProfileService {
 
   Future<void> logout() async {
     String? jwt=await jwtService.getJwt();
+    if(jwt==null){
+      throw AuthException("JWT invalid");
+    }
     final response = await httpClient.delete(
       Uri.parse(ApiRoutes.logoutUrl),
       headers: {
