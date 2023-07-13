@@ -9,6 +9,7 @@ import 'dart:typed_data' as _i6;
 
 import 'package:http/http.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
+import 'package:study_savvy_app/models/model_files.dart' as _i7;
 import 'package:study_savvy_app/services/jwt_storage.dart' as _i3;
 
 // ignore_for_file: type=lint
@@ -305,4 +306,34 @@ class MockClient extends _i1.Mock implements _i2.Client {
         ),
         returnValueForMissingStub: null,
       );
+}
+
+/// A class which mocks [File].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockFile extends _i1.Mock implements _i7.File {
+  MockFile() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  String get id => (super.noSuchMethod(
+        Invocation.getter(#id),
+        returnValue: '',
+      ) as String);
+  @override
+  String get time => (super.noSuchMethod(
+        Invocation.getter(#time),
+        returnValue: '',
+      ) as String);
+  @override
+  String get status => (super.noSuchMethod(
+        Invocation.getter(#status),
+        returnValue: '',
+      ) as String);
+  @override
+  String get type => (super.noSuchMethod(
+        Invocation.getter(#type),
+        returnValue: '',
+      ) as String);
 }
