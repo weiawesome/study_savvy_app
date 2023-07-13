@@ -30,7 +30,9 @@ class OnlineBloc extends Bloc<OnlineEvent,OnlineState> {
           emit(OnlineState(false,null));
         }
         on AuthException {
-          emit(OnlineState(true,"AUTH"));
+          JwtService jwtService=JwtService();
+          await jwtService.deleteJwt();
+          emit(OnlineState(false,"AUTH"));
         }
         on ServerException {
           emit(OnlineState(true,"SERVER"));
