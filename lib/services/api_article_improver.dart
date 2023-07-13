@@ -15,7 +15,6 @@ class ArticleImproverService {
   ArticleImproverService({JwtService? jwtService, http.Client? httpClient,}): jwtService = jwtService ?? JwtService(), httpClient = httpClient ?? http.Client();
 
   Future<void> predictOcrGraph(ArticleImage data) async {
-    JwtService jwtService=JwtService();
     String? jwt=await jwtService.getJwt();
     File imageData=data.image;
     String text=data.prompt;
@@ -56,7 +55,6 @@ class ArticleImproverService {
   }
 
   Future<void> predictOcrText(ArticleText data) async {
-    JwtService jwtService=JwtService();
     String? jwt=await jwtService.getJwt();
     final response = await http.post(
       Uri.parse(ApiRoutes.articleImproverTextUrl),

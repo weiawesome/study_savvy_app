@@ -14,7 +14,6 @@ class FilesService {
   FilesService({JwtService? jwtService, http.Client? httpClient,}): jwtService = jwtService ?? JwtService(), httpClient = httpClient ?? http.Client();
 
   Future<Uint8List?> getImage(String id) async {
-    JwtService jwtService=JwtService();
     String? jwt=await jwtService.getJwt();
     final response = await http.get(
       Uri.parse("${ApiRoutes.fileImageUrl}/$id"),
@@ -45,7 +44,6 @@ class FilesService {
   }
 
   Future<Uint8List> getAudio(String id) async {
-    JwtService jwtService=JwtService();
     String? jwt=await jwtService.getJwt();
     final response = await http.get(
       Uri.parse("${ApiRoutes.fileAudioUrl}/$id"),
@@ -73,7 +71,6 @@ class FilesService {
   }
 
   Future<SpecificFile> getSpecificFile(String id) async {
-    JwtService jwtService=JwtService();
     String? jwt=await jwtService.getJwt();
     final response = await http.get(
       Uri.parse("${ApiRoutes.fileUrl}/$id"),
@@ -101,7 +98,6 @@ class FilesService {
   }
 
   Future<Files> getFiles(int page) async {
-    JwtService jwtService=JwtService();
     String? jwt=await jwtService.getJwt();
     final response = await http.get(
       Uri.parse("${ApiRoutes.fileUrl}?page=$page"),
@@ -118,7 +114,7 @@ class FilesService {
       throw ExistException("Source not exist");
     }
     else if (response.statusCode == 422){
-      JwtService jwtService=JwtService();
+      
       await jwtService.deleteJwt();
       throw AuthException("JWT invalid");
     }
@@ -131,7 +127,6 @@ class FilesService {
   }
 
   Future<void> deleteSpecificFile(String id) async {
-    JwtService jwtService=JwtService();
     String? jwt=await jwtService.getJwt();
     final response = await http.delete(
       Uri.parse("${ApiRoutes.fileUrl}/$id"),
@@ -159,7 +154,6 @@ class FilesService {
   }
 
   Future<void> editSpecificFileOCR(EditFile file) async {
-    JwtService jwtService=JwtService();
     String? jwt=await jwtService.getJwt();
     final String id=file.id;
     final response = await http.put(
@@ -193,7 +187,6 @@ class FilesService {
   }
 
   Future<void> editSpecificFileASR(EditFile file) async {
-    JwtService jwtService=JwtService();
     String? jwt=await jwtService.getJwt();
     final String id=file.id;
     final response = await http.put(

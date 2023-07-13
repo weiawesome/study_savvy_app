@@ -19,18 +19,17 @@ class OnlineState {
 
 class OnlineBloc extends Bloc<OnlineEvent,OnlineState> {
   final ProfileService apiService=ProfileService();
+  final JwtService jwtService=JwtService();
   OnlineBloc(): super(OnlineState(true,null)){
     on<OnlineEvent>((event,emit) async {
       if(event is OnlineEventLogout){
         emit(OnlineState(null,null));
         try{
           await apiService.logout();
-          JwtService jwtService=JwtService();
           await jwtService.deleteJwt();
           emit(OnlineState(false,null));
         }
         on AuthException {
-          JwtService jwtService=JwtService();
           await jwtService.deleteJwt();
           emit(OnlineState(false,"AUTH"));
         }
@@ -59,7 +58,6 @@ class OnlineBloc extends Bloc<OnlineEvent,OnlineState> {
         }
       }
       else if(event is OnlineEventCheck){
-        JwtService jwtService=JwtService();
         bool? status=await jwtService.hasJwt();
         emit(OnlineState(status==true,null));
       }
