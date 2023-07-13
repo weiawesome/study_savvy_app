@@ -213,7 +213,7 @@ class _ProfilePage extends State<ProfilePage> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text("API_KEY",style: Theme.of(context).textTheme.displaySmall),
+                                  Text("Api_Key",style: Theme.of(context).textTheme.displaySmall),
                                   Icon(Icons.navigate_next_rounded,size: 25,color: Theme.of(context).hintColor)
                                 ],
                               )
@@ -233,7 +233,7 @@ class _ProfilePage extends State<ProfilePage> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text("ACCESS_TOKEN",style: Theme.of(context).textTheme.displaySmall),
+                                  Text("Access_Token",style: Theme.of(context).textTheme.displaySmall),
                                   Icon(Icons.navigate_next_rounded,size: 25,color: Theme.of(context).hintColor)
                                 ],
                               )

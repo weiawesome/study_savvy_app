@@ -32,6 +32,7 @@ class _AccessTokenPage extends State<AccessTokenPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body:GestureDetector(
         onTap: () {
           FocusScopeNode currentFocus = FocusScope.of(context);
@@ -50,7 +51,7 @@ class _AccessTokenPage extends State<AccessTokenPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(flex:1,child: IconButton(onPressed: (){Navigator.pop(context);}, icon: const Icon(Icons.arrow_back_ios_new),alignment: Alignment.bottomLeft,)),
-                          Expanded(flex:5,child: Text('TOKEN',style: Theme.of(context).textTheme.bodyLarge,textAlign: TextAlign.center,),),
+                          Expanded(flex:5,child: Text('AccessToken',style: Theme.of(context).textTheme.bodyLarge,textAlign: TextAlign.center,),),
                           Expanded(flex:1,child: Container()),
                         ],
                       ),
@@ -63,30 +64,6 @@ class _AccessTokenPage extends State<AccessTokenPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Expanded(
-                                flex: 20,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Text("Have service of chat-gpt by reverse.",style: Theme.of(context).textTheme.displaySmall,),
-                                    Text("You can give us your ACCESS_TOKEN.",style: Theme.of(context).textTheme.displaySmall,),
-                                    Text("We won't charge for this service, then you can use the service powered by Open-AI.",style: Theme.of(context).textTheme.displaySmall,),
-                                    Text("Furthermore, we will use AES, RSA, SSL/TLS algorithm to encrypt your API_KEY.",style: Theme.of(context).textTheme.displaySmall,),
-                                    Text("Hence, if you want to have the service, gain you ACCESS_TOKEN and give us.",style: Theme.of(context).textTheme.displaySmall,),
-                                  ],
-                                )
-                            ),
-                            Expanded(
-                                flex: 1,
-                                child: Container()
-                            ),
-                            Expanded(
-                              flex: 4,
-                              child: Container(
-                                decoration: BoxDecoration(border: Border.all(color: Theme.of(context).brightness==Brightness.light?LightStyle.borderColor:DarkStyle.borderColor),borderRadius: BorderRadius.circular(10)),
-                                child: TextButton(onPressed: (){_launchURL();}, child: Text('Gain your ACCESS_TOKEN',style: Theme.of(context).textTheme.displaySmall,)),
-                              ),
-                            ),
-                            Expanded(
                                 flex: 1,
                                 child: Container()
                             ),
@@ -94,30 +71,26 @@ class _AccessTokenPage extends State<AccessTokenPage> {
                               builder: (context,state){
                                 if(state==null){
                                   return Expanded(
-                                    flex: 4,
-                                    child: Row(
+                                    flex: 5,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Expanded(
-                                            flex:4,
-                                            child: Text('ACCESS\nTOKEN:',style: Theme.of(context).textTheme.displayMedium,)
-                                        ),
-                                        Expanded(
-                                            flex:6,
-                                            child: Container(
-                                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),border: Border.all(width: 1)),
-                                              padding: const EdgeInsets.symmetric(horizontal: 10),
-                                              child: TextField(
-                                                controller: _controller,
-                                                maxLines: 1,
-                                                decoration: const InputDecoration(
-                                                  hintText: "Access_Token",
-                                                  hintMaxLines: 1,
-                                                  border: InputBorder.none,
-                                                ),
-                                              ),
-                                            )
-                                        ),
-
+                                        Text('Access_Token:',style: Theme.of(context).textTheme.displayMedium,),
+                                        Container(
+                                          margin: const EdgeInsets.only(top: 10),
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),border: Border.all(width: 1)),
+                                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                                          child: TextField(
+                                            controller: _controller,
+                                            maxLines: 1,
+                                            decoration: const InputDecoration(
+                                              hintText: "Access_Token",
+                                              hintMaxLines: 1,
+                                              border: InputBorder.none,
+                                            ),
+                                          ),
+                                        )
                                       ],
                                     ),
                                   );
@@ -145,6 +118,35 @@ class _AccessTokenPage extends State<AccessTokenPage> {
                                 }
                               },
                             ),
+                            Expanded(
+                                flex: 15,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Text("Have service of chat-gpt by reverse.",style: Theme.of(context).textTheme.displaySmall,),
+                                    Text("You can give us your ACCESS_TOKEN.",style: Theme.of(context).textTheme.displaySmall,),
+                                    Text("We won't charge for this service, then you can use the service powered by Open-AI.",style: Theme.of(context).textTheme.displaySmall,),
+                                    Text("Furthermore, we will use AES, RSA, SSL/TLS algorithm to encrypt your API_KEY.",style: Theme.of(context).textTheme.displaySmall,),
+                                    Text("Hence, if you want to have the service, gain you ACCESS_TOKEN and give us.",style: Theme.of(context).textTheme.displaySmall,),
+                                  ],
+                                )
+                            ),
+                            Expanded(
+                              flex: 4,
+                              child: TextButton(
+                                  onPressed: (){_launchURL();},
+                                  child: Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 15),
+                                      decoration: BoxDecoration(border: Border.all(color: Theme.of(context).brightness==Brightness.light?LightStyle.borderColor:DarkStyle.borderColor),borderRadius: BorderRadius.circular(10)),
+                                      child: Text('Gain your ACCESS_TOKEN',style: Theme.of(context).textTheme.displaySmall,)
+                                  )
+                              ),
+                            ),
+                            Expanded(
+                                flex: 1,
+                                child: Container()
+                            ),
+
                           ],
                         ),
                       ),

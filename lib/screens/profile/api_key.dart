@@ -30,6 +30,7 @@ class _ApiKeyPage extends State<ApiKeyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body:GestureDetector(
         onTap: () {
           FocusScopeNode currentFocus = FocusScope.of(context);
@@ -48,7 +49,7 @@ class _ApiKeyPage extends State<ApiKeyPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(flex:1,child: IconButton(onPressed: (){Navigator.pop(context);}, icon: const Icon(Icons.arrow_back_ios_new),alignment: Alignment.bottomLeft,)),
-                          Expanded(flex:5,child: Text('API_KEY',style: Theme.of(context).textTheme.bodyLarge,textAlign: TextAlign.center,),),
+                          Expanded(flex:5,child: Text('Api_Key',style: Theme.of(context).textTheme.bodyLarge,textAlign: TextAlign.center,),),
                           Expanded(flex:1,child: Container()),
                         ],
                       ),
@@ -61,30 +62,6 @@ class _ApiKeyPage extends State<ApiKeyPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Expanded(
-                                flex: 20,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Text("To have the service of chat-gpt.",style: Theme.of(context).textTheme.displaySmall,),
-                                    Text("You can give us your API_KEY in Open-AI.",style: Theme.of(context).textTheme.displaySmall,),
-                                    Text("We won't charge for this service, then you can use the service powered by Open-AI.",style: Theme.of(context).textTheme.displaySmall,),
-                                    Text("Furthermore, we will use AES, RSA, SSL/TLS algorithm to encrypt your API_KEY.",style: Theme.of(context).textTheme.displaySmall,),
-                                    Text("Hence, if you want to have the service, gain you API_KEY and give us.",style: Theme.of(context).textTheme.displaySmall,),
-                                  ],
-                                )
-                            ),
-                            Expanded(
-                                flex: 1,
-                                child: Container()
-                            ),
-                            Expanded(
-                              flex: 4,
-                              child: Container(
-                                decoration: BoxDecoration(border: Border.all(color: Theme.of(context).brightness==Brightness.light?LightStyle.borderColor:DarkStyle.borderColor),borderRadius: BorderRadius.circular(10)),
-                                child: TextButton(onPressed: (){_launchURL();}, child: Text('Gain your API_KEY',style: Theme.of(context).textTheme.displaySmall,)),
-                              ),
-                            ),
-                            Expanded(
                                 flex: 1,
                                 child: Container()
                             ),
@@ -92,29 +69,25 @@ class _ApiKeyPage extends State<ApiKeyPage> {
                               builder: (context,state){
                                 if(state==null){
                                   return Expanded(
-                                    flex: 4,
-                                    child: Row(
+                                    flex: 5,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Expanded(
-                                            flex:4,
-                                            child: Text('API_KEY:',style: Theme.of(context).textTheme.displayMedium,)
-                                        ),
-                                        Expanded(
-                                            flex:6,
-                                            child: Container(
-                                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),border: Border.all(width: 1)),
-                                              padding: const EdgeInsets.symmetric(horizontal: 10),
-                                              child: TextField(
-                                                controller: _controller,
-                                                maxLines: 1,
-                                                decoration: const InputDecoration(
-                                                  hintText: "API_KEY",
-                                                  hintMaxLines: 1,
-                                                  border: InputBorder.none,
-                                                ),
-                                              ),
-                                            )
-                                        ),
+                                        Text('Api_Key:',style: Theme.of(context).textTheme.displayMedium,),
+                                        Container(
+                                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),border: Border.all(width: 1)),
+                                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                                          margin: const EdgeInsets.only(top: 10),
+                                          child: TextField(
+                                            controller: _controller,
+                                            maxLines: 1,
+                                            decoration: const InputDecoration(
+                                              hintText: "Api_Key",
+                                              hintMaxLines: 1,
+                                              border: InputBorder.none,
+                                            ),
+                                          ),
+                                        )
                                       ],
                                     ),
                                   );
@@ -142,6 +115,34 @@ class _ApiKeyPage extends State<ApiKeyPage> {
                                 }
 
                               },
+                            ),
+                            Expanded(
+                                flex: 15,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Text("To have the service of chat-gpt.",style: Theme.of(context).textTheme.displaySmall,),
+                                    Text("You can give us your Api_Key in Open-AI.",style: Theme.of(context).textTheme.displaySmall,),
+                                    Text("We won't charge for this service, then you can use the service powered by Open-AI.",style: Theme.of(context).textTheme.displaySmall,),
+                                    Text("Furthermore, we will use AES, RSA, SSL/TLS algorithm to encrypt your Api_Key.",style: Theme.of(context).textTheme.displaySmall,),
+                                    Text("Hence, if you want to have the service, gain you Api_Key and give us.",style: Theme.of(context).textTheme.displaySmall,),
+                                  ],
+                                )
+                            ),
+                            Expanded(
+                              flex: 4,
+                              child: TextButton(
+                                  onPressed: (){_launchURL();},
+                                  child: Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 15),
+                                      decoration: BoxDecoration(border: Border.all(color: Theme.of(context).brightness==Brightness.light?LightStyle.borderColor:DarkStyle.borderColor),borderRadius: BorderRadius.circular(10)),
+                                      child: Text('Gain your Api_Key',style: Theme.of(context).textTheme.displaySmall,)
+                                  )
+                              ),
+                            ),
+                            Expanded(
+                                flex: 1,
+                                child: Container()
                             ),
                           ],
                         ),
