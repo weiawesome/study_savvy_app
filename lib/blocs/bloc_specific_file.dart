@@ -38,12 +38,13 @@ class FileState {
 
 
 class FileBloc extends Bloc<FileEvent,FileState> {
+  final FilesService apiService=FilesService();
   FileBloc(): super(FileState("INIT",null, null, null,null,null)){
     on<FileEvent>((event,emit) async {
       if (event is FileEventOCR){
         try{
-          SpecificFile file=await getSpecificFile(event.id);
-          Uint8List? media=await getImage(event.id);
+          SpecificFile file=await apiService.getSpecificFile(event.id);
+          Uint8List? media=await apiService.getImage(event.id);
           emit(FileState("SUCCESS",null,file, media,"OCR",event.id));
         }
         on AuthException {
@@ -64,8 +65,8 @@ class FileBloc extends Bloc<FileEvent,FileState> {
       }
       else if (event is FileEventASR){
         try{
-          SpecificFile file=await getSpecificFile(event.id);
-          Uint8List media=await getAudio(event.id);
+          SpecificFile file=await apiService.getSpecificFile(event.id);
+          Uint8List media=await apiService.getAudio(event.id);
           emit(FileState("SUCCESS",null,file, media,"ASR",event.id));
         }
         on AuthException {
@@ -90,7 +91,7 @@ class FileBloc extends Bloc<FileEvent,FileState> {
       else if(event is FileEventDelete){
         emit(FileState("PENDING",null,null,null,null,null));
         try{
-          await deleteSpecificFile(event.id);
+          await apiService.deleteSpecificFile(event.id);
           emit(FileState("SUCCESS_OTHER","Success to delete",null,null,null,null));
         }
         on AuthException {
@@ -112,7 +113,7 @@ class FileBloc extends Bloc<FileEvent,FileState> {
       else if(event is FileEventEditOCR){
         emit(FileState("PENDING",null,null,null,null,null));
         try{
-          await editSpecificFileOCR(event.file);
+          await apiService.editSpecificFileOCR(event.file);
           emit(FileState("SUCCESS_OTHER","Success to upload",null,null,null,null));
         }
         on AuthException {
@@ -134,7 +135,7 @@ class FileBloc extends Bloc<FileEvent,FileState> {
       else if(event is FileEventEditASR){
         emit(FileState("PENDING",null,null,null,null,null));
         try{
-          await editSpecificFileASR(event.file);
+          await apiService.editSpecificFileASR(event.file);
           emit(FileState("SUCCESS_OTHER","Success to upload",null,null,null,null));
         }
         on AuthException {

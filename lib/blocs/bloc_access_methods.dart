@@ -21,6 +21,7 @@ class AccessMethodState {
   AccessMethodState(this.status,this.error);
 }
 class AccessMethodBloc extends Bloc<AccessMethodEvent,AccessMethodState?> {
+  final ProfileService apiService=ProfileService();
   AccessMethodBloc(): super(null){
     on<AccessMethodEvent>((event,emit) async {
       if(event is AccessMethodEventReset){
@@ -29,7 +30,7 @@ class AccessMethodBloc extends Bloc<AccessMethodEvent,AccessMethodState?> {
       else if(event is AccessMethodEventApiKey){
         emit(AccessMethodState("PENDING",null));
         try{
-          await setApiKey(event.apikey);
+          await apiService.setApiKey(event.apikey);
           emit(AccessMethodState("SUCCESS",null));
         }
         on AuthException {
@@ -51,7 +52,7 @@ class AccessMethodBloc extends Bloc<AccessMethodEvent,AccessMethodState?> {
       else if(event is AccessMethodEventAccessToken){
         emit(AccessMethodState("PENDING",null));
         try{
-          await setAccessToken(event.accessToken);
+          await apiService.setAccessToken(event.accessToken);
           emit(AccessMethodState("SUCCESS",null));
         }
         on AuthException {

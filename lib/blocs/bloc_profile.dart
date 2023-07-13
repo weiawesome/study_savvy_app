@@ -14,11 +14,12 @@ class ProfileState {
   ProfileState(this.status,this.error,this.profile);
 }
 class ProfileBloc extends Bloc<ProfileEvent,ProfileState> {
+  final ProfileService apiService=ProfileService();
   ProfileBloc(): super(ProfileState("INIT",null,Profile("","",""))){
     on<ProfileEvent>((event,emit) async {
       if(event is ProfileEventGet){
         try{
-          Profile result=await getProfile();
+          Profile result=await apiService.getProfile();
           emit(ProfileState("SUCCESS",null, result));  
         }
         on AuthException {

@@ -18,12 +18,13 @@ class OnlineState {
 }
 
 class OnlineBloc extends Bloc<OnlineEvent,OnlineState> {
+  final ProfileService apiService=ProfileService();
   OnlineBloc(): super(OnlineState(true,null)){
     on<OnlineEvent>((event,emit) async {
       if(event is OnlineEventLogout){
         emit(OnlineState(null,null));
         try{
-          await logout();
+          await apiService.logout();
           JwtService jwtService=JwtService();
           await jwtService.deleteJwt();
           emit(OnlineState(false,null));

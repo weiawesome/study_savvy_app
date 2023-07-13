@@ -6,162 +6,169 @@ import 'package:study_savvy_app/utils/exception.dart';
 import 'api_routes.dart';
 import 'jwt_storage.dart';
 
-Future<Profile> getProfile() async {
-  JwtService jwtService=JwtService();
-  String? jwt=await jwtService.getJwt();
-  final response = await http.get(
-    Uri.parse(ApiRoutes.profileUrl),
-    headers: {'Authorization': 'Bearer ${jwt!}'},
-  );
-  if (response.statusCode == 200) {
-    Map<String,dynamic> result=jsonDecode(response.body);
-    return Profile.fromJson(result);
-  }
-  else if(response.statusCode == 400){
-    throw ClientException("Client's error");
-  }
-  else if(response.statusCode == 404){
-    throw ExistException("Source not exist");
-  }
-  else if (response.statusCode == 422){
-    await jwtService.deleteJwt();
-    throw AuthException("JWT invalid");
-  }
-  else if(response.statusCode == 500){
-    throw ServerException("Server's error");
-  }
-  else{
-    throw Exception('Failed to upload in unknown reason');
-  }
-}
+class ProfileService {
+  JwtService jwtService;
+  http.Client httpClient;
 
-Future<void> setApiKey(String apikey) async {
-  JwtService jwtService=JwtService();
-  String? jwt=await jwtService.getJwt();
-  SecureData data=await encrypt(apikey);
-  final response = await http.put(
-    Uri.parse(ApiRoutes.apiKeyUrl),
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ${jwt!}'
-    },
-    body: jsonEncode(data.formatApiKey()),
-  );
-  if (response.statusCode == 200) {
-    return ;
+  ProfileService({JwtService? jwtService, http.Client? httpClient,}): jwtService = jwtService ?? JwtService(), httpClient = httpClient ?? http.Client();
+  
+  Future<Profile> getProfile() async {
+    JwtService jwtService=JwtService();
+    String? jwt=await jwtService.getJwt();
+    final response = await http.get(
+      Uri.parse(ApiRoutes.profileUrl),
+      headers: {'Authorization': 'Bearer ${jwt!}'},
+    );
+    if (response.statusCode == 200) {
+      Map<String,dynamic> result=jsonDecode(response.body);
+      return Profile.fromJson(result);
+    }
+    else if(response.statusCode == 400){
+      throw ClientException("Client's error");
+    }
+    else if(response.statusCode == 404){
+      throw ExistException("Source not exist");
+    }
+    else if (response.statusCode == 422){
+      await jwtService.deleteJwt();
+      throw AuthException("JWT invalid");
+    }
+    else if(response.statusCode == 500){
+      throw ServerException("Server's error");
+    }
+    else{
+      throw Exception('Failed to upload in unknown reason');
+    }
   }
-  else if(response.statusCode == 400){
-    throw ClientException("Client's error");
-  }
-  else if(response.statusCode == 404){
-    throw ExistException("Source not exist");
-  }
-  else if (response.statusCode == 422){
-    await jwtService.deleteJwt();
-    throw AuthException("JWT invalid");
-  }
-  else if(response.statusCode == 500){
-    throw ServerException("Server's error");
-  }
-  else{
-    throw Exception('Failed to upload in unknown reason');
-  }
-}
 
-Future<void> setAccessToken(String accessToken) async {
-  JwtService jwtService=JwtService();
-  String? jwt=await jwtService.getJwt();
-  SecureData data=await encrypt(accessToken);
-  final response = await http.put(
-    Uri.parse(ApiRoutes.accessTokenUrl),
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ${jwt!}'
-    },
-    body: jsonEncode(data.formatAccessToken()),
-  );
-  if (response.statusCode == 200) {
-    return ;
+  Future<void> setApiKey(String apikey) async {
+    JwtService jwtService=JwtService();
+    String? jwt=await jwtService.getJwt();
+    SecureData data=await encrypt(apikey);
+    final response = await http.put(
+      Uri.parse(ApiRoutes.apiKeyUrl),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${jwt!}'
+      },
+      body: jsonEncode(data.formatApiKey()),
+    );
+    if (response.statusCode == 200) {
+      return ;
+    }
+    else if(response.statusCode == 400){
+      throw ClientException("Client's error");
+    }
+    else if(response.statusCode == 404){
+      throw ExistException("Source not exist");
+    }
+    else if (response.statusCode == 422){
+      await jwtService.deleteJwt();
+      throw AuthException("JWT invalid");
+    }
+    else if(response.statusCode == 500){
+      throw ServerException("Server's error");
+    }
+    else{
+      throw Exception('Failed to upload in unknown reason');
+    }
   }
-  else if(response.statusCode == 400){
-    throw ClientException("Client's error");
-  }
-  else if(response.statusCode == 404){
-    throw ExistException("Source not exist");
-  }
-  else if (response.statusCode == 422){
-    await jwtService.deleteJwt();
-    throw AuthException("JWT invalid");
-  }
-  else if(response.statusCode == 500){
-    throw ServerException("Server's error");
-  }
-  else{
-    throw Exception('Failed to upload in unknown reason');
-  }
-}
 
-Future<void> resetPassword(UpdatePwd data) async {
-  JwtService jwtService=JwtService();
-  String? jwt=await jwtService.getJwt();
-  final response = await http.put(
-    Uri.parse(ApiRoutes.passwordEditUrl),
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ${jwt!}'
-    },
-    body: jsonEncode(data.formatJson()),
-  );
-  if (response.statusCode == 200) {
-    return ;
+  Future<void> setAccessToken(String accessToken) async {
+    JwtService jwtService=JwtService();
+    String? jwt=await jwtService.getJwt();
+    SecureData data=await encrypt(accessToken);
+    final response = await http.put(
+      Uri.parse(ApiRoutes.accessTokenUrl),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${jwt!}'
+      },
+      body: jsonEncode(data.formatAccessToken()),
+    );
+    if (response.statusCode == 200) {
+      return ;
+    }
+    else if(response.statusCode == 400){
+      throw ClientException("Client's error");
+    }
+    else if(response.statusCode == 404){
+      throw ExistException("Source not exist");
+    }
+    else if (response.statusCode == 422){
+      await jwtService.deleteJwt();
+      throw AuthException("JWT invalid");
+    }
+    else if(response.statusCode == 500){
+      throw ServerException("Server's error");
+    }
+    else{
+      throw Exception('Failed to upload in unknown reason');
+    }
   }
-  else if(response.statusCode == 400){
-    throw ClientException("Client's error");
-  }
-  else if(response.statusCode==401){
-    throw PasswordException("Password's error");
-  }
-  else if(response.statusCode == 404){
-    throw ExistException("Source not exist");
-  }
-  else if (response.statusCode == 422){
-    await jwtService.deleteJwt();
-    throw AuthException("JWT invalid");
-  }
-  else if(response.statusCode == 500){
-    throw ServerException("Server's error");
-  }
-  else{
-    throw Exception('Failed to upload in unknown reason');
-  }
-}
 
-Future<void> logout() async {
-  JwtService jwtService=JwtService();
-  String? jwt=await jwtService.getJwt();
-  final response = await http.delete(
-    Uri.parse(ApiRoutes.logoutUrl),
-    headers: {
-      'Authorization': 'Bearer ${jwt!}'
-    },
-  );
-  if (response.statusCode == 201) {
-    return ;
+  Future<void> resetPassword(UpdatePwd data) async {
+    JwtService jwtService=JwtService();
+    String? jwt=await jwtService.getJwt();
+    final response = await http.put(
+      Uri.parse(ApiRoutes.passwordEditUrl),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${jwt!}'
+      },
+      body: jsonEncode(data.formatJson()),
+    );
+    if (response.statusCode == 200) {
+      return ;
+    }
+    else if(response.statusCode == 400){
+      throw ClientException("Client's error");
+    }
+    else if(response.statusCode==401){
+      throw PasswordException("Password's error");
+    }
+    else if(response.statusCode == 404){
+      throw ExistException("Source not exist");
+    }
+    else if (response.statusCode == 422){
+      await jwtService.deleteJwt();
+      throw AuthException("JWT invalid");
+    }
+    else if(response.statusCode == 500){
+      throw ServerException("Server's error");
+    }
+    else{
+      throw Exception('Failed to upload in unknown reason');
+    }
   }
-  else if(response.statusCode == 400){
-    throw ClientException("Client's error");
-  }
-  else if(response.statusCode == 404){
-    throw ExistException("Source not exist");
-  }
-  else if (response.statusCode == 422){
-    await jwtService.deleteJwt();
-    throw AuthException("JWT invalid");
-  }
-  else if(response.statusCode == 500){
-    throw ServerException("Server's error");
-  }
-  else{
-    throw Exception('Failed to upload in unknown reason');
+
+  Future<void> logout() async {
+    JwtService jwtService=JwtService();
+    String? jwt=await jwtService.getJwt();
+    final response = await http.delete(
+      Uri.parse(ApiRoutes.logoutUrl),
+      headers: {
+        'Authorization': 'Bearer ${jwt!}'
+      },
+    );
+    if (response.statusCode == 201) {
+      return ;
+    }
+    else if(response.statusCode == 400){
+      throw ClientException("Client's error");
+    }
+    else if(response.statusCode == 404){
+      throw ExistException("Source not exist");
+    }
+    else if (response.statusCode == 422){
+      await jwtService.deleteJwt();
+      throw AuthException("JWT invalid");
+    }
+    else if(response.statusCode == 500){
+      throw ServerException("Server's error");
+    }
+    else{
+      throw Exception('Failed to upload in unknown reason');
+    }
   }
 }
