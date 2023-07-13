@@ -20,7 +20,7 @@ class FilesService {
     }
     final response = await httpClient.get(
       Uri.parse("${ApiRoutes.fileImageUrl}/$id"),
-      headers: {'Authorization': 'Bearer ${jwt!}'},
+      headers: {'Authorization': 'Bearer $jwt'},
     );
     if (response.statusCode == 200) {
       return response.bodyBytes;
@@ -53,7 +53,7 @@ class FilesService {
     }
     final response = await httpClient.get(
       Uri.parse("${ApiRoutes.fileAudioUrl}/$id"),
-      headers: {'Authorization': 'Bearer ${jwt!}'},
+      headers: {'Authorization': 'Bearer $jwt'},
     );
     if (response.statusCode == 200) {
       return response.bodyBytes;
@@ -83,7 +83,7 @@ class FilesService {
     }
     final response = await httpClient.get(
       Uri.parse("${ApiRoutes.fileUrl}/$id"),
-      headers: {'Authorization': 'Bearer ${jwt!}'},
+      headers: {'Authorization': 'Bearer $jwt'},
     );
     if (response.statusCode == 200) {
       return SpecificFile.fromJson(jsonDecode(response.body));
@@ -113,7 +113,7 @@ class FilesService {
     }
     final response = await httpClient.get(
       Uri.parse("${ApiRoutes.fileUrl}?page=$page"),
-      headers: {'Authorization': 'Bearer ${jwt!}'},
+      headers: {'Authorization': 'Bearer $jwt'},
     );
     if (response.statusCode == 200) {
       Map<String,dynamic> result=jsonDecode(response.body);
@@ -145,7 +145,7 @@ class FilesService {
     }
     final response = await httpClient.delete(
       Uri.parse("${ApiRoutes.fileUrl}/$id"),
-      headers: {'Authorization': 'Bearer ${jwt!}'},
+      headers: {'Authorization': 'Bearer $jwt'},
     );
     if (response.statusCode == 201) {
       return ;
@@ -178,7 +178,7 @@ class FilesService {
         Uri.parse("${ApiRoutes.fileNlpEditOCRUrl}/$id"),
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ${jwt!}'
+          'Authorization': 'Bearer $jwt'
         },
         body: jsonEncode(file.formatJson())
     );
@@ -214,7 +214,7 @@ class FilesService {
         Uri.parse("${ApiRoutes.fileNlpEditASRUrl}/$id"),
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ${jwt!}'
+          'Authorization': 'Bearer $jwt'
         },
         body: jsonEncode(file.formatJson())
     );

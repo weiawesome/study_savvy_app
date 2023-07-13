@@ -33,7 +33,7 @@ class ArticleImproverService {
       ))
       ..headers.addAll(
         {
-          'Authorization': 'Bearer ${jwt!}'
+          'Authorization': 'Bearer $jwt'
         },
       ));
     if (response.statusCode == 200) {
@@ -66,7 +66,7 @@ class ArticleImproverService {
       Uri.parse(ApiRoutes.articleImproverTextUrl),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ${jwt!}'
+        'Authorization': 'Bearer $jwt'
       },
       body: jsonEncode(data.formatJson()),
     );

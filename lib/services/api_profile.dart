@@ -19,7 +19,7 @@ class ProfileService {
     }
     final response = await httpClient.get(
       Uri.parse(ApiRoutes.profileUrl),
-      headers: {'Authorization': 'Bearer ${jwt!}'},
+      headers: {'Authorization': 'Bearer $jwt'},
     );
     if (response.statusCode == 200) {
       Map<String,dynamic> result=jsonDecode(response.body);
@@ -53,7 +53,7 @@ class ProfileService {
       Uri.parse(ApiRoutes.apiKeyUrl),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ${jwt!}'
+        'Authorization': 'Bearer $jwt'
       },
       body: jsonEncode(data.formatApiKey()),
     );
@@ -88,7 +88,7 @@ class ProfileService {
       Uri.parse(ApiRoutes.accessTokenUrl),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ${jwt!}'
+        'Authorization': 'Bearer $jwt'
       },
       body: jsonEncode(data.formatAccessToken()),
     );
@@ -122,7 +122,7 @@ class ProfileService {
       Uri.parse(ApiRoutes.passwordEditUrl),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ${jwt!}'
+        'Authorization': 'Bearer $jwt'
       },
       body: jsonEncode(data.formatJson()),
     );
@@ -158,7 +158,7 @@ class ProfileService {
     final response = await httpClient.delete(
       Uri.parse(ApiRoutes.logoutUrl),
       headers: {
-        'Authorization': 'Bearer ${jwt!}'
+        'Authorization': 'Bearer $jwt'
       },
     );
     if (response.statusCode == 201) {
