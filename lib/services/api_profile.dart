@@ -14,7 +14,7 @@ class ProfileService {
   
   Future<Profile> getProfile() async {
     String? jwt=await jwtService.getJwt();
-    final response = await http.get(
+    final response = await httpClient.get(
       Uri.parse(ApiRoutes.profileUrl),
       headers: {'Authorization': 'Bearer ${jwt!}'},
     );
@@ -43,7 +43,7 @@ class ProfileService {
   Future<void> setApiKey(String apikey) async {
     String? jwt=await jwtService.getJwt();
     SecureData data=await encrypt(apikey);
-    final response = await http.put(
+    final response = await httpClient.put(
       Uri.parse(ApiRoutes.apiKeyUrl),
       headers: {
         'Content-Type': 'application/json',
@@ -75,7 +75,7 @@ class ProfileService {
   Future<void> setAccessToken(String accessToken) async {
     String? jwt=await jwtService.getJwt();
     SecureData data=await encrypt(accessToken);
-    final response = await http.put(
+    final response = await httpClient.put(
       Uri.parse(ApiRoutes.accessTokenUrl),
       headers: {
         'Content-Type': 'application/json',
@@ -106,7 +106,7 @@ class ProfileService {
 
   Future<void> resetPassword(UpdatePwd data) async {
     String? jwt=await jwtService.getJwt();
-    final response = await http.put(
+    final response = await httpClient.put(
       Uri.parse(ApiRoutes.passwordEditUrl),
       headers: {
         'Content-Type': 'application/json',
@@ -140,7 +140,7 @@ class ProfileService {
 
   Future<void> logout() async {
     String? jwt=await jwtService.getJwt();
-    final response = await http.delete(
+    final response = await httpClient.delete(
       Uri.parse(ApiRoutes.logoutUrl),
       headers: {
         'Authorization': 'Bearer ${jwt!}'

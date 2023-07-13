@@ -18,7 +18,7 @@ class ArticleImproverService {
     String? jwt=await jwtService.getJwt();
     File imageData=data.image;
     String text=data.prompt;
-    final response = await (http.MultipartRequest(
+    final response = await httpClient.send(http.MultipartRequest(
       'POST',
       Uri.parse(ApiRoutes.articleImproverUrl),
     )
@@ -32,7 +32,7 @@ class ArticleImproverService {
         {
           'Authorization': 'Bearer ${jwt!}'
         },
-      )).send();
+      ));
     if (response.statusCode == 200) {
       return ;
     }
@@ -56,7 +56,7 @@ class ArticleImproverService {
 
   Future<void> predictOcrText(ArticleText data) async {
     String? jwt=await jwtService.getJwt();
-    final response = await http.post(
+    final response = await httpClient.post(
       Uri.parse(ApiRoutes.articleImproverTextUrl),
       headers: {
         'Content-Type': 'application/json',
