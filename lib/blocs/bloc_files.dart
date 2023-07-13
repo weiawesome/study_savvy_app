@@ -19,12 +19,12 @@ class FilesState {
 }
 
 class FilesBloc extends Bloc<FilesEvent,FilesState> {
-  final FilesService apiService=FilesService();
-  FilesBloc(): super(FilesState("INIT",null,Files([],0,0))){
+  final FilesService apiService;
+  FilesBloc({FilesService? apiService}):apiService=apiService??FilesService(), super(FilesState("INIT",null,Files([],0,0))){
     on<FilesEvent>((event,emit) async {
       if (event is FilesEventInit){
         try{
-          Files result=await apiService.getFiles(1);
+          Files result=await apiService!.getFiles(1);
           emit(FilesState("SUCCESS",null,result));  
         }
         on AuthException {
@@ -46,7 +46,7 @@ class FilesBloc extends Bloc<FilesEvent,FilesState> {
       }
       else if (event is FilesEventRefresh){
         try{
-          Files result=await apiService.getFiles(1);
+          Files result=await apiService!.getFiles(1);
           emit(FilesState("SUCCESS",null,result));
         }
         on AuthException {
@@ -69,7 +69,7 @@ class FilesBloc extends Bloc<FilesEvent,FilesState> {
         emit(FilesState("PENDING",null,event.files));
         if(event.files.totalPages>event.files.currentPage){
           try{
-            Files result=await apiService.getFiles((event.files.currentPage+1));
+            Files result=await apiService!.getFiles((event.files.currentPage+1));
             emit(FilesState("SUCCESS",null,combineFiles(event.files, result)));
           }
           on AuthException {

@@ -16,13 +16,13 @@ class PasswordState {
   PasswordState(this.status,this.error);
 }
 class PasswordBloc extends Bloc<PasswordEvent,PasswordState> {
-  final ProfileService apiService=ProfileService();
-  PasswordBloc(): super(PasswordState("INIT",null)){
+  final ProfileService apiService;
+  PasswordBloc({ProfileService? apiService}):apiService=apiService??ProfileService(), super(PasswordState("INIT",null)){
     on<PasswordEvent>((event,emit) async {
       if(event is PasswordEventUpdate){
         emit(PasswordState("PENDING",null));
         try{
-          await apiService.resetPassword(event.pwd);
+          await apiService!.resetPassword(event.pwd);
           emit(PasswordState("SUCCESS",null));
         }
         on AuthException {

@@ -5,16 +5,15 @@ abstract class JWTEvent {}
 class JWTEventGet extends JWTEvent{}
 class JWTEventDelete extends JWTEvent{}
 class JWTBloc extends Bloc<JWTEvent,String?> {
-  JWTBloc(): super(null){
+  final JwtService jwtService;
+  JWTBloc({JwtService? jwtService}):jwtService=jwtService??JwtService(),super(null){
     on<JWTEvent>((event,emit) async {
       if (event is JWTEventGet){
-        JwtService jwtService=JwtService();
-        String? jwt = await jwtService.getJwt();
+        String? jwt = await jwtService!.getJwt();
         emit(jwt);
       }
       else{
-        JwtService jwtService=JwtService();
-        await jwtService.deleteJwt();
+        await jwtService!.deleteJwt();
         emit(null);
       }
     });

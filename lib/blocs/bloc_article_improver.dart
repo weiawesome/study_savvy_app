@@ -22,8 +22,8 @@ class ArticleState {
 }
 
 class ArticleBloc extends Bloc<ArticleEvent,ArticleState> {
-  final ArticleImproverService apiService=ArticleImproverService();
-  ArticleBloc(): super(ArticleState("INIT",null)){
+  final ArticleImproverService apiService;
+  ArticleBloc({ArticleImproverService? apiService}):apiService = apiService ?? ArticleImproverService(), super(ArticleState("INIT",null)){
     on<ArticleEvent>((event,emit) async {
       if (event is ArticleEventRefresh){
         emit(ArticleState("INIT",null));
@@ -31,7 +31,7 @@ class ArticleBloc extends Bloc<ArticleEvent,ArticleState> {
       else if (event is ArticleEventGraph){
         emit(ArticleState("PENDING",null));
         try{
-          await apiService.predictOcrGraph(event.article);
+          await apiService!.predictOcrGraph(event.article);
           emit(ArticleState("SUCCESS",null));  
         }
         on AuthException {
@@ -53,7 +53,7 @@ class ArticleBloc extends Bloc<ArticleEvent,ArticleState> {
       else if (event is ArticleEventText){
         emit(ArticleState("PENDING",null));
         try{
-          await apiService.predictOcrText(event.article);
+          await apiService!.predictOcrText(event.article);
           emit(ArticleState("SUCCESS",null));
         }
         on AuthException {
