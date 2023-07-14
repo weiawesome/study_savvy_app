@@ -25,7 +25,6 @@ class _AccessTokenPage extends State<AccessTokenPage> {
   final _controller= TextEditingController();
   @override
   void dispose() {
-    // 清理控制器资源
     _controller.dispose();
     super.dispose();
   }
@@ -83,6 +82,9 @@ class _AccessTokenPage extends State<AccessTokenPage> {
                                           padding: const EdgeInsets.symmetric(horizontal: 10),
                                           child: TextField(
                                             controller: _controller,
+                                            onSubmitted: (value){
+                                              context.read<AccessMethodBloc>().add(AccessMethodEventAccessToken(_controller.text));
+                                            },
                                             maxLines: 1,
                                             decoration: const InputDecoration(
                                               hintText: "Access_Token",

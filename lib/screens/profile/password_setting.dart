@@ -18,6 +18,20 @@ class _PasswordPage extends State<PasswordPage> {
   final oldPasswordController = TextEditingController();
   final newPasswordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+  final FocusNode oldPasswordNode=FocusNode();
+  final FocusNode newPasswordNode=FocusNode();
+  final FocusNode confirmPasswordNode=FocusNode();
+
+  @override
+  void dispose() {
+    oldPasswordNode.dispose();
+    oldPasswordController.dispose();
+    newPasswordNode.dispose();
+    newPasswordController.dispose();
+    confirmPasswordNode.dispose();
+    confirmPasswordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +91,10 @@ class _PasswordPage extends State<PasswordPage> {
                                             border: InputBorder.none,
                                           ),
                                           obscureText: true,
+                                          focusNode: oldPasswordNode,
+                                          onFieldSubmitted: (value){
+                                            FocusScope.of(context).requestFocus(newPasswordNode);
+                                          },
                                           validator: (value) {
                                             if (value == null || value.isEmpty) {
                                               return 'Empty error';
@@ -95,6 +113,7 @@ class _PasswordPage extends State<PasswordPage> {
                                         child: TextFormField(
                                           controller: newPasswordController,
                                           maxLines: 1,
+                                          focusNode: newPasswordNode,
                                           decoration: const InputDecoration(
                                             hintText: "Enter new Password",
                                             hintMaxLines: 1,
@@ -109,6 +128,10 @@ class _PasswordPage extends State<PasswordPage> {
                                               return 'Same with old Error';
                                             }
                                             return null;
+                                          },
+                                          onFieldSubmitted: (value){
+                                            FocusScope.of(context).requestFocus(confirmPasswordNode);
+                                            _formKey.currentState!.validate();
                                           },
                                         ),
                                       ),
@@ -128,6 +151,10 @@ class _PasswordPage extends State<PasswordPage> {
                                             border: InputBorder.none,
                                           ),
                                           obscureText: true,
+                                          focusNode: confirmPasswordNode,
+                                          onFieldSubmitted: (value){
+                                            submitForm();
+                                          },
                                           validator: (value) {
                                             if (value == null || value.isEmpty) {
                                               return 'Empty Error';
@@ -136,9 +163,6 @@ class _PasswordPage extends State<PasswordPage> {
                                               return 'Match Error';
                                             }
                                             return null;
-                                          },
-                                          onChanged: (value) {
-                                            _formKey.currentState!.validate();  // Re-validate the form when the new password changes
                                           },
                                         ),
                                       ),

@@ -79,6 +79,9 @@ class _ApiKeyPage extends State<ApiKeyPage> {
                                           padding: const EdgeInsets.symmetric(horizontal: 10),
                                           margin: const EdgeInsets.only(top: 10),
                                           child: TextField(
+                                            onSubmitted: (value){
+                                              context.read<AccessMethodBloc>().add(AccessMethodEventApiKey(_controller.text));
+                                            },
                                             controller: _controller,
                                             maxLines: 1,
                                             decoration: const InputDecoration(
