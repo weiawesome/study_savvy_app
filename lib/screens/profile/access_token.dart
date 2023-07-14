@@ -78,7 +78,7 @@ class _AccessTokenPage extends State<AccessTokenPage> {
                                         Container(
                                           margin: const EdgeInsets.only(top: 10),
                                           width: double.infinity,
-                                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),border: Border.all(width: 1)),
+                                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),border: Border.all(color: Theme.of(context).brightness==Brightness.light?LightStyle.borderColor:DarkStyle.borderColor)),
                                           padding: const EdgeInsets.symmetric(horizontal: 10),
                                           child: TextField(
                                             controller: _controller,

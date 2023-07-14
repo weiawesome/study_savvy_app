@@ -75,7 +75,7 @@ class _ApiKeyPage extends State<ApiKeyPage> {
                                       children: [
                                         Text('Api_Key:',style: Theme.of(context).textTheme.displayMedium,),
                                         Container(
-                                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),border: Border.all(width: 1)),
+                                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),border: Border.all(color: Theme.of(context).brightness==Brightness.light?LightStyle.borderColor:DarkStyle.borderColor)),
                                           padding: const EdgeInsets.symmetric(horizontal: 10),
                                           margin: const EdgeInsets.only(top: 10),
                                           child: TextField(
