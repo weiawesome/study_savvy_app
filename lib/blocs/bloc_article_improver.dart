@@ -15,6 +15,8 @@ class ArticleEventText extends ArticleEvent{
 }
 class ArticleEventRefresh extends ArticleEvent{}
 
+class ArticleEventUnknown extends ArticleEvent{}
+
 class ArticleState {
   final String status;
   final String? error;

@@ -26,6 +26,8 @@ class FileEventEditASR extends FileEvent{
   FileEventEditASR(this.file);
 }
 class FileEventClear extends FileEvent{}
+class FileEventUnknown extends FileEvent{}
+
 class FileState {
   final String status;
   final String? message;

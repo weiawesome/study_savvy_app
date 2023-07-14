@@ -9,6 +9,7 @@ class PasswordEventUpdate extends PasswordEvent{
   PasswordEventUpdate(this.pwd);
 }
 class PasswordEventReset extends PasswordEvent{}
+class PasswordEventUnknown extends PasswordEvent{}
 
 class PasswordState {
   final String status;

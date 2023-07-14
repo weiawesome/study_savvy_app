@@ -15,6 +15,8 @@ class AccessMethodEventAccessToken extends AccessMethodEvent{
   AccessMethodEventAccessToken(this.accessToken);
 }
 
+class AccessMethodEventUnknown extends AccessMethodEvent{}
+
 class AccessMethodState {
   final String status;
   final String? error;

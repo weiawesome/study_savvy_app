@@ -10,6 +10,7 @@ class OnlineEventReset extends OnlineEvent{
   final bool? status;
   OnlineEventReset(this.status);
 }
+class OnlineEventUnknown extends OnlineEvent{}
 
 class OnlineState {
   final bool? status;

@@ -10,6 +10,7 @@ class FilesEventLoadMore extends FilesEvent{
   FilesEventLoadMore(this.files);
 }
 class FilesEventRefresh extends FilesEvent{}
+class FilesEventUnknown extends FilesEvent{}
 
 class FilesState {
   final String status;

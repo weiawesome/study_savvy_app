@@ -6,6 +6,7 @@ import 'package:study_savvy_app/utils/exception.dart';
 abstract class ProfileEvent {}
 class ProfileEventGet extends ProfileEvent{}
 class ProfileEventReset extends ProfileEvent{}
+class ProfileEventUnknown extends ProfileEvent{}
 
 class ProfileState {
   final String status;

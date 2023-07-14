@@ -30,6 +30,8 @@ class PageEventFiles extends PageEvent {}
 
 class PageEventProfile extends PageEvent {}
 
+class PageEventUnknown extends PageEvent {}
+
 class PageBloc extends Bloc<PageEvent,PageState> {
   PageBloc() : super(PageState.audio){
     on<PageEvent>((event, emit) {
@@ -39,8 +41,10 @@ class PageBloc extends Bloc<PageEvent,PageState> {
         emit(PageState.files);
       }else if(event is PageEventProfile){
         emit(PageState.profile);
-      }else{
+      }else if(event is PageEventAudio){
         emit(PageState.audio);
+      }else{
+        throw Exception("Error event in navigator");
       }
     });
   }
