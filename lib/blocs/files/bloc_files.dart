@@ -28,6 +28,7 @@ class FilesBloc extends Bloc<FilesEvent,FilesState> {
   final FilesService apiService;
   FilesBloc({FilesService? apiService}):apiService=apiService??FilesService(), super(FilesState("INIT",null,Files([],0,0))){
     on<FilesEvent>((event,emit) async {
+      apiService ??= FilesService();
       if (event is FilesEventInit){
         try{
           Files result=await apiService!.getFiles(1);

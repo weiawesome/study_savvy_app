@@ -22,6 +22,7 @@ class ProfileBloc extends Bloc<ProfileEvent,ProfileState> {
   final ProfileService apiService;
   ProfileBloc({ProfileService? apiService}):apiService=apiService??ProfileService(), super(ProfileState("INIT",null,Profile("","",""))){
     on<ProfileEvent>((event,emit) async {
+      apiService ??= ProfileService();
       if(event is ProfileEventGet){
         try{
           Profile result=await apiService!.getProfile();

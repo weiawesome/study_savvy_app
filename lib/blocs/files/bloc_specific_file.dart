@@ -47,10 +47,11 @@ class FileBloc extends Bloc<FileEvent,FileState> {
   final FilesService apiService;
   FileBloc({FilesService? apiService}):apiService=apiService??FilesService(), super(FileState("INIT",null, null, null,null,null)){
     on<FileEvent>((event,emit) async {
+      apiService ??= FilesService();
       if (event is FileEventOCR){
         try{
           SpecificFile file=await apiService!.getSpecificFile(event.id);
-          Uint8List? media=await apiService.getImage(event.id);
+          Uint8List? media=await apiService!.getImage(event.id);
           emit(FileState("SUCCESS",null,file, media,"OCR",event.id));
         }
         on AuthException {
@@ -72,7 +73,7 @@ class FileBloc extends Bloc<FileEvent,FileState> {
       else if (event is FileEventASR){
         try{
           SpecificFile file=await apiService!.getSpecificFile(event.id);
-          Uint8List media=await apiService.getAudio(event.id);
+          Uint8List media=await apiService!.getAudio(event.id);
           emit(FileState("SUCCESS",null,file, media,"ASR",event.id));
         }
         on AuthException {

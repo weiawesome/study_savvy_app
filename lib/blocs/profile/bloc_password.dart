@@ -24,6 +24,7 @@ class PasswordBloc extends Bloc<PasswordEvent,PasswordState> {
   final ProfileService apiService;
   PasswordBloc({ProfileService? apiService}):apiService=apiService??ProfileService(), super(PasswordState("INIT",null)){
     on<PasswordEvent>((event,emit) async {
+      apiService ??= ProfileService();
       if(event is PasswordEventUpdate){
         emit(PasswordState("PENDING",null));
         try{

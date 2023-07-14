@@ -32,6 +32,7 @@ class AccessMethodBloc extends Bloc<AccessMethodEvent,AccessMethodState?> {
   AccessMethodBloc({ProfileService? apiService})
       : apiService = apiService ?? ProfileService(), super(null){
     on<AccessMethodEvent>((event,emit) async {
+      apiService ??= ProfileService();
       if(event is AccessMethodEventReset){
         emit(null);
       }

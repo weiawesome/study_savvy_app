@@ -32,6 +32,7 @@ class ArticleBloc extends Bloc<ArticleEvent,ArticleState> {
   final ArticleImproverService apiService;
   ArticleBloc({ArticleImproverService? apiService}):apiService = apiService ?? ArticleImproverService(), super(ArticleState("INIT",null)){
     on<ArticleEvent>((event,emit) async {
+      apiService ??= ArticleImproverService();
       if (event is ArticleEventRefresh){
         emit(ArticleState("INIT",null));
       }
