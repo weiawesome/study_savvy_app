@@ -53,7 +53,7 @@ class ArticleImproverService {
       throw ServerException("Server's error");
     }
     else{
-      throw Exception('Failed to upload in unknown reason');
+      throw Exception('Failed in unknown reason');
     }
   }
 
@@ -87,7 +87,7 @@ class ArticleImproverService {
       throw ServerException("Server's error");
     }
     else{
-      throw Exception('Failed to upload in unknown reason');
+      throw Exception('Failed in unknown reason');
     }
   }
 
