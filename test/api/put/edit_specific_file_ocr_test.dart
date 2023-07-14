@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:http/http.dart' as http;
@@ -29,7 +28,7 @@ void main() {
       when(jwtService.getJwt()).thenAnswer((_) async => testJwt);
       when(httpClient.put(url, headers: {"Content-Type": "application/json",'Authorization': 'Bearer $testJwt'},body: jsonEncode(testEditFile.formatJson()))).thenAnswer((_) async => http.Response('', 200),);
 
-      final FilesService apiService = FilesService(jwtService: jwtService, httpClient: httpClient);
+      final FilesService apiService = FilesService(jwtService: jwtService,httpClient: httpClient);
       await apiService.editSpecificFileOCR(testEditFile);
 
       verify(httpClient.put(url, headers: {"Content-Type": "application/json",'Authorization': 'Bearer $testJwt'},body: jsonEncode(testEditFile.formatJson()))).called(1);
