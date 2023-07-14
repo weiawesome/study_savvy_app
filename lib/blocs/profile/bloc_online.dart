@@ -28,6 +28,7 @@ class OnlineBloc extends Bloc<OnlineEvent,OnlineState> {
   OnlineBloc({ProfileService? apiService,JwtService? jwtService}):apiService=apiService??ProfileService(),jwtService=jwtService??JwtService(), super(OnlineState(true,null)){
     on<OnlineEvent>((event,emit) async {
       apiService ??= ProfileService();
+      jwtService ??= JwtService();
       if(event is OnlineEventLogout){
         emit(OnlineState(null,null));
         try{
