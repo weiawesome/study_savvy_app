@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:study_savvy_app/models/profile/model_profile.dart';
 import 'package:study_savvy_app/styles/custom_style.dart';
 import 'package:study_savvy_app/widgets/failure.dart';
 import 'package:study_savvy_app/widgets/loading.dart';
 import 'package:study_savvy_app/blocs/profile/bloc_profile.dart';
+import 'package:study_savvy_app/widgets/success.dart';
 
 class InformationPage extends StatefulWidget{
   const InformationPage({Key?key}):super(key: key);
@@ -13,9 +15,32 @@ class InformationPage extends StatefulWidget{
 }
 
 class _InformationPage extends State<InformationPage> {
+  void _showAlertDialog(BuildContext context) {
+    showCupertinoModalPopup(
+      context: context,
+      builder: (BuildContext context) {
+        return CupertinoAlertDialog(
+          title: Text('Warn',style: Theme.of(context).textTheme.displayMedium),
+          content: Text("Name 部分不得為空",style: Theme.of(context).textTheme.displaySmall),
+          actions: <Widget>[
+            CupertinoDialogAction(
+              isDestructiveAction: true,
+              onPressed: (){
+                Navigator.pop(context);
+              },
+              child: Text('confirm',style: Theme.of(context).textTheme.displaySmall),
+            ),
+          ],
+        );
+      },
+    );
+  }
   int groupValue=0;
   late TextEditingController _controller;
   late ProfileBloc bloc;
+  Map<int,String> genderIndex={
+    0:"male",1:"female",2:"other"
+  };
   @override
   void initState() {
     super.initState();
@@ -42,6 +67,7 @@ class _InformationPage extends State<InformationPage> {
   @override
   void dispose() {
     _controller.dispose();
+    bloc.add(ProfileEventReset());
     super.dispose();
   }
   @override
@@ -79,7 +105,7 @@ class _InformationPage extends State<InformationPage> {
                     flex: 8,
                     child: BlocBuilder<ProfileBloc,ProfileState>(
                       builder: (context,state) {
-                        if (state.status=="INIT") {
+                        if (state.status=="INIT" || state.status=="PENDING") {
                           return const Loading();
                         }
                         else if(state.status=="SUCCESS"){
@@ -194,32 +220,54 @@ class _InformationPage extends State<InformationPage> {
                             ),
                           );
                         }
+                        else if(state.status=="FAILURE"){
+                          return Failure(error: state.message!,);
+                        }
+                        else if(state.status=="SUCCESS_OTHER"){
+                          return Success(message: state.message!);
+                        }
                         else{
-                          return Failure(error: state.error!,);
+                          return const Failure(error: "UNKNOWN STATUS");
                         }
                       }
                     )
                   ),
+
                   Expanded(
                       flex: 1,
-                      child: FractionallySizedBox(
-                          widthFactor: 0.5,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            style: Theme
-                                .of(context)
-                                .elevatedButtonTheme
-                                .style,
-                            child: const Text(
-                              'Save', textAlign: TextAlign.center,
-                              style: TextStyle(color: Colors.white,
-                                  fontSize: 23,
-                                  fontFamily: 'Play',
-                                  fontWeight: FontWeight.bold),),
-                          )
-                      )
+                      child: BlocBuilder<ProfileBloc,ProfileState>(
+                          builder: (context,state){
+                            if(state.status=="SUCCESS"){
+                              return FractionallySizedBox(
+                                  widthFactor: 0.5,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      if(_controller.text.isEmpty){
+                                        _showAlertDialog(context);
+                                      }
+                                      else{
+                                        context.read<ProfileBloc>().add(ProfileEventUpdate(UpdateProfile(_controller.text.toString(),genderIndex[groupValue]!)));
+                                      }
+
+                                    },
+                                    style: Theme
+                                        .of(context)
+                                        .elevatedButtonTheme
+                                        .style,
+                                    child: const Text(
+                                      'Save', textAlign: TextAlign.center,
+                                      style: TextStyle(color: Colors.white,
+                                          fontSize: 23,
+                                          fontFamily: 'Play',
+                                          fontWeight: FontWeight.bold),),
+                                  )
+                              );
+                            }
+                            else{
+                              return Container();
+                            }
+                          }
+                      ),
                   ),
                 ],
               )

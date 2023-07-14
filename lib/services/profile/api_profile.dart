@@ -43,6 +43,40 @@ class ProfileService {
     }
   }
 
+  Future<void> setProfile(UpdateProfile data) async {
+    String? jwt=await jwtService.getJwt();
+    if(jwt==null){
+      throw AuthException("JWT invalid");
+    }
+    final response = await httpClient.put(
+      Uri.parse(ApiRoutes.profileUrl),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwt'
+      },
+      body: jsonEncode(data.formatJson()),
+    );
+    if (response.statusCode == 200) {
+      return ;
+    }
+    else if(response.statusCode == 400){
+      throw ClientException("Client's error");
+    }
+    else if(response.statusCode == 404){
+      throw ExistException("Source not exist");
+    }
+    else if (response.statusCode == 422){
+      await jwtService.deleteJwt();
+      throw AuthException("JWT invalid");
+    }
+    else if(response.statusCode == 500){
+      throw ServerException("Server's error");
+    }
+    else{
+      throw Exception('Failed in unknown reason');
+    }
+  }
+
   Future<void> setApiKey(String apikey) async {
     String? jwt=await jwtService.getJwt();
     if(jwt==null){

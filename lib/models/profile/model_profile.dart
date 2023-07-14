@@ -16,6 +16,12 @@ class UpdateProfile{
   final String name;
   final String gender;
   UpdateProfile(this.name,this.gender);
+  Map<String,String> formatJson(){
+    return {
+      "name": name,
+      "gender": gender
+    };
+  }
 }
 class UpdatePwd{
   final String oldPwd;
