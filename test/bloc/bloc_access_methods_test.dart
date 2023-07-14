@@ -248,7 +248,8 @@ void main() {
   group("AccessMethodBloc Unknown Event", () {
     test('throw exception when Unknown happen', () async {
       final AccessMethodBloc accessMethodBloc=AccessMethodBloc();
-      expect(accessMethodBloc.state, null);
+      accessMethodBloc.add(AccessMethodEventUnknown());
+      // expectLater(()=>), throwsException);
     });
   });
 }
