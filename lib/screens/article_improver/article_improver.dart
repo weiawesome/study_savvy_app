@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -29,18 +30,19 @@ class _ArticleImproverPage extends State<ArticleImproverPage>{
     super.dispose();
   }
   void _showAlertDialog(BuildContext context) {
-    showDialog(
+    showCupertinoModalPopup(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
+        return CupertinoAlertDialog(
           title: Text('Warn',style: Theme.of(context).textTheme.displayMedium),
-          content: Text("Content 內容不得為空 至少選擇圖檔或是文字",style: Theme.of(context).textTheme.displaySmall),
+          content: Text("Content 內容不得為空\n至少選擇圖檔或是文字",style: Theme.of(context).textTheme.displaySmall),
           actions: <Widget>[
-            TextButton(
-              child: Text('confirm',style: Theme.of(context).textTheme.displaySmall),
+            CupertinoDialogAction(
+              isDestructiveAction: true,
               onPressed: (){
                 Navigator.pop(context);
               },
+              child: Text('confirm',style: Theme.of(context).textTheme.displaySmall),
             ),
           ],
         );

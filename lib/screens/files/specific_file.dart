@@ -16,8 +16,8 @@ class SpecificFilePage extends StatefulWidget{
 }
 
 class _SpecificFilePage extends State<SpecificFilePage> {
-  final _promptController= TextEditingController();
-  final _contentController= TextEditingController();
+  late TextEditingController _promptController;
+  late TextEditingController _contentController;
   late FileBloc bloc;
   bool init=true;
   bool? playState=false;
@@ -25,11 +25,15 @@ class _SpecificFilePage extends State<SpecificFilePage> {
   @override
   void initState() {
     super.initState();
+    _contentController= TextEditingController();
+    _promptController= TextEditingController();
     bloc=BlocProvider.of<FileBloc>(context);
     context.read<FileBloc>().stream.listen((FileState state) {
       if(state.status=="SUCCESS"){
-       _promptController.text=state.file!.prompt;
-       _contentController.text=state.file!.content;
+        if(mounted){
+          _promptController.text=state.file!.prompt;
+          _contentController.text=state.file!.content;
+        }
       }
     });
   }

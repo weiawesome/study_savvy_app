@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
@@ -77,23 +78,25 @@ class _FilesPage extends State<FilesPage> {
                                     }
                                   }
                                   else if((state.files.files[index]).status=='FAILURE'){
-                                    showDialog(
+                                    showCupertinoModalPopup(
                                       context: context,
                                       builder: (BuildContext context) {
                                         return BlocBuilder<FileBloc,FileState>(
                                             builder: (context,stateFile){
                                               if(stateFile.status=="INIT"){
-                                                return AlertDialog(
+                                                return CupertinoAlertDialog(
                                                   title: const Text('刪除錯誤檔案'),
                                                   content: const Text('這份檔案執行失敗\n目前無法開啟，是否刪除?'),
                                                   actions: <Widget>[
-                                                    TextButton(
+                                                    CupertinoDialogAction(
+                                                      isDestructiveAction: false,
                                                       child: const Text('取消'),
                                                       onPressed: () {
                                                         Navigator.of(context).pop();
                                                       },
                                                     ),
-                                                    TextButton(
+                                                    CupertinoDialogAction(
+                                                      isDestructiveAction: true,
                                                       child: const Text('刪除'),
                                                       onPressed: () {
                                                         context.read<FileBloc>().add(FileEventDelete((state.files.files[index]).id));
@@ -103,17 +106,17 @@ class _FilesPage extends State<FilesPage> {
                                                 );
                                               }
                                               else if(stateFile.status=="PENDING"){
-                                                return const AlertDialog(
+                                                return const CupertinoAlertDialog(
                                                   title: Text('刪除錯誤檔案'),
                                                   content: Loading()
                                                 );
                                               }
                                               else if(stateFile.status=="FAILURE"){
-                                                return AlertDialog(
+                                                return CupertinoAlertDialog(
                                                   title: const Text('刪除錯誤檔案'),
                                                   content: Failure(error: stateFile.message!),
                                                   actions: [
-                                                    TextButton(
+                                                    CupertinoDialogAction(
                                                       child: const Text('確定'),
                                                       onPressed: () {
                                                         Navigator.of(context).pop();
@@ -123,11 +126,11 @@ class _FilesPage extends State<FilesPage> {
                                                 );
                                               }
                                               else if(stateFile.status=='SUCCESS_OTHER'){
-                                                return AlertDialog(
+                                                return CupertinoAlertDialog(
                                                   title: const Text('刪除錯誤檔案'),
                                                   content: Success(message: stateFile.message!),
                                                   actions: [
-                                                    TextButton(
+                                                    CupertinoDialogAction(
                                                       child: const Text('確定'),
                                                       onPressed: () {
                                                         Navigator.of(context).pop();
@@ -149,7 +152,7 @@ class _FilesPage extends State<FilesPage> {
                                     showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
-                                        return AlertDialog(
+                                        return CupertinoAlertDialog(
                                           title: const Text('錯誤'),
                                           content: const Text('這份檔案正在執行\n目前無法開啟'),
                                           actions: <Widget>[

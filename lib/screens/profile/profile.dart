@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
@@ -24,17 +25,17 @@ class _ProfilePage extends State<ProfilePage> {
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     void showLogoutDialog(BuildContext context) {
-      showDialog(
+      showCupertinoModalPopup(
         context: context,
         builder: (BuildContext context) {
           return BlocBuilder<OnlineBloc,OnlineState>(
               builder: (context,state){
                 if(state.status==null){
-                  return AlertDialog(
+                  return CupertinoAlertDialog(
                     title: Text('Logout',style: Theme.of(context).textTheme.displayMedium),
                     content: const Loading(),
                     actions: <Widget>[
-                      TextButton(
+                      CupertinoDialogAction(
                         child: Text('close',style: Theme.of(context).textTheme.displaySmall,),
                         onPressed: () {
                           Navigator.of(context).pop();
@@ -44,30 +45,32 @@ class _ProfilePage extends State<ProfilePage> {
                   );
                 }
                 else if(state.status==true && state.message==null){
-                  return AlertDialog(
+                  return CupertinoAlertDialog(
                     title: Text('Logout',style: Theme.of(context).textTheme.displayMedium),
                     actions: <Widget>[
-                      TextButton(
+                      CupertinoDialogAction(
+                        isDestructiveAction: false,
                         child: Text('cancel',style: Theme.of(context).textTheme.displaySmall,),
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
                       ),
-                      TextButton(
-                        child: Text('confirm',style: Theme.of(context).textTheme.displaySmall,),
+                      CupertinoDialogAction(
+                        isDestructiveAction: true,
                         onPressed: () {
                           context.read<OnlineBloc>().add(OnlineEventLogout());
                         },
+                        child: Text('confirm',style: Theme.of(context).textTheme.displaySmall,),
                       ),
                     ],
                   );
                 }
                 else if(state.status==true){
-                  return AlertDialog(
+                  return CupertinoAlertDialog(
                     title: Text('Logout',style: Theme.of(context).textTheme.displayMedium),
                     content: Failure(error: state.message!,),
                     actions: <Widget>[
-                      TextButton(
+                      CupertinoDialogAction(
                         child: Text('confirm',style: Theme.of(context).textTheme.displaySmall,),
                         onPressed: () {
                           Navigator.of(context).pop();
@@ -77,11 +80,11 @@ class _ProfilePage extends State<ProfilePage> {
                   );
                 }
                 else{
-                  return AlertDialog(
+                  return CupertinoAlertDialog(
                     title: Text('Logout',style: Theme.of(context).textTheme.displayMedium),
                     content: const Success(message: "Success to logout",),
                     actions: <Widget>[
-                      TextButton(
+                      CupertinoDialogAction(
                         child: Text('confirm',style: Theme.of(context).textTheme.displaySmall,),
                         onPressed: () {
                           Navigator.of(context).pop();
@@ -386,7 +389,7 @@ class _ProfilePage extends State<ProfilePage> {
                             ),
                             onPressed: () async {
                               JwtService jwtService=JwtService();
-                              await jwtService.saveJwt("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4OTA4MzcyNCwianRpIjoiNDEyMjc2ZDItNTQ4Ny00Y2ZjLThlOTUtMzJhOGY3OGQ5NjcxIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IndlaTg5MTAxM0BnbWFpbC5jb20iLCJuYmYiOjE2ODkwODM3MjQsImNzcmYiOiIxMjQ2NzhkZi1hMmZmLTQ0OGUtYTIzNC05ZjBlMzg5MGY5ODUiLCJleHAiOjE2OTAyOTMzMjR9.jxzlctZbhb25-lqR4X33C2U2_aWkWrSKnG2R0DqAejA");
+                              await jwtService.saveJwt("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4OTM1MzIwNCwianRpIjoiY2IyZDQyYzAtNDA5ZC00ZjIwLWE5OWMtMjM4Y2M0NWJiNzVhIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IndlaTg5MTAxM0BnbWFpbC5jb20iLCJuYmYiOjE2ODkzNTMyMDQsImNzcmYiOiI2MmJiMTgxMS1lYjZhLTRkZWYtOTQ2Mi1kZDE3YTVmOTRmMTciLCJleHAiOjE2OTA1NjI4MDR9.VR2yL1m9DMak5_9NczOAo4QJvl7ouZ_SuCCTRFlxBOI");
                             },
                           ),
 
