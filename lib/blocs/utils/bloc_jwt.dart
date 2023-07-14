@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:study_savvy_app/services/jwt_storage.dart';
+import 'package:study_savvy_app/services/utils/jwt_storage.dart';
 
 abstract class JWTEvent {}
 class JWTEventGet extends JWTEvent{}

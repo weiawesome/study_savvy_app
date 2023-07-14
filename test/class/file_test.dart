@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:study_savvy_app/models/model_files.dart';
+import 'package:study_savvy_app/models/files/model_files.dart';
 import 'file_test.mocks.dart';
 
 

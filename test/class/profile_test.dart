@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:study_savvy_app/models/model_profile.dart';
+import 'package:study_savvy_app/models/profile/model_profile.dart';
 
 void main(){
   group('Profile', () {

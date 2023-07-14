@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:study_savvy_app/models/model_article_improver.dart';
+import 'package:study_savvy_app/models/article_improver/model_article_improver.dart';
 import 'package:test/test.dart';
 import 'article_improver_test.mocks.dart';
 

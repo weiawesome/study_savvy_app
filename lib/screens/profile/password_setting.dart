@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:study_savvy_app/blocs/bloc_password.dart';
+import 'package:study_savvy_app/blocs/profile/bloc_password.dart';
 import 'package:study_savvy_app/styles/custom_style.dart';
 import 'package:study_savvy_app/widgets/loading.dart';
 import 'package:study_savvy_app/widgets/success.dart';
-import 'package:study_savvy_app/models/model_profile.dart';
+import 'package:study_savvy_app/models/profile/model_profile.dart';
 import 'package:study_savvy_app/widgets/failure.dart';
 
 class PasswordPage extends StatefulWidget{

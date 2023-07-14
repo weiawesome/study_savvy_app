@@ -1,123 +1,29 @@
 import 'dart:convert';
-import 'dart:typed_data';
+import 'package:study_savvy_app/models/profile/model_profile.dart';
 import 'package:http/http.dart' as http;
-import 'package:study_savvy_app/models/model_files.dart';
-import 'package:study_savvy_app/services/api_routes.dart';
-import 'package:study_savvy_app/services/jwt_storage.dart';
+import 'package:study_savvy_app/services/utils/encrypt.dart';
 import 'package:study_savvy_app/utils/exception.dart';
+import '../api_routes.dart';
+import '../utils/jwt_storage.dart';
 
-
-class FilesService {
+class ProfileService {
   JwtService jwtService;
   http.Client httpClient;
 
-  FilesService({JwtService? jwtService, http.Client? httpClient,}): jwtService = jwtService ?? JwtService(), httpClient = httpClient ?? http.Client();
-
-  Future<Uint8List?> getImage(String id) async {
+  ProfileService({JwtService? jwtService, http.Client? httpClient,}): jwtService = jwtService ?? JwtService(), httpClient = httpClient ?? http.Client();
+  
+  Future<Profile> getProfile() async {
     String? jwt=await jwtService.getJwt();
     if(jwt==null){
       throw AuthException("JWT invalid");
     }
     final response = await httpClient.get(
-      Uri.parse("${ApiRoutes.fileImageUrl}/$id"),
-      headers: {'Authorization': 'Bearer $jwt'},
-    );
-    if (response.statusCode == 200) {
-      return response.bodyBytes;
-    }
-    else if (response.statusCode==203){
-      return null;
-    }
-    else if(response.statusCode == 400){
-      throw ClientException("Client's error");
-    }
-    else if(response.statusCode == 404){
-      throw ExistException("Source not exist");
-    }
-    else if (response.statusCode == 422){
-      await jwtService.deleteJwt();
-      throw AuthException("JWT invalid");
-    }
-    else if(response.statusCode == 500){
-      throw ServerException("Server's error");
-    }
-    else{
-      throw Exception('Failed in unknown reason');
-    }
-  }
-
-  Future<Uint8List> getAudio(String id) async {
-    String? jwt=await jwtService.getJwt();
-    if(jwt==null){
-      throw AuthException("JWT invalid");
-    }
-    final response = await httpClient.get(
-      Uri.parse("${ApiRoutes.fileAudioUrl}/$id"),
-      headers: {'Authorization': 'Bearer $jwt'},
-    );
-    if (response.statusCode == 200) {
-      return response.bodyBytes;
-    }
-    else if(response.statusCode == 400){
-      throw ClientException("Client's error");
-    }
-    else if(response.statusCode == 404){
-      throw ExistException("Source not exist");
-    }
-    else if (response.statusCode == 422){
-      await jwtService.deleteJwt();
-      throw AuthException("JWT invalid");
-    }
-    else if(response.statusCode == 500){
-      throw ServerException("Server's error");
-    }
-    else{
-      throw Exception('Failed in unknown reason');
-    }
-  }
-
-  Future<SpecificFile> getSpecificFile(String id) async {
-    String? jwt=await jwtService.getJwt();
-    if(jwt==null){
-      throw AuthException("JWT invalid");
-    }
-    final response = await httpClient.get(
-      Uri.parse("${ApiRoutes.fileUrl}/$id"),
-      headers: {'Authorization': 'Bearer $jwt'},
-    );
-    if (response.statusCode == 200) {
-      return SpecificFile.fromJson(jsonDecode(response.body));
-    }
-    else if(response.statusCode == 400){
-      throw ClientException("Client's error");
-    }
-    else if(response.statusCode == 404){
-      throw ExistException("Source not exist");
-    }
-    else if (response.statusCode == 422){
-      await jwtService.deleteJwt();
-      throw AuthException("JWT invalid");
-    }
-    else if(response.statusCode == 500){
-      throw ServerException("Server's error");
-    }
-    else{
-      throw Exception('Failed in unknown reason');
-    }
-  }
-
-  Future<Files> getFiles(int page) async {
-    String? jwt=await jwtService.getJwt();
-    if(jwt==null){
-      throw AuthException("JWT invalid");
-    }
-    final response = await httpClient.get(
-      Uri.parse("${ApiRoutes.fileUrl}?page=$page"),
+      Uri.parse(ApiRoutes.profileUrl),
       headers: {'Authorization': 'Bearer $jwt'},
     );
     if (response.statusCode == 200) {
       Map<String,dynamic> result=jsonDecode(response.body);
-      return Files.fromJson(result);
+      return Profile.fromJson(result);
     }
     else if(response.statusCode == 400){
       throw ClientException("Client's error");
@@ -126,7 +32,6 @@ class FilesService {
       throw ExistException("Source not exist");
     }
     else if (response.statusCode == 422){
-      
       await jwtService.deleteJwt();
       throw AuthException("JWT invalid");
     }
@@ -138,14 +43,123 @@ class FilesService {
     }
   }
 
-  Future<void> deleteSpecificFile(String id) async {
+  Future<void> setApiKey(String apikey) async {
+    String? jwt=await jwtService.getJwt();
+    if(jwt==null){
+      throw AuthException("JWT invalid");
+    }
+    SecureData data=await encrypt(apikey);
+    final response = await httpClient.put(
+      Uri.parse(ApiRoutes.apiKeyUrl),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwt'
+      },
+      body: jsonEncode(data.formatApiKey()),
+    );
+    if (response.statusCode == 200) {
+      return ;
+    }
+    else if(response.statusCode == 400){
+      throw ClientException("Client's error");
+    }
+    else if(response.statusCode == 404){
+      throw ExistException("Source not exist");
+    }
+    else if (response.statusCode == 422){
+      await jwtService.deleteJwt();
+      throw AuthException("JWT invalid");
+    }
+    else if(response.statusCode == 500){
+      throw ServerException("Server's error");
+    }
+    else{
+      throw Exception('Failed in unknown reason');
+    }
+  }
+
+  Future<void> setAccessToken(String accessToken) async {
+    String? jwt=await jwtService.getJwt();
+    if(jwt==null){
+      throw AuthException("JWT invalid");
+    }
+    SecureData data=await encrypt(accessToken);
+    final response = await httpClient.put(
+      Uri.parse(ApiRoutes.accessTokenUrl),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwt'
+      },
+      body: jsonEncode(data.formatAccessToken()),
+    );
+    if (response.statusCode == 200) {
+      return ;
+    }
+    else if(response.statusCode == 400){
+      throw ClientException("Client's error");
+    }
+    else if(response.statusCode == 404){
+      throw ExistException("Source not exist");
+    }
+    else if (response.statusCode == 422){
+      await jwtService.deleteJwt();
+      throw AuthException("JWT invalid");
+    }
+    else if(response.statusCode == 500){
+      throw ServerException("Server's error");
+    }
+    else{
+      throw Exception('Failed in unknown reason');
+    }
+  }
+
+  Future<void> resetPassword(UpdatePwd data) async {
+    String? jwt=await jwtService.getJwt();
+    if(jwt==null){
+      throw AuthException("JWT invalid");
+    }
+    final response = await httpClient.put(
+      Uri.parse(ApiRoutes.passwordEditUrl),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwt'
+      },
+      body: jsonEncode(data.formatJson()),
+    );
+    if (response.statusCode == 200) {
+      return ;
+    }
+    else if(response.statusCode == 400){
+      throw ClientException("Client's error");
+    }
+    else if(response.statusCode==401){
+      throw PasswordException("Password's error");
+    }
+    else if(response.statusCode == 404){
+      throw ExistException("Source not exist");
+    }
+    else if (response.statusCode == 422){
+      await jwtService.deleteJwt();
+      throw AuthException("JWT invalid");
+    }
+    else if(response.statusCode == 500){
+      throw ServerException("Server's error");
+    }
+    else{
+      throw Exception('Failed in unknown reason');
+    }
+  }
+
+  Future<void> logout() async {
     String? jwt=await jwtService.getJwt();
     if(jwt==null){
       throw AuthException("JWT invalid");
     }
     final response = await httpClient.delete(
-      Uri.parse("${ApiRoutes.fileUrl}/$id"),
-      headers: {'Authorization': 'Bearer $jwt'},
+      Uri.parse(ApiRoutes.logoutUrl),
+      headers: {
+        'Authorization': 'Bearer $jwt'
+      },
     );
     if (response.statusCode == 201) {
       return ;
@@ -167,76 +181,4 @@ class FilesService {
       throw Exception('Failed in unknown reason');
     }
   }
-
-  Future<void> editSpecificFileOCR(EditFile file) async {
-    String? jwt=await jwtService.getJwt();
-    if(jwt==null){
-      throw AuthException("JWT invalid");
-    }
-    final String id=file.id;
-    final response = await httpClient.put(
-        Uri.parse("${ApiRoutes.fileNlpEditOCRUrl}/$id"),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $jwt'
-        },
-        body: jsonEncode(file.formatJson())
-    );
-
-    if (response.statusCode == 200) {
-      return ;
-    }
-    else if(response.statusCode == 400){
-      throw ClientException("Client's error");
-    }
-    else if(response.statusCode == 404){
-      throw ExistException("Source not exist");
-    }
-    else if (response.statusCode == 422){
-      await jwtService.deleteJwt();
-      throw AuthException("JWT invalid");
-    }
-    else if(response.statusCode == 500){
-      throw ServerException("Server's error");
-    }
-    else{
-      throw Exception('Failed in unknown reason');
-    }
-  }
-
-  Future<void> editSpecificFileASR(EditFile file) async {
-    String? jwt=await jwtService.getJwt();
-    if(jwt==null){
-      throw AuthException("JWT invalid");
-    }
-    final String id=file.id;
-    final response = await httpClient.put(
-        Uri.parse("${ApiRoutes.fileNlpEditASRUrl}/$id"),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $jwt'
-        },
-        body: jsonEncode(file.formatJson())
-    );
-    if (response.statusCode == 200) {
-      return ;
-    }
-    else if(response.statusCode == 400){
-      throw ClientException("Client's error");
-    }
-    else if(response.statusCode == 404){
-      throw ExistException("Source not exist");
-    }
-    else if (response.statusCode == 422){
-      await jwtService.deleteJwt();
-      throw AuthException("JWT invalid");
-    }
-    else if(response.statusCode == 500){
-      throw ServerException("Server's error");
-    }
-    else{
-      throw Exception('Failed in unknown reason');
-    }
-  }
-  
 }

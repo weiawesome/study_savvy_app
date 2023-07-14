@@ -9,8 +9,8 @@ import 'dart:typed_data' as _i6;
 
 import 'package:http/http.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:study_savvy_app/models/model_files.dart' as _i7;
-import 'package:study_savvy_app/services/jwt_storage.dart' as _i3;
+import 'package:study_savvy_app/models/files/model_files.dart' as _i7;
+import 'package:study_savvy_app/services/utils/jwt_storage.dart' as _i3;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values

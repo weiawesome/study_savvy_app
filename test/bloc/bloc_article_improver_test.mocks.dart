@@ -10,9 +10,9 @@ import 'dart:typed_data' as _i7;
 
 import 'package:http/http.dart' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:study_savvy_app/models/model_article_improver.dart' as _i9;
-import 'package:study_savvy_app/services/api_article_improver.dart' as _i8;
-import 'package:study_savvy_app/services/jwt_storage.dart' as _i3;
+import 'package:study_savvy_app/models/article_improver/model_article_improver.dart' as _i9;
+import 'package:study_savvy_app/services/article_improver/api_article_improver.dart' as _i8;
+import 'package:study_savvy_app/services/utils/jwt_storage.dart' as _i3;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values

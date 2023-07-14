@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:study_savvy_app/blocs/bloc_navigator.dart';
+import 'package:study_savvy_app/blocs/utils/bloc_navigator.dart';
 
 class CustomNavigate extends StatefulWidget {
   const CustomNavigate({super.key});

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_savvy_app/styles/custom_style.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:study_savvy_app/blocs/bloc_access_methods.dart';
+import 'package:study_savvy_app/blocs/profile/bloc_access_methods.dart';
 import 'package:study_savvy_app/widgets/loading.dart';
 
 class AccessTokenPage extends StatefulWidget{

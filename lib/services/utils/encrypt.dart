@@ -4,7 +4,7 @@ import 'package:pointycastle/export.dart';
 import 'package:encrypt/encrypt.dart';
 import 'package:pointycastle/asymmetric/api.dart';
 import 'package:asn1lib/asn1lib.dart';
-import 'package:study_savvy_app/models/model_profile.dart';
+import 'package:study_savvy_app/models/profile/model_profile.dart';
 
 Future<SecureData> encrypt(String text) async {
 

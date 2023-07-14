@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_savvy_app/utils/exception.dart';
-import 'package:study_savvy_app/services/api_profile.dart';
+import 'package:study_savvy_app/services/profile/api_profile.dart';
 
 abstract class AccessMethodEvent {}
 

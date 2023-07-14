@@ -2,7 +2,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:study_savvy_app/services/jwt_storage.dart';
+import 'package:study_savvy_app/services/utils/jwt_storage.dart';
 import 'jwt_test.mocks.dart';
 
 @GenerateMocks([FlutterSecureStorage])

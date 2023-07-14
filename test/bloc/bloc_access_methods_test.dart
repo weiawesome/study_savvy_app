@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:study_savvy_app/blocs/bloc_access_methods.dart';
-import 'package:study_savvy_app/services/api_profile.dart';
+import 'package:study_savvy_app/blocs/profile/bloc_access_methods.dart';
+import 'package:study_savvy_app/services/profile/api_profile.dart';
 import 'package:study_savvy_app/utils/exception.dart';
 import 'bloc_access_methods_test.mocks.dart';
 

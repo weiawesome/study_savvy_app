@@ -2,9 +2,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
-import 'package:study_savvy_app/services/api_profile.dart';
+import 'package:study_savvy_app/services/profile/api_profile.dart';
 import 'package:study_savvy_app/services/api_routes.dart';
-import 'package:study_savvy_app/services/jwt_storage.dart';
+import 'package:study_savvy_app/services/utils/jwt_storage.dart';
 import 'package:study_savvy_app/utils/exception.dart';
 import 'logout_test.mocks.dart';
 

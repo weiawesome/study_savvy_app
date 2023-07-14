@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:study_savvy_app/utils/exception.dart';
-import 'package:study_savvy_app/models/model_article_improver.dart';
-import 'api_routes.dart';
-import 'jwt_storage.dart';
+import 'package:study_savvy_app/models/article_improver/model_article_improver.dart';
+import '../api_routes.dart';
+import '../utils/jwt_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 

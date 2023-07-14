@@ -2,9 +2,9 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:study_savvy_app/blocs/bloc_article_improver.dart';
-import 'package:study_savvy_app/models/model_article_improver.dart';
-import 'package:study_savvy_app/services/api_article_improver.dart';
+import 'package:study_savvy_app/blocs/article_improver/bloc_article_improver.dart';
+import 'package:study_savvy_app/models/article_improver/model_article_improver.dart';
+import 'package:study_savvy_app/services/article_improver/api_article_improver.dart';
 import 'package:study_savvy_app/utils/exception.dart';
 import 'bloc_article_improver_test.mocks.dart';
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_savvy_app/widgets/failure.dart';
 import 'package:study_savvy_app/widgets/loading.dart';
-import 'package:study_savvy_app/blocs/bloc_profile.dart';
+import 'package:study_savvy_app/blocs/profile/bloc_profile.dart';
 
 class InformationPage extends StatefulWidget{
   const InformationPage({Key?key}):super(key: key);
