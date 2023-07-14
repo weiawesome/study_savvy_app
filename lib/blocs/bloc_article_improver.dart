@@ -19,6 +19,11 @@ class ArticleState {
   final String status;
   final String? error;
   ArticleState(this.status,this.error);
+
+  @override
+  String toString(){
+    return "ArticleState $status $error";
+  }
 }
 
 class ArticleBloc extends Bloc<ArticleEvent,ArticleState> {

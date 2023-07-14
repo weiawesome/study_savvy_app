@@ -14,6 +14,10 @@ class PasswordState {
   final String status;
   final String? error;
   PasswordState(this.status,this.error);
+  @override
+  String toString(){
+    return "PasswordState $status $error";
+  }
 }
 class PasswordBloc extends Bloc<PasswordEvent,PasswordState> {
   final ProfileService apiService;

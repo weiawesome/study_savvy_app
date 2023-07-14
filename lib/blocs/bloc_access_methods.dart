@@ -19,6 +19,11 @@ class AccessMethodState {
   final String status;
   final String? error;
   AccessMethodState(this.status,this.error);
+
+  @override
+  String toString(){
+    return "AccessMethodState $status $error";
+  }
 }
 class AccessMethodBloc extends Bloc<AccessMethodEvent,AccessMethodState?> {
   final ProfileService apiService;

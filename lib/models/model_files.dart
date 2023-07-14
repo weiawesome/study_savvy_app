@@ -4,6 +4,11 @@ class File {
   final String status;
   final String type;
   File(this.id,this.type,this.status,this.time);
+
+  @override
+  String toString(){
+    return "File $id $time $status $type";
+  }
 }
 class Files{
   final List<dynamic> files;
@@ -16,6 +21,11 @@ class Files{
         }).toList(),
         currentPage=json['current_page'],
         totalPages=json['total_pages'];
+
+  @override
+  String toString(){
+    return "File $currentPage $totalPages $files";
+  }
 }
 
 class SpecificFile{
@@ -29,6 +39,10 @@ class SpecificFile{
         prompt =json['prompt'] as String,
         summarize =json['summarize'] as String,
         details =json['details'];
+  @override
+  String toString(){
+    return "SpecificFile $content $prompt $summarize $details";
+  }
 }
 
 class EditFile{

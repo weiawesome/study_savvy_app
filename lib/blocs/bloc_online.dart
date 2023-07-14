@@ -15,6 +15,10 @@ class OnlineState {
   final bool? status;
   final String? message;
   OnlineState(this.status,this.message);
+  @override
+  String toString(){
+    return "OnlineState $status $message";
+  }
 }
 
 class OnlineBloc extends Bloc<OnlineEvent,OnlineState> {

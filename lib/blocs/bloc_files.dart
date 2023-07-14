@@ -16,6 +16,11 @@ class FilesState {
   final String? error;
   final Files files;
   FilesState(this.status,this.error,this.files);
+
+  @override
+  String toString(){
+    return "FilesState $status $error $files";
+  }
 }
 
 class FilesBloc extends Bloc<FilesEvent,FilesState> {

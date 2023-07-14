@@ -7,6 +7,10 @@ class Profile{
         name=json['name'],
         mail=json['mail'],
         gender=json['gender'];
+  @override
+  String toString(){
+    return "Profile $name $mail $gender";
+  }
 }
 class UpdateProfile{
   final String name;

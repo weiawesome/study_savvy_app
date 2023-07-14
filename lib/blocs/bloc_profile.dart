@@ -12,6 +12,10 @@ class ProfileState {
   final String? error;
   final Profile profile;
   ProfileState(this.status,this.error,this.profile);
+  @override
+  String toString(){
+    return "ProfileState $status $error $profile";
+  }
 }
 class ProfileBloc extends Bloc<ProfileEvent,ProfileState> {
   final ProfileService apiService;

@@ -34,6 +34,10 @@ class FileState {
   final String? type;
   final String? id;
   FileState(this.status,this.message,this.file,this.media,this.type,this.id);
+  @override
+  String toString(){
+    return "FileState $status $message $file $media $type $id";
+  }
 }
 
 
