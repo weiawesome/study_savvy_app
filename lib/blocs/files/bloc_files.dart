@@ -75,6 +75,7 @@ class FilesBloc extends Bloc<FilesEvent,FilesState> {
       else if (event is FilesEventLoadMore){
         emit(FilesState("PENDING",null,event.files));
         if(event.files.totalPages>event.files.currentPage){
+          await Future.delayed(const Duration(seconds: 2));
           try{
             Files result=await apiService!.getFiles((event.files.currentPage+1));
             emit(FilesState("SUCCESS",null,combineFiles(event.files, result)));

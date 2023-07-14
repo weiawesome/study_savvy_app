@@ -24,7 +24,7 @@ class _FilesPage extends State<FilesPage> {
     context.read<FilesBloc>().add(FilesEventInit());
     _scrollController.addListener(() {
       FilesState? state=context.read<FilesBloc>().state;
-      if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
+      if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent*0.9) {
         context.read<FilesBloc>().add(FilesEventLoadMore(state.files));
       }
     });
