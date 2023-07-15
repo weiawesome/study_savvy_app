@@ -183,7 +183,6 @@ class _FilesPage extends State<FilesPage> {
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 15),
                                   height: 100,
-                                  margin: const EdgeInsets.symmetric(vertical: 5),
                                   decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),border: Border.all(color: Theme.of(context).brightness==Brightness.light?LightStyle.borderColor:DarkStyle.borderColor)),
                                   child: Row(
                                     children: [
