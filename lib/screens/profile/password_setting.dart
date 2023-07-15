@@ -14,7 +14,9 @@ class PasswordPage extends StatefulWidget{
 }
 
 class _PasswordPage extends State<PasswordPage> {
-  final _formKey = GlobalKey<FormState>();
+  final _formKeyOldPassword = GlobalKey<FormState>();
+  final _formKeyNewPassword = GlobalKey<FormState>();
+  final _formKeyConfirmPassword = GlobalKey<FormState>();
   final oldPasswordController = TextEditingController();
   final newPasswordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
@@ -36,11 +38,12 @@ class _PasswordPage extends State<PasswordPage> {
   @override
   Widget build(BuildContext context) {
     void submitForm() {
-      if (_formKey.currentState!.validate()) {
+      if (_formKeyOldPassword.currentState!.validate() && _formKeyNewPassword.currentState!.validate() && _formKeyConfirmPassword.currentState!.validate()) {
         context.read<PasswordBloc>().add(PasswordEventUpdate(UpdatePwd(oldPasswordController.text.toString(),newPasswordController.text.toString())));
       }
     }
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body:GestureDetector(
         onTap: () {
           FocusScopeNode currentFocus = FocusScope.of(context);
@@ -68,108 +71,138 @@ class _PasswordPage extends State<PasswordPage> {
                         builder: (context,state){
                           if(state.status=="INIT"){
                             return Expanded(
-                              flex: 8,
-                              child:SingleChildScrollView(
-                                child: Form(
-                                  key: _formKey,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                          margin: const EdgeInsets.symmetric(vertical: 20),
-                                          child: Text('Original Password:',style: Theme.of(context).textTheme.displayMedium,)
-                                      ),
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(horizontal: 15),
-                                        decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),border: Border.all(color: Theme.of(context).brightness==Brightness.light?LightStyle.borderColor:DarkStyle.borderColor,)),
-                                        child: TextFormField(
-                                          controller: oldPasswordController,
-                                          maxLines: 1,
-                                          decoration: const InputDecoration(
-                                            hintText: "Enter the Password",
-                                            hintMaxLines: 3,
-                                            border: InputBorder.none,
+                              flex: 9,
+                              child:Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),border: Border.all(color: Theme.of(context).brightness==Brightness.light?LightStyle.borderColor:DarkStyle.borderColor,)),
+                                    padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Text('Password Edit :',style: Theme.of(context).textTheme.displayMedium,),
+                                        const Divider(),
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                                          decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),border: Border.all(color: Theme.of(context).brightness==Brightness.light?LightStyle.borderColor:DarkStyle.borderColor,)),
+                                          child: Form(
+                                            key: _formKeyOldPassword,
+                                            child: TextFormField(
+                                              controller: oldPasswordController,
+                                              maxLines: 1,
+                                              decoration: const InputDecoration(
+                                                hintText: "Enter the Password",
+                                                hintMaxLines: 1,
+                                                border: InputBorder.none,
+                                              ),
+                                              obscureText: true,
+                                              focusNode: oldPasswordNode,
+                                              onFieldSubmitted: (value){
+                                                if (_formKeyOldPassword.currentState!.validate()){
+                                                  FocusScope.of(context).requestFocus(newPasswordNode);
+                                                }
+                                                else{
+                                                  FocusScope.of(context).requestFocus(oldPasswordNode);
+                                                }
+                                              },
+                                              validator: (value) {
+                                                if (value == null || value.isEmpty) {
+                                                  return 'Empty error';
+                                                }
+                                                return null;
+                                              },
+                                            ),
                                           ),
-                                          obscureText: true,
-                                          focusNode: oldPasswordNode,
-                                          onFieldSubmitted: (value){
-                                            FocusScope.of(context).requestFocus(newPasswordNode);
-                                          },
-                                          validator: (value) {
-                                            if (value == null || value.isEmpty) {
-                                              return 'Empty error';
-                                            }
-                                            return null;
-                                          },
                                         ),
-                                      ),
-                                      Container(
-                                          margin: const EdgeInsets.symmetric(vertical: 20),
-                                          child: Text('New Password:',style: Theme.of(context).textTheme.displayMedium,)
-                                      ),
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(horizontal: 15),
-                                        decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),border: Border.all(color: Theme.of(context).brightness==Brightness.light?LightStyle.borderColor:DarkStyle.borderColor,)),
-                                        child: TextFormField(
-                                          controller: newPasswordController,
-                                          maxLines: 1,
-                                          focusNode: newPasswordNode,
-                                          decoration: const InputDecoration(
-                                            hintText: "Enter new Password",
-                                            hintMaxLines: 1,
-                                            border: InputBorder.none,
+                                        const Divider(),
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                                          decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),border: Border.all(color: Theme.of(context).brightness==Brightness.light?LightStyle.borderColor:DarkStyle.borderColor,)),
+                                          child: Form(
+                                            key: _formKeyNewPassword,
+                                            child: TextFormField(
+                                              controller: newPasswordController,
+                                              maxLines: 1,
+                                              focusNode: newPasswordNode,
+                                              decoration: const InputDecoration(
+                                                hintText: "Enter new Password",
+                                                hintMaxLines: 1,
+                                                border: InputBorder.none,
+                                              ),
+                                              obscureText: true,
+                                              validator: (value) {
+                                                if (value == null || value.isEmpty) {
+                                                  return 'Empty Error';
+                                                }
+                                                else if(value==oldPasswordController.text.toString()){
+                                                  return 'Same with current Error';
+                                                }
+                                                return null;
+                                              },
+                                              onFieldSubmitted: (value){
+                                                if (_formKeyOldPassword.currentState!.validate() && _formKeyNewPassword.currentState!.validate()){
+                                                  FocusScope.of(context).requestFocus(confirmPasswordNode);
+                                                }
+                                                else{
+                                                  FocusScope.of(context).requestFocus(newPasswordNode);
+                                                }
+                                              },
+                                            ),
                                           ),
-                                          obscureText: true,
-                                          validator: (value) {
-                                            if (value == null || value.isEmpty) {
-                                              return 'Empty Error';
-                                            }
-                                            else if(value==oldPasswordController.text){
-                                              return 'Same with old Error';
-                                            }
-                                            return null;
-                                          },
-                                          onFieldSubmitted: (value){
-                                            FocusScope.of(context).requestFocus(confirmPasswordNode);
-                                            _formKey.currentState!.validate();
-                                          },
                                         ),
-                                      ),
-                                      Container(
-                                          margin: const EdgeInsets.symmetric(vertical: 20),
-                                          child: Text('Confirm New Password:',style: Theme.of(context).textTheme.displayMedium,)
-                                      ),
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(horizontal: 15),
-                                        decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),border: Border.all(color: Theme.of(context).brightness==Brightness.light?LightStyle.borderColor:DarkStyle.borderColor,)),
-                                        child: TextFormField(
-                                          controller: confirmPasswordController,
-                                          maxLines: 1,
-                                          decoration: const InputDecoration(
-                                            hintText: "Confirm new Password",
-                                            hintMaxLines: 3,
-                                            border: InputBorder.none,
+                                        const Divider(),
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                                          decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)),border: Border.all(color: Theme.of(context).brightness==Brightness.light?LightStyle.borderColor:DarkStyle.borderColor,)),
+                                          child: Form(
+                                            key: _formKeyConfirmPassword,
+                                            child: TextFormField(
+                                              controller: confirmPasswordController,
+                                              maxLines: 1,
+                                              decoration: const InputDecoration(
+                                                hintText: "Confirm new Password",
+                                                hintMaxLines: 1,
+                                                border: InputBorder.none,
+                                              ),
+                                              obscureText: true,
+                                              focusNode: confirmPasswordNode,
+                                              onFieldSubmitted: (value){
+                                                if (_formKeyOldPassword.currentState!.validate() && _formKeyNewPassword.currentState!.validate() && _formKeyConfirmPassword.currentState!.validate()){
+                                                  submitForm();
+                                                }
+                                                else{
+                                                  FocusScope.of(context).requestFocus(confirmPasswordNode);
+                                                }
+                                              },
+                                              validator: (value) {
+                                                if (value == null || value.isEmpty) {
+                                                  return 'Empty Error';
+                                                }
+                                                else if (value != newPasswordController.text.toString()) {
+                                                  return 'Match Error';
+                                                }
+                                                return null;
+                                              },
+                                            ),
                                           ),
-                                          obscureText: true,
-                                          focusNode: confirmPasswordNode,
-                                          onFieldSubmitted: (value){
-                                            submitForm();
-                                          },
-                                          validator: (value) {
-                                            if (value == null || value.isEmpty) {
-                                              return 'Empty Error';
-                                            }
-                                            else if (value != newPasswordController.text) {
-                                              return 'Match Error';
-                                            }
-                                            return null;
-                                          },
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ),
+                                  const Divider(),
+                                  Center(
+                                    child: FractionallySizedBox(
+                                        widthFactor: 0.5,
+                                        child: ElevatedButton(
+                                          onPressed: () { submitForm(); },
+                                          style: Theme.of(context).elevatedButtonTheme.style,
+                                          child:const Text('Done',textAlign: TextAlign.center,style: TextStyle(color: Colors.white, fontSize:23,fontFamily: 'Play',fontWeight: FontWeight.bold),),
+                                        )
+                                    ),
+                                  )
+                                ],
+                              )
                             );
                           }
                           else if(state.status=="PENDING"){
@@ -194,29 +227,6 @@ class _PasswordPage extends State<PasswordPage> {
                             return Container();
                           }
                         }
-                    ),
-                    BlocBuilder<PasswordBloc,PasswordState>(
-                      builder: (context,state){
-                        if(state.status=="INIT"){
-                          return Expanded(
-                              flex: 1,
-                              child:FractionallySizedBox(
-                                  widthFactor: 0.5,
-                                  child: ElevatedButton(
-                                    onPressed: () { submitForm(); },
-                                    style: Theme.of(context).elevatedButtonTheme.style,
-                                    child:const Text('Done',textAlign: TextAlign.center,style: TextStyle(color: Colors.white, fontSize:23,fontFamily: 'Play',fontWeight: FontWeight.bold),),
-                                  )
-                              )
-                          );
-                        }
-                        else if(state.status=="PENDING"){
-                          return Container();
-                        }
-                        else{
-                          return Container();
-                        }
-                      },
                     ),
                   ],
                 )
