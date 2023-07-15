@@ -270,6 +270,9 @@ class _ProfilePage extends State<ProfilePage> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text("Theme Setting",style: Theme.of(context).textTheme.displaySmall),
+                              Theme.of(context).brightness==Brightness.light?
+                              Icon(Icons.light_mode,size: 25,color: Theme.of(context).hintColor):
+                              Icon(Icons.dark_mode,size: 25,color: Theme.of(context).hintColor)
                             ],
                           ),
                           const Divider(),
