@@ -73,10 +73,10 @@ class _AccessTokenPage extends State<AccessTokenPage> {
                                     flex: 5,
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                                       children: [
-                                        Text('Access_Token:',style: Theme.of(context).textTheme.displayMedium,),
+                                        Text('Access_Token :',style: Theme.of(context).textTheme.displayMedium,),
                                         Container(
-                                          margin: const EdgeInsets.only(top: 10),
                                           width: double.infinity,
                                           decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),border: Border.all(color: Theme.of(context).brightness==Brightness.light?LightStyle.borderColor:DarkStyle.borderColor)),
                                           padding: const EdgeInsets.symmetric(horizontal: 10),

@@ -72,12 +72,12 @@ class _ApiKeyPage extends State<ApiKeyPage> {
                                     flex: 5,
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                                       children: [
-                                        Text('Api_Key:',style: Theme.of(context).textTheme.displayMedium,),
+                                        Text('Api_Key :',style: Theme.of(context).textTheme.displayMedium,),
                                         Container(
                                           decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),border: Border.all(color: Theme.of(context).brightness==Brightness.light?LightStyle.borderColor:DarkStyle.borderColor)),
                                           padding: const EdgeInsets.symmetric(horizontal: 10),
-                                          margin: const EdgeInsets.only(top: 10),
                                           child: TextField(
                                             onSubmitted: (value){
                                               context.read<AccessMethodBloc>().add(AccessMethodEventApiKey(_controller.text));
