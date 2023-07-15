@@ -166,7 +166,12 @@ class _ArticleImproverPage extends State<ArticleImproverPage>{
                                   Stack(
                                       children: [
                                         Image.memory(ocrImageProvider.image as Uint8List),
-                                        IconButton(onPressed: (){ocrImageProvider.clear();}, icon: const Icon(Icons.cancel_outlined,size: 30,color: Colors.red,))
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.end,
+                                          children: [
+                                            IconButton(onPressed: (){ocrImageProvider.clear();}, icon: const Icon(Icons.cancel_outlined,size: 30,color: Colors.red,)),
+                                          ],
+                                        )
                                       ]
                                   ),
                                 ),
