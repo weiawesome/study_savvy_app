@@ -21,9 +21,11 @@ class ProfilePage extends StatefulWidget{
 }
 
 class _ProfilePage extends State<ProfilePage> {
-  int groupValue=0;
   Map<int,ThemeMode> themeModeIndex={
     0:ThemeMode.system,1:ThemeMode.light,2:ThemeMode.dark
+  };
+  Map<ThemeMode,int> indexThemeMode={
+    ThemeMode.system:0,ThemeMode.light:1,ThemeMode.dark:2
   };
   Map<int,String> themeIndex={
     0:"system",1:"light",2:"dark"
@@ -34,7 +36,9 @@ class _ProfilePage extends State<ProfilePage> {
   }
   @override
   Widget build(BuildContext context) {
+
     final themeProvider = Provider.of<ThemeProvider>(context);
+    int groupValue=indexThemeMode[themeProvider.themeMode]??0;
     void showLogoutDialog(BuildContext context) {
       showCupertinoModalPopup(
         context: context,

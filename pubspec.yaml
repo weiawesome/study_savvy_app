@@ -58,6 +58,7 @@ dependencies:
   wechat_assets_picker: ^8.5.0
   liquid_pull_to_refresh: ^3.0.1
   flutter_image_compress: ^2.0.3
+  shared_preferences: ^2.2.0
 
 
 dev_dependencies:
