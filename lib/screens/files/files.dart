@@ -59,6 +59,7 @@ class _FilesPage extends State<FilesPage> {
                       onRefresh: _refresh,
                       showChildOpacityTransition: false,
                       child: ListView.builder(
+                          key: const PageStorageKey<String>('FilesKey'),
                           physics: const BouncingScrollPhysics(),
                           controller: _scrollController,
                           itemCount: state.status=="PENDING"?state.files.files.length+1:state.files.files.length,
