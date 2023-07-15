@@ -95,10 +95,8 @@ class _SpecificFilePage extends State<SpecificFilePage> {
                                         child: Column(
                                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                                           children: [
-                                            Container(
-                                              margin: const EdgeInsets.only(bottom: 10),
-                                              child: const Text("Introduce"),
-                                            ),
+                                            Text("Introduce",style: Theme.of(context).textTheme.headlineLarge,),
+                                            const Divider(),
                                             Row(
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
