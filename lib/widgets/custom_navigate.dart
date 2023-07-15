@@ -16,8 +16,8 @@ class _CustomNavigate extends State<CustomNavigate> {
     return BottomNavigationBar(
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          icon: Icon(Icons.file_open_outlined,size: iconSize,),
-          activeIcon: Icon(Icons.file_open_outlined,size: iconSize,),
+          icon: Icon(Icons.insert_drive_file_outlined,size: iconSize,),
+          activeIcon: Icon(Icons.insert_drive_file_outlined,size: iconSize,),
           label: 'Note Maker',
         ),
         BottomNavigationBarItem(
