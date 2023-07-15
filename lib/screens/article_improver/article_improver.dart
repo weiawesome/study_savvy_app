@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:provider/provider.dart';
 import 'package:study_savvy_app/blocs/article_improver/bloc_article_improver.dart';
 import 'package:study_savvy_app/models/article_improver/model_article_improver.dart';
@@ -55,30 +56,45 @@ class _ArticleImproverPage extends State<ArticleImproverPage>{
     List<AssetEntity> images = <AssetEntity>[];
 
     Future<void> processImages() async {
-      List<img_package.Image> loadedImages = [];
-      for (AssetEntity asset in images) {
-        final Uint8List? imageData = await asset.originBytes;
-        if (imageData != null) {
-          img_package.Image img = img_package.decodeImage(imageData)!;
-          loadedImages.add(img_package.copyResize(img, width: 720));
+      ocrImageProvider.setStatus(false);
+      ocrImageProvider.closeStatusFuture();
+      try{
+        List<img_package.Image> loadedImages = [];
+        for (AssetEntity asset in images) {
+          File? file = await asset.file;
+          if(file!=null){
+            Uint8List? imageData = await FlutterImageCompress.compressWithFile(
+              file.absolute.path,
+              autoCorrectionAngle: true,
+            );
+            if (imageData != null) {
+              img_package.Image img = img_package.decodeImage(imageData)!;
+              loadedImages.add(img_package.copyResize(img, width: asset.width));
+            }
+          }
         }
+        final combined = img_package.Image(
+            loadedImages[0].width,
+            loadedImages.fold<int>(0, (previousValue, element) => previousValue + element.height)
+        );
+
+        int offset = 0;
+        for (img_package.Image img in loadedImages) {
+          img_package.copyInto(combined, img, dstY: offset);
+          offset += img.height;
+        }
+
+        final directory = await getApplicationDocumentsDirectory();
+        final filePath = '${directory.path}/combined.jpg';
+        File(filePath).writeAsBytesSync(img_package.encodeJpg(combined));
+        ocrImageProvider.set(File(filePath));
       }
-
-      final combined = img_package.Image(
-          loadedImages[0].width,
-          loadedImages.fold<int>(
-              0, (previousValue, element) => previousValue + element.height));
-
-      int offset = 0;
-      for (img_package.Image img in loadedImages) {
-        img_package.copyInto(combined, img, dstY: offset);
-        offset += img.height;
+      catch (e){
+        throw Exception("Error to choose image");
       }
-
-      final directory = await getApplicationDocumentsDirectory();
-      final filePath = '${directory.path}/combined.jpg';
-      File(filePath).writeAsBytesSync(img_package.encodeJpg(combined));
-      ocrImageProvider.set(File(filePath));
+      finally{
+        ocrImageProvider.setStatus(true);
+      }
     }
 
     Future<void> loadAssets() async {
@@ -101,6 +117,7 @@ class _ArticleImproverPage extends State<ArticleImproverPage>{
         await processImages();
       }
     }
+
     return GestureDetector(
       onTap: () {
         FocusScopeNode currentFocus = FocusScope.of(context);
@@ -135,7 +152,8 @@ class _ArticleImproverPage extends State<ArticleImproverPage>{
                                 height: 180,
                                 decoration: Theme.of(context).brightness == Brightness.dark ? DarkStyle.boxDecoration : LightStyle.boxDecoration,
                                 child: SingleChildScrollView(
-                                  child: ocrImageProvider.isNull()?
+                                  child: ocrImageProvider.status==false?
+                                  const Loading() :ocrImageProvider.isNull()?
                                   TextField(
                                     controller: _contentController,
                                     maxLines: null,
