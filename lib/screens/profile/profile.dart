@@ -21,6 +21,17 @@ class ProfilePage extends StatefulWidget{
 }
 
 class _ProfilePage extends State<ProfilePage> {
+  int groupValue=0;
+  Map<int,ThemeMode> themeModeIndex={
+    0:ThemeMode.system,1:ThemeMode.light,2:ThemeMode.dark
+  };
+  Map<int,String> themeIndex={
+    0:"system",1:"light",2:"dark"
+  };
+  Widget formatThemeUI(int index){
+    final String gender=themeIndex[index]!;
+    return Container(padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 3),child: Text(gender,style: Theme.of(context).textTheme.displaySmall));
+  }
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
@@ -252,100 +263,36 @@ class _ProfilePage extends State<ProfilePage> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Container(
-                              margin: const EdgeInsets.only(bottom: 5),
+                              margin: const EdgeInsets.only(bottom: 10),
                               child: Text('Preference Setting',style: Theme.of(context).textTheme.displayMedium)
                           ),
-                          TextButton(
-                            style: ButtonStyle(
-                              overlayColor: MaterialStateProperty.resolveWith<Color>(
-                                    (Set<MaterialState> states) {
-                                  if (states.contains(MaterialState.pressed)) {
-                                    return Theme.of(context).hintColor;
-                                  }
-                                  return Colors.transparent;
-                                },
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Theme Setting",style: Theme.of(context).textTheme.displaySmall),
+                            ],
+                          ),
+                          const Divider(),
+                          SizedBox(
+                            height: 40,
+                            child: ListView(
                               children: [
-                                Text("Theme Setting",style: Theme.of(context).textTheme.displaySmall),
-                                Icon(Icons.navigate_next_rounded,size: 25,color: Theme.of(context).hintColor)
+                                CupertinoSlidingSegmentedControl(
+                                    groupValue: groupValue,
+                                    children:{
+                                      0: formatThemeUI(0),
+                                      1: formatThemeUI(1),
+                                      2: formatThemeUI(2)
+                                    },
+                                    onValueChanged: (value){
+                                      themeProvider.themeMode=themeModeIndex[value]!;
+                                      setState(() {
+                                        groupValue=value!;
+                                      });
+                                    }
+                                )
                               ],
                             ),
-                            onPressed: () {
-                              showBottomSheet<void>(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return Container(
-                                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
-                                    padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 20),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: <Widget>[
-                                        Expanded(
-                                            flex: 3,
-                                            child:Center(
-                                              child: Text('Mode',style: Theme.of(context).textTheme.bodyLarge,),
-                                            )
-                                        ),
-                                        Expanded(
-                                          flex: 7,
-                                          child: Container(
-                                            alignment: Alignment.topLeft,
-                                            padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 15),
-                                            child: Column(
-                                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                              children: [
-                                                TextButton(
-                                                  child: Row(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                      children: [
-                                                        Text('System',style: Theme.of(context).textTheme.displayMedium),
-                                                        themeProvider.themeMode==ThemeMode.system? const Icon(Icons.check):Container()
-                                                      ]
-                                                  ),
-                                                  onPressed: () => {
-                                                    themeProvider.themeMode=ThemeMode.system,
-                                                    Navigator.pop(context),
-                                                  },
-                                                ),
-                                                TextButton(
-                                                  child: Row(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                      children: [
-                                                        Text('Dark',style: Theme.of(context).textTheme.displayMedium),
-                                                        themeProvider.themeMode==ThemeMode.dark? const Icon(Icons.check):Container()
-                                                      ]
-                                                  ),
-                                                  onPressed: () => {
-                                                    themeProvider.themeMode=ThemeMode.dark,
-                                                    Navigator.pop(context)
-                                                  },
-                                                ),
-                                                TextButton(
-                                                  child: Row(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                      children: [
-                                                        Text('Light',style: Theme.of(context).textTheme.displayMedium),
-                                                        themeProvider.themeMode==ThemeMode.light? const Icon(Icons.check):Container()
-                                                      ]
-                                                  ),
-                                                  onPressed: () => {
-                                                    themeProvider.themeMode=ThemeMode.light,
-                                                    Navigator.pop(context)
-                                                  },
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                              );
-                            },
                           ),
                           TextButton(
                             style: ButtonStyle(
