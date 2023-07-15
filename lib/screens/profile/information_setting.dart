@@ -21,7 +21,7 @@ class _InformationPage extends State<InformationPage> {
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
           title: Text('Warn',style: Theme.of(context).textTheme.displayMedium),
-          content: Text("Name 部分不得為空",style: Theme.of(context).textTheme.displaySmall),
+          content: _controller.text.isEmpty?Text("Name 部分不得為空",style: Theme.of(context).textTheme.displaySmall):Text("與原資料相符 未做更動",style: Theme.of(context).textTheme.displaySmall),
           actions: <Widget>[
             CupertinoDialogAction(
               isDestructiveAction: true,
@@ -38,9 +38,17 @@ class _InformationPage extends State<InformationPage> {
   int groupValue=0;
   late TextEditingController _controller;
   late ProfileBloc bloc;
+
+  late final String originalName;
+  late final String originalGender;
+
   Map<int,String> genderIndex={
     0:"male",1:"female",2:"other"
   };
+  Widget formatGenderUI(int index){
+    final String gender=genderIndex[index]!;
+    return Container(padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 3),child: Text(gender,style: Theme.of(context).textTheme.displaySmall));
+  }
   @override
   void initState() {
     super.initState();
@@ -50,6 +58,10 @@ class _InformationPage extends State<InformationPage> {
       if(state.status=="SUCCESS"){
         if(mounted){
           _controller.text=state.profile.name;
+
+          originalName=state.profile.name;
+          originalGender=state.profile.gender;
+
           setState(() {
             if(state.profile.gender=="male"){
               groupValue=0;
@@ -197,9 +209,9 @@ class _InformationPage extends State<InformationPage> {
                                               CupertinoSlidingSegmentedControl(
                                                   groupValue: groupValue,
                                                   children:{
-                                                    0: Container(padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 3),child: Text("Male",style: Theme.of(context).textTheme.displaySmall)),
-                                                    1: Container(padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 3),child: Text("Female",style: Theme.of(context).textTheme.displaySmall)),
-                                                    2: Container(padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 3),child: Text("Other",style: Theme.of(context).textTheme.displaySmall))
+                                                    0: formatGenderUI(0),
+                                                    1: formatGenderUI(1),
+                                                    2: formatGenderUI(2)
                                                   },
                                                   onValueChanged: (value){
                                                     setState(() {
@@ -245,10 +257,12 @@ class _InformationPage extends State<InformationPage> {
                                       if(_controller.text.isEmpty){
                                         _showAlertDialog(context);
                                       }
+                                      else if(_controller.text.toString()==originalName && genderIndex[groupValue]==originalGender){
+                                        _showAlertDialog(context);
+                                      }
                                       else{
                                         context.read<ProfileBloc>().add(ProfileEventUpdate(UpdateProfile(_controller.text.toString(),genderIndex[groupValue]!)));
                                       }
-
                                     },
                                     style: Theme
                                         .of(context)
