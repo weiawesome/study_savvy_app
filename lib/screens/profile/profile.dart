@@ -283,6 +283,7 @@ class _ProfilePage extends State<ProfilePage> {
                           SizedBox(
                             height: 40,
                             child: ListView(
+                              physics: const NeverScrollableScrollPhysics(),
                               children: [
                                 CupertinoSlidingSegmentedControl(
                                     groupValue: groupValue,

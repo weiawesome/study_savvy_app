@@ -205,6 +205,7 @@ class _InformationPage extends State<InformationPage> {
                                         Expanded(
                                           flex: 1,
                                           child: ListView(
+                                            physics: const NeverScrollableScrollPhysics(),
                                             children: [
                                               CupertinoSlidingSegmentedControl(
                                                   groupValue: groupValue,
