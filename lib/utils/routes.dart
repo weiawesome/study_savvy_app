@@ -17,7 +17,7 @@ class Routes {
   static const camera='/camera';
 }
 class RouteGenerator {
-  static Route<dynamic> generateRoute(RouteSettings settings) {
+  static Route<dynamic>? generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case Routes.home:
         return MaterialPageRoute(builder: (_) => const HomePage());
@@ -34,7 +34,7 @@ class RouteGenerator {
       case Routes.camera:
         return MaterialPageRoute(builder: (_) => const CameraPage());
       default:
-        return MaterialPageRoute(builder: (_) => const HomePage());
+        return null;
     }
   }
 }

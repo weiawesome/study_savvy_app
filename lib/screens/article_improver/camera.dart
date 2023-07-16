@@ -30,7 +30,6 @@ class _CameraPageState extends State<CameraPage> {
           Expanded(
             flex:9,
             child: AdvCamera(
-
               onCameraCreated: _onCameraCreated,
               onImageCaptured: (path) async {
                 await ocrImageProvider.set(File(path)).then((value) => {
@@ -59,7 +58,7 @@ class _CameraPageState extends State<CameraPage> {
                             if (states.contains(MaterialState.pressed)) {
                               return Theme.of(context).hintColor;
                             }
-                            // 其他状态下的背景色
+                            
                             return Colors.transparent;
                           },
                         ),
@@ -74,7 +73,7 @@ class _CameraPageState extends State<CameraPage> {
                             if (states.contains(MaterialState.pressed)) {
                               return Theme.of(context).hintColor;
                             }
-                            // 其他状态下的背景色
+                            
                             return Colors.transparent;
                           },
                         ),
