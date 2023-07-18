@@ -9,23 +9,22 @@ import 'package:study_savvy_app/blocs/utils/bloc_navigator.dart';
 import 'package:study_savvy_app/blocs/profile/bloc_online.dart';
 import 'package:study_savvy_app/blocs/files/bloc_specific_file.dart';
 import 'package:study_savvy_app/utils/routes.dart';
-import 'blocs/files/bloc_files.dart';
-import 'blocs/utils/bloc_jwt.dart';
-import 'blocs/profile/bloc_password.dart';
-import 'blocs/profile/bloc_profile.dart';
+import 'blocs/LogIn/login_bloc.dart';
+import 'package:study_savvy_app/blocs/files/bloc_files.dart';
+import 'package:study_savvy_app/blocs/utils/bloc_jwt.dart';
+import 'package:study_savvy_app/blocs/profile/bloc_password.dart';
+import 'package:study_savvy_app/blocs/profile/bloc_profile.dart';
 import 'blocs/provider/ocr_image_provider.dart';
 import 'blocs/provider/theme_provider.dart';
 import 'styles/custom_style.dart';
+import 'package:study_savvy_app/screens/initial.dart';
 import 'package:study_savvy_app/screens/sign_in.dart';
-import 'package:study_savvy_app/screens/sign_up.dart';
-import 'package:study_savvy_app/screens/note_taker.dart';
+import 'package:study_savvy_app/blocs/auth/auth_repository.dart';
 
-Color primaryColor = Color(0xFF202124);
 void main() {
-  runApp(
-      DevicePreview(
-          enabled: !kReleaseMode,
-          builder: (context) => MultiProvider(
+  runApp(DevicePreview(
+      enabled: !kReleaseMode,
+      builder: (context) => MultiProvider(
             providers: [
               ChangeNotifierProvider(
                 create: (_) => ThemeProvider(),
@@ -37,34 +36,39 @@ void main() {
                 create: (context) => PageBloc(),
               ),
               BlocProvider(
-                create:  (context) => JWTBloc(),
+                create: (context) => JWTBloc(),
               ),
               BlocProvider(
-                create:  (context) => FileBloc(),
+                create: (context) => FileBloc(),
               ),
               BlocProvider(
-                create:  (context) => FilesBloc(),
+                create: (context) => FilesBloc(),
               ),
               BlocProvider(
-                create:  (context) => ProfileBloc(),
+                create: (context) => ProfileBloc(),
               ),
               BlocProvider(
-                create:  (context) => AccessMethodBloc(),
+                create: (context) => AccessMethodBloc(),
               ),
               BlocProvider(
-                create:  (context) => ArticleBloc(),
+                create: (context) => ArticleBloc(),
               ),
               BlocProvider(
                 create:  (context) => PasswordBloc(),
               ),
               BlocProvider(
                 create:  (context) => OnlineBloc(),
-              )
+              ),
+              BlocProvider(
+                create: (context) => LoginBloc(authRepo: AuthRepository()),
+              ),
+              /*RepositoryProvider(
+                create: (context) => LoginBloc(authRepo: AuthRepository()),
+                child: SignInPage(),
+              ),*/
             ],
             child: const MyApp(),
-          )
-      )
-  );
+          )));
 }
 
 class MyApp extends StatelessWidget {
@@ -72,93 +76,28 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
-    return MaterialApp(
-      locale: DevicePreview.locale(context),
-      builder: DevicePreview.appBuilder,
-      title: 'Study-Savvy',
-      theme: LightStyle.theme,
-      darkTheme: DarkStyle.theme,
-      themeMode: themeProvider.themeMode,
-      initialRoute: Routes.home,
-      onGenerateRoute: RouteGenerator.generateRoute,
-      debugShowCheckedModeBanner: false,
-    home: Container(
-      alignment: Alignment.center,
-      decoration: const BoxDecoration(
-          image: DecorationImage(
-        image: AssetImage('assets/images/initial.jpg'),
-        fit: BoxFit.cover,
-      )),
-      child: const HomePage(),
-    ),
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-    home: Container(
-      margin: EdgeInsets.only(top: 400.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children:
-        [
-          SizedBox(
-            width: 189,
-            height: 49,
-            child: TextButton(
-              style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.all(Colors.black),
-                backgroundColor: MaterialStateProperty.all(Colors.white),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                      borderRadius: BorderRadius.zero,
-                  )
-                )
-                ),
-              child: new Text(
-                'Sign in',
-                style: TextStyle(fontFamily: 'Play', fontSize: 25),
-              ),
-
-              onPressed: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => SignInPage()));
-              },
-            ),
-          ),
-
-
-          SizedBox(height: 16), // 用于在两个按钮之间添加间距
-
-          SizedBox(
-            width: 189,
-            height: 49,
-            child: TextButton(
-              style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.all(Colors.black),
-                backgroundColor: MaterialStateProperty.all(Colors.white),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.zero,
-                ))),
-            child: const Text(
-              'Sign up',
-              style: TextStyle(fontFamily: 'Play', fontSize: 25),
-            ),
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => SignUpPage()));
-            },
-          )
-          )
-        ]
+    return RepositoryProvider(
+      create: (context) => AuthRepository(),
+      child: MaterialApp(
+        locale: DevicePreview.locale(context),
+        builder: DevicePreview.appBuilder,
+        title: 'Study-Savvy',
+        theme: LightStyle.theme,
+        darkTheme: DarkStyle.theme,
+        themeMode: themeProvider.themeMode,
+         //initialRoute: Routes.home,
+        onGenerateRoute: RouteGenerator.generateRoute,
+        debugShowCheckedModeBanner: false,
+        home: Container(
+          alignment: Alignment.center,
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+            image: AssetImage('assets/images/initial.jpg'),
+            fit: BoxFit.cover,
+          )),
+          child: const HomePage(),
+        ),
       ),
-    ),
     );
   }
 }
