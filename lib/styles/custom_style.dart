@@ -50,6 +50,7 @@ class DarkStyle {
 
   static final ThemeData theme = ThemeData(
     primarySwatch: primarySwatch,
+    
     primaryColor: primaryDark,
     brightness: Brightness.dark,
     textTheme: const TextTheme(
