@@ -10,6 +10,7 @@ class LightStyle {
     ),
   );
   static const Color fileBoxColor= Color.fromRGBO(236, 236, 236, 0.80);
+  static const Color textColor = Color.fromRGBO(235, 235, 245, 0.60);
 
   static final ThemeData theme = ThemeData(
     primarySwatch: primarySwatch,
@@ -26,6 +27,7 @@ class LightStyle {
       titleSmall: const TextStyle(color: Colors.black, fontSize:15,fontFamily: 'Play',fontWeight: FontWeight.bold),
       headlineMedium: const TextStyle(color: Colors.black, fontSize:17,fontFamily: 'Play',fontWeight: FontWeight.bold),
       headlineSmall: const TextStyle(color: Colors.black, fontSize:13,fontFamily: 'Play',fontWeight: FontWeight.bold),
+      titleMedium: const TextStyle(color: Color.fromRGBO(60, 60, 67, 0.6), fontSize:17, fontFamily: 'Play', fontWeight: FontWeight.bold),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
@@ -41,8 +43,10 @@ class DarkStyle {
   static const Color primaryDark = Color(0xFF202124);
   static const BoxDecoration boxDecoration= BoxDecoration(color: Color.fromRGBO(118, 118, 128, 0.24));
   static const Color fileBoxColor= Colors.black;
+  static const Color textColor = Color.fromRGBO(60, 60, 67, 0.60);
 
   static final ThemeData theme = ThemeData(
+    
     primaryColor: primaryDark,
     brightness: Brightness.dark,
     textTheme: const TextTheme(
@@ -56,6 +60,7 @@ class DarkStyle {
       titleSmall: TextStyle(color: Colors.white, fontSize:15,fontFamily: 'Play',fontWeight: FontWeight.bold),
       headlineMedium: TextStyle(color: Colors.black, fontSize:17,fontFamily: 'Play',fontWeight: FontWeight.bold),
       headlineSmall: TextStyle(color: Colors.black, fontSize:15,fontFamily: 'Play',fontWeight: FontWeight.bold),
+      titleMedium: TextStyle(color: Color.fromRGBO(235, 235, 245, 0.6), fontSize:17, fontFamily: 'Play', fontWeight: FontWeight.bold),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
