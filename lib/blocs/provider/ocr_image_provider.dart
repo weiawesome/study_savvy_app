@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 
 class OCRImageProvider extends ChangeNotifier {
+  bool status=true;
   String? _path;
   Uint8List? _image;
   File? _file;
@@ -24,5 +25,12 @@ class OCRImageProvider extends ChangeNotifier {
   }
   bool isNull(){
     return _file==null;
+  }
+  void setStatus(bool status){
+    this.status=status;
+  }
+  Future<void> closeStatusFuture() async {
+    await Future.delayed(const Duration(seconds: 5));
+    status=true;
   }
 }

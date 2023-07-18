@@ -3,16 +3,17 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import 'package:study_savvy_app/blocs/bloc_access_methods.dart';
-import 'package:study_savvy_app/blocs/bloc_article_improver.dart';
-import 'package:study_savvy_app/blocs/bloc_navigator.dart';
-import 'package:study_savvy_app/blocs/bloc_specific_file.dart';
+import 'package:study_savvy_app/blocs/profile/bloc_access_methods.dart';
+import 'package:study_savvy_app/blocs/article_improver/bloc_article_improver.dart';
+import 'package:study_savvy_app/blocs/utils/bloc_navigator.dart';
+import 'package:study_savvy_app/blocs/profile/bloc_online.dart';
+import 'package:study_savvy_app/blocs/files/bloc_specific_file.dart';
 import 'package:study_savvy_app/utils/routes.dart';
 import 'blocs/LogIn/login_bloc.dart';
-import 'blocs/bloc_files.dart';
-import 'blocs/bloc_jwt.dart';
-import 'blocs/bloc_password.dart';
-import 'blocs/bloc_profile.dart';
+import 'blocs/files/bloc_files.dart';
+import 'blocs/utils/bloc_jwt.dart';
+import 'blocs/profile/bloc_password.dart';
+import 'blocs/profile/bloc_profile.dart';
 import 'blocs/provider/ocr_image_provider.dart';
 import 'blocs/provider/theme_provider.dart';
 import 'styles/custom_style.dart';
@@ -62,6 +63,12 @@ void main() {
                 create: (context) => LoginBloc(authRepo: AuthRepository()),
                 child: SignInPage(),
               ),*/
+              BlocProvider(
+                create:  (context) => PasswordBloc(),
+              ),
+              BlocProvider(
+                create:  (context) => OnlineBloc(),
+              )
             ],
             child: const MyApp(),
           )));
@@ -69,7 +76,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
@@ -93,8 +99,8 @@ class MyApp extends StatelessWidget {
             fit: BoxFit.cover,
           )),
           child: const HomePage(),
-        ),
-      ),
-    );
+
+        )
+      ));
   }
 }
