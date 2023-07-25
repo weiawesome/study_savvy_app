@@ -26,7 +26,7 @@ class OnlineState {
 class OnlineBloc extends Bloc<OnlineEvent,OnlineState> {
   final ProfileService apiService;
   final JwtService jwtService;
-  OnlineBloc({ProfileService? apiService,JwtService? jwtService}):apiService=apiService??ProfileService(),jwtService=jwtService??JwtService(), super(OnlineState(false,null)){
+  OnlineBloc({ProfileService? apiService,JwtService? jwtService}):apiService=apiService??ProfileService(),jwtService=jwtService??JwtService(), super(OnlineState(false,"INIT")){
     on<OnlineEvent>((event,emit) async {
       apiService ??= ProfileService();
       jwtService ??= JwtService();
@@ -35,7 +35,7 @@ class OnlineBloc extends Bloc<OnlineEvent,OnlineState> {
         try{
           await apiService!.logout();
           await jwtService!.deleteJwt();
-          emit(OnlineState(null,"Success"));
+          emit(OnlineState(null,"SUCCESS"));
         }
         on AuthException {
           await jwtService!.deleteJwt();
