@@ -10,6 +10,7 @@ import 'package:study_savvy_app/blocs/profile/bloc_online.dart';
 import 'package:study_savvy_app/blocs/files/bloc_specific_file.dart';
 import 'package:study_savvy_app/utils/routes.dart';
 import 'package:study_savvy_app/widgets/loading.dart';
+import 'blocs/LogIn/login_bloc.dart';
 import 'blocs/files/bloc_files.dart';
 import 'blocs/utils/bloc_jwt.dart';
 import 'blocs/profile/bloc_password.dart';
@@ -17,13 +18,14 @@ import 'blocs/profile/bloc_profile.dart';
 import 'blocs/provider/ocr_image_provider.dart';
 import 'blocs/provider/theme_provider.dart';
 import 'styles/custom_style.dart';
-
+import 'package:study_savvy_app/screens/initial.dart';
+import 'package:study_savvy_app/screens/sign_in.dart';
+import 'package:study_savvy_app/blocs/auth/auth_repository.dart';
 
 void main() {
-  runApp(
-      DevicePreview(
-          enabled: !kReleaseMode,
-          builder: (context) => MultiProvider(
+  runApp(DevicePreview(
+      enabled: !kReleaseMode,
+      builder: (context) => MultiProvider(
             providers: [
               ChangeNotifierProvider(
                 create: (_) => ThemeProvider(),
@@ -56,6 +58,16 @@ void main() {
                 create:  (context) => PasswordBloc(),
               ),
               BlocProvider(
+                create: (context) => LoginBloc(authRepo: AuthRepository()),
+              ),
+              /*RepositoryProvider(
+                create: (context) => LoginBloc(authRepo: AuthRepository()),
+                child: SignInPage(),
+              ),*/
+              BlocProvider(
+                create:  (context) => PasswordBloc(),
+              ),
+              BlocProvider(
                 create:  (context) => OnlineBloc(),
               )
             ],
@@ -70,6 +82,29 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
+    return RepositoryProvider(
+      create: (context) => AuthRepository(),
+      child: MaterialApp(
+        locale: DevicePreview.locale(context),
+        builder: DevicePreview.appBuilder,
+        title: 'Study-Savvy',
+        theme: LightStyle.theme,
+        darkTheme: DarkStyle.theme,
+        themeMode: themeProvider.themeMode,
+         //initialRoute: Routes.home,
+        onGenerateRoute: RouteGenerator.generateRoute,
+        debugShowCheckedModeBanner: false,
+        home: Container(
+          alignment: Alignment.center,
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+            image: AssetImage('assets/images/initial.jpg'),
+            fit: BoxFit.cover,
+          )),
+          child: const HomePage(),
+
+        )
+      ));
     context.read<OnlineBloc>().add(OnlineEventCheck());
     return BlocBuilder<OnlineBloc,OnlineState>(
         builder: (context,state){

@@ -3,11 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_savvy_app/screens/article_improver/article_improver.dart';
 import 'package:study_savvy_app/screens/files/files.dart';
 import 'package:study_savvy_app/screens/profile/profile.dart';
+import 'package:study_savvy_app/screens/note_taker.dart';
+
 
 enum PageState { audio,articleImprover,files,profile }
 
 final pageWidgets = {
-  PageState.audio: Container(),
+  PageState.audio: const NoteTakerPage(),
   PageState.articleImprover: const ArticleImproverPage(),
   PageState.files:const FilesPage(),
   PageState.profile:const ProfilePage(),
