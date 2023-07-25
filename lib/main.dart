@@ -82,29 +82,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
-    return RepositoryProvider(
-      create: (context) => AuthRepository(),
-      child: MaterialApp(
-        locale: DevicePreview.locale(context),
-        builder: DevicePreview.appBuilder,
-        title: 'Study-Savvy',
-        theme: LightStyle.theme,
-        darkTheme: DarkStyle.theme,
-        themeMode: themeProvider.themeMode,
-         //initialRoute: Routes.home,
-        onGenerateRoute: RouteGenerator.generateRoute,
-        debugShowCheckedModeBanner: false,
-        home: Container(
-          alignment: Alignment.center,
-          decoration: const BoxDecoration(
-              image: DecorationImage(
-            image: AssetImage('assets/images/initial.jpg'),
-            fit: BoxFit.cover,
-          )),
-          child: const HomePage(),
-
-        )
-      ));
     context.read<OnlineBloc>().add(OnlineEventCheck());
     return BlocBuilder<OnlineBloc,OnlineState>(
         builder: (context,state){
@@ -122,17 +99,28 @@ class MyApp extends StatelessWidget {
             );
           }
           else if(state.status==false){
-            return MaterialApp(
-              locale: DevicePreview.locale(context),
-              builder: DevicePreview.appBuilder,
-              title: 'Study-Savvy',
-              theme: LightStyle.theme,
-              darkTheme: DarkStyle.theme,
-              themeMode: themeProvider.themeMode,
-              initialRoute: Routes.apikey,
-              onGenerateRoute: RouteGenerator.generateRoute,
-              debugShowCheckedModeBanner: false,
-            );
+            return RepositoryProvider(
+                create: (context) => AuthRepository(),
+                child: MaterialApp(
+                    locale: DevicePreview.locale(context),
+                    builder: DevicePreview.appBuilder,
+                    title: 'Study-Savvy',
+                    theme: LightStyle.theme,
+                    darkTheme: DarkStyle.theme,
+                    themeMode: themeProvider.themeMode,
+                    onGenerateRoute: RouteGenerator.generateRoute,
+                    debugShowCheckedModeBanner: false,
+                    home: Container(
+                      alignment: Alignment.center,
+                      decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('assets/images/initial.jpg'),
+                            fit: BoxFit.cover,
+                          )),
+                      child: const HomePage(),
+
+                    )
+                ));
           }
           else{
             return const Loading();
