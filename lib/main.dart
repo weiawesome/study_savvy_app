@@ -85,20 +85,7 @@ class MyApp extends StatelessWidget {
     context.read<OnlineBloc>().add(OnlineEventCheck());
     return BlocBuilder<OnlineBloc,OnlineState>(
         builder: (context,state){
-          if(state.status==true){
-            return MaterialApp(
-              locale: DevicePreview.locale(context),
-              builder: DevicePreview.appBuilder,
-              title: 'Study-Savvy',
-              theme: LightStyle.theme,
-              darkTheme: DarkStyle.theme,
-              themeMode: themeProvider.themeMode,
-              initialRoute: Routes.home,
-              onGenerateRoute: RouteGenerator.generateRoute,
-              debugShowCheckedModeBanner: false,
-            );
-          }
-          else if(state.status==false){
+          if(state.status==false){
             return RepositoryProvider(
                 create: (context) => AuthRepository(),
                 child: MaterialApp(
@@ -123,7 +110,17 @@ class MyApp extends StatelessWidget {
                 ));
           }
           else{
-            return const Loading();
+            return MaterialApp(
+              locale: DevicePreview.locale(context),
+              builder: DevicePreview.appBuilder,
+              title: 'Study-Savvy',
+              theme: LightStyle.theme,
+              darkTheme: DarkStyle.theme,
+              themeMode: themeProvider.themeMode,
+              initialRoute: Routes.home,
+              onGenerateRoute: RouteGenerator.generateRoute,
+              debugShowCheckedModeBanner: false,
+            );
           }
         }
     );
