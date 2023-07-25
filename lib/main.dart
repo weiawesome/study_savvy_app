@@ -9,6 +9,7 @@ import 'package:study_savvy_app/blocs/utils/bloc_navigator.dart';
 import 'package:study_savvy_app/blocs/profile/bloc_online.dart';
 import 'package:study_savvy_app/blocs/files/bloc_specific_file.dart';
 import 'package:study_savvy_app/utils/routes.dart';
+import 'package:study_savvy_app/widgets/loading.dart';
 import 'blocs/files/bloc_files.dart';
 import 'blocs/utils/bloc_jwt.dart';
 import 'blocs/profile/bloc_password.dart';
@@ -69,16 +70,39 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
-    return MaterialApp(
-      locale: DevicePreview.locale(context),
-      builder: DevicePreview.appBuilder,
-      title: 'Study-Savvy',
-      theme: LightStyle.theme,
-      darkTheme: DarkStyle.theme,
-      themeMode: themeProvider.themeMode,
-      initialRoute: Routes.home,
-      onGenerateRoute: RouteGenerator.generateRoute,
-      debugShowCheckedModeBanner: false,
+    context.read<OnlineBloc>().add(OnlineEventCheck());
+    return BlocBuilder<OnlineBloc,OnlineState>(
+        builder: (context,state){
+          if(state.status==true){
+            return MaterialApp(
+              locale: DevicePreview.locale(context),
+              builder: DevicePreview.appBuilder,
+              title: 'Study-Savvy',
+              theme: LightStyle.theme,
+              darkTheme: DarkStyle.theme,
+              themeMode: themeProvider.themeMode,
+              initialRoute: Routes.home,
+              onGenerateRoute: RouteGenerator.generateRoute,
+              debugShowCheckedModeBanner: false,
+            );
+          }
+          else if(state.status==false){
+            return MaterialApp(
+              locale: DevicePreview.locale(context),
+              builder: DevicePreview.appBuilder,
+              title: 'Study-Savvy',
+              theme: LightStyle.theme,
+              darkTheme: DarkStyle.theme,
+              themeMode: themeProvider.themeMode,
+              initialRoute: Routes.apikey,
+              onGenerateRoute: RouteGenerator.generateRoute,
+              debugShowCheckedModeBanner: false,
+            );
+          }
+          else{
+            return const Loading();
+          }
+        }
     );
   }
 }
