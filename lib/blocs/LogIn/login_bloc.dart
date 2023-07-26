@@ -5,11 +5,15 @@ import 'package:study_savvy_app/blocs/auth/form_submission_status.dart';
 import 'package:study_savvy_app/blocs/auth/auth_repository.dart';
 import 'package:study_savvy_app/screens/sign_in.dart';
 import 'package:flutter/material.dart';
+import 'package:study_savvy_app/blocs/auth/auth_cubit.dart';
+
+import '../auth/auth_credentials.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final AuthRepository authRepo;
+  final AuthCubit authCubit;
 
-  LoginBloc({required this.authRepo})
+  LoginBloc({required this.authRepo, required this.authCubit})
       : super(LoginState()) {
     on<LoginEvent>(_onEvent);
   }
@@ -27,8 +31,16 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       emit(state.copyWith(formStatus: FormSubmitting()));
       try {
         debugPrint("test");
-        await authRepo.login();
+        final userId = await authRepo.login(  //這裡
+          email: state.email,
+          password: state.password,
+        );
         emit(state.copyWith(formStatus: SubmissionSuccess()));
+
+        authCubit.launchSession(AuthCredentials(
+          username: state.email,
+          userId: userId,   //這裡
+        ));
       } catch (e) {
         emit(state.copyWith(formStatus: SubmissionFailed(e.toString() as Exception)));
       }
