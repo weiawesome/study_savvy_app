@@ -1,26 +1,32 @@
 import 'package:study_savvy_app/blocs/auth/form_submission_status.dart';
 
-class LoginState {
+class SignUpState {
+  final String username;
+  bool get isValidUsername => username.length > 3;
+
   final String email;
-  bool get isValidEmail => email.contains("@");
+  bool get isValidEmail => email.contains('@');
 
   final String password;
-  bool get isValidPassword => password.length >= 8;
+  bool get isValidPassword => password.length > 6;
 
   final FormSubmissionStatus formStatus;
 
-  LoginState({
+  SignUpState({
+    this.username = '',
     this.email = '',
     this.password = '',
     this.formStatus = const InitialFormStatus(),
   });
 
-  LoginState copyWith({
+  SignUpState copyWith({
+    String? username,
     String? email,
     String? password,
     FormSubmissionStatus? formStatus,
   }) {
-    return LoginState(
+    return SignUpState(
+      username: username ?? this.username,
       email: email ?? this.email,
       password: password ?? this.password,
       formStatus: formStatus ?? this.formStatus,

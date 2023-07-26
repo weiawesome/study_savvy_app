@@ -13,31 +13,15 @@ class _EmailConfirmState extends State<EmailConfirm> {
   Widget build(BuildContext context) {
     return Column(
        children: [
-        Center(
-          child: Text(
-            "StudySavvy",
-            ),
-        ),
-        SizedBox(height: 5),
-        Center(
-          child: Text(
-            "Your mail has been certified successfully",
-            ),
-        ),
-        SizedBox(height: 5),
-        Center(
-          child: Text(
-            "You can now use all features",
-            ),
-        ),
-        SizedBox(height: 5),
-        Center(
-          child: Text(
-            "Press \"Confirm\" to return to the login",
-            ),
-        ),
-        SizedBox(height: 5),
-        Icon(
+        const Center(child: Text("StudySavvy",),),
+        const SizedBox(height: 5),
+        const Center(child: Text("Your mail has been certified successfully",),),
+        const SizedBox(height: 5),
+        const Center(child: Text("You can now use all features",),),
+        const SizedBox(height: 5),
+        const Center(child: Text("Press \"Confirm\" to return to the login",),),
+        const SizedBox(height: 5),
+        const Icon(
           FontAwesomeIcons.cakeCandles,
           color: Colors.white,
           size: 50,
@@ -48,7 +32,7 @@ class _EmailConfirmState extends State<EmailConfirm> {
           child: ElevatedButton(
             style: ButtonStyle(
               //foregroundColor: MaterialStateProperty.all(Colors.white),
-              backgroundColor: MaterialStateProperty.all(Color(0xFF767680)),
+              backgroundColor: MaterialStateProperty.all(const Color(0xFF767680)),
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                const RoundedRectangleBorder(
                 borderRadius: BorderRadius.zero,
@@ -57,7 +41,7 @@ class _EmailConfirmState extends State<EmailConfirm> {
             debugPrint('sign in!');
             }, 
             child: const Text(
-            'Sign in',
+            'Confirm',
             style: TextStyle(fontFamily: 'Play', fontSize: 25),
             )
           ),

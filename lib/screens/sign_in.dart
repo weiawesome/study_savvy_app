@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:study_savvy_app/blocs/auth/auth_cubit.dart';
+import 'package:study_savvy_app/blocs/session/session_cubit.dart';
 import 'package:study_savvy_app/styles/custom_style.dart';
 import 'package:study_savvy_app/screens/sign_up.dart';
 import 'package:study_savvy_app/screens/Home.dart';
@@ -9,6 +11,7 @@ import 'package:study_savvy_app/blocs/LogIn/login_event.dart';
 import 'package:study_savvy_app/blocs/auth/form_submission_status.dart';
 import 'package:study_savvy_app/blocs/auth/auth_repository.dart';
 import 'package:study_savvy_app/blocs/LogIn/login_bloc.dart';
+
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -24,61 +27,64 @@ class _SignInPageState extends State<SignInPage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-        backgroundColor: Theme.of(context).primaryColor,
-        body: RepositoryProvider(
-          create: (context) => LoginBloc(
-            authRepo: context.read<AuthRepository>(),
-          ),
-          child: 
-          SafeArea(
-            child: Column(children: [
-              Expanded(flex: 1, child: Container()),
-              Expanded(
-                flex: 1,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Expanded(
-                      flex: 5,
-                      child: Text(
-                        'StudySavvy',
-                        style: Theme.of(context).textTheme.bodyLarge,
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    //Expanded(flex:1,child: Container(),),
-                  ],
-                ),
-              ),
-              Expanded(
-                flex: 11,
-                child: _LoginForm(),
-              ),
-              Expanded(
-                  flex: 2,
-                  child: Column(
+            backgroundColor: Theme.of(context).primaryColor,
+            // body: BlocProvider<LoginBloc>(
+            //   create: (context) => LoginBloc(
+            //     authRepo: context.read<AuthRepository>(),
+            //     authCubit: context.read<AuthCubit>(),
+            //   ),
+              // child:
+              body: 
+              SafeArea(
+                child: Column(children: [
+                  Expanded(flex: 1, child: Container()),
+                  Expanded(
+                    flex: 1,
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Text("—————————— sign up ——————————",
-                            style: Theme.of(context).textTheme.bodySmall),
-                        Text("Don’t have an account?",
-                            style: Theme.of(context).textTheme.bodySmall),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SignUpPage()));
-                          },
-                          child: Text("Sign up",
-                              style: Theme.of(context).textTheme.bodyLarge),
+                        Expanded(
+                          flex: 5,
+                          child: Text(
+                            'StudySavvy',
+                            style: Theme.of(context).textTheme.bodyLarge,
+                            textAlign: TextAlign.center,
+                          ),
                         ),
-                      ]))
-            ]),
-          ),
-        )
-        );
+                        //Expanded(flex:1,child: Container(),),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    flex: 11,
+                    child: _LoginForm(),
+                  ),
+                  Expanded(
+                      flex: 2,
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("—————————— sign up ——————————",
+                                style: Theme.of(context).textTheme.bodySmall),
+                            Text("Don’t have an account?",
+                                style: Theme.of(context).textTheme.bodySmall),
+                            TextButton(
+                              onPressed: () {
+                                //context.read<AuthCubit>().showSignUp();
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => SignUpView()));
+                              },
+                              child: Text("Sign up",
+                                  style: Theme.of(context).textTheme.bodyLarge),
+                            ),
+                          ]))
+                ]),
+              ),
+            //)
+            );
   }
 
   Widget _LoginForm() {
