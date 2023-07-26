@@ -3,8 +3,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:study_savvy_app/blocs/SignUp/sign_up_bloc.dart';
+import 'package:study_savvy_app/blocs/auth/auth_cubit.dart';
+import 'package:study_savvy_app/blocs/auth/auth_navigator.dart';
 import 'package:study_savvy_app/blocs/profile/bloc_access_methods.dart';
 import 'package:study_savvy_app/blocs/article_improver/bloc_article_improver.dart';
+import 'package:study_savvy_app/blocs/session/session_cubit.dart';
+import 'package:study_savvy_app/blocs/session/session_state.dart';
+import 'package:study_savvy_app/blocs/utils/app_navigator.dart';
 import 'package:study_savvy_app/blocs/utils/bloc_navigator.dart';
 import 'package:study_savvy_app/blocs/profile/bloc_online.dart';
 import 'package:study_savvy_app/blocs/files/bloc_specific_file.dart';
@@ -19,6 +25,7 @@ import 'blocs/provider/theme_provider.dart';
 import 'styles/custom_style.dart';
 import 'package:study_savvy_app/screens/initial.dart';
 import 'package:study_savvy_app/screens/sign_in.dart';
+ import 'package:study_savvy_app/screens/sign_up.dart';
 import 'package:study_savvy_app/blocs/auth/auth_repository.dart';
 
 void main() {
@@ -26,6 +33,12 @@ void main() {
       enabled: !kReleaseMode,
       builder: (context) => MultiProvider(
             providers: [
+              RepositoryProvider(
+                create: (context) => AuthRepository(),
+              ),
+              BlocProvider(
+                create: (context) => AuthCubit(sessionCubit: SessionCubit(authRepo: AuthRepository())), // 创建 AuthCubit 提供者
+              ),
               ChangeNotifierProvider(
                 create: (_) => ThemeProvider(),
               ),
@@ -59,13 +72,31 @@ void main() {
               BlocProvider(
                 create:  (context) => OnlineBloc(),
               ),
+              // RepositoryProvider(
+              //   create: (context) => LoginBloc(authRepo: context.read<AuthRepository>(), authCubit: context.read<AuthCubit>()),
+              //   child: SignInPage(),
+              // ),
+                BlocProvider(
+                  create: (context) => LoginBloc(authRepo: context.read<AuthRepository>(), authCubit: AuthCubit(sessionCubit: SessionCubit(authRepo: AuthRepository())))
+                ),
+                // RepositoryProvider(
+                //   create: (context) => SignUpBloc(authRepo: context.read<AuthRepository>(), authCubit: context.read<AuthCubit>()),
+                //   child: SignUpView(),
+                // ),
+                BlocProvider(
+                  create: (context) => SignUpBloc(authRepo: context.read<AuthRepository>(), authCubit: context.read<AuthCubit>())
+                ),
               BlocProvider(
-                create: (context) => LoginBloc(authRepo: AuthRepository()),
+                create:  (context) => PasswordBloc(),
               ),
-              /*RepositoryProvider(
-                create: (context) => LoginBloc(authRepo: AuthRepository()),
-                child: SignInPage(),
-              ),*/
+              BlocProvider(
+                create:  (context) => OnlineBloc(),
+              ),
+              BlocProvider(
+                create:  (context) 
+                            => SessionCubit(authRepo: context.read<AuthRepository>(),),
+                child: AppNavigator(), //responsible for showing the view
+              ),
             ],
             child: const MyApp(),
           )));
@@ -76,9 +107,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
-    return RepositoryProvider(
-      create: (context) => AuthRepository(),
-      child: MaterialApp(
+    return 
+    // RepositoryProvider(
+    //   create: (context) => AuthRepository(),
+    //   child: 
+      MaterialApp(
         locale: DevicePreview.locale(context),
         builder: DevicePreview.appBuilder,
         title: 'Study-Savvy',
@@ -96,8 +129,9 @@ class MyApp extends StatelessWidget {
             fit: BoxFit.cover,
           )),
           child: const HomePage(),
-        ),
-      ),
-    );
+
+        )
+      //)
+      );
   }
 }

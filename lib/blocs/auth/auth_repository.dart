@@ -1,30 +1,58 @@
 import 'package:flutter/material.dart';
-import 'package:study_savvy_app/screens/note_taker.dart';
-
+import 'package:flutter/foundation.dart';
 class AuthRepository {
-  Future<void> login() async {
+
+  Future<String> attemptAutoLogin() async {
+    await Future.delayed(Duration(seconds: 1));
+    throw Exception('not signed in');
+  }
+
+  Future<String> login({
+    required String email,
+    required String password,
+  }) async {
     print('attempting login');
     await Future.delayed(Duration(seconds: 3));
-    try
-    {
-    /*if(...)
-	map{username : Name
-    password : passwd}
-    toJSON
-    db.update(map)
-	else
-		throw Exception('failed log in');
-		*/
-		debugPrint('success');
-		check();
-    }
-    catch(e)
-    {
-      debugPrint("failed login");
-    }
+    /*
+      /*
+      if(...)
+        map{username : Name
+          password : passwd}
+          toJSON
+          db.update(map)
+      else
+        throw Exception('failed log in');
+      */
+      debugPrint('success');
+      
+      }
+      catch(e)
+      {
+        debugPrint("failed login");
+      }
+    */
+    return 'userID';
+  }
+
+  Future<void> signUp({
+    required String username,
+    required String email,
+    required String password,
+  }) async {
+    print('signUp auth repo~~');
+    await Future.delayed(Duration(seconds: 2));
+  }
+
+  Future<String> confirmSignUp({
+    required String username,
+    required String confirmationCode,
+  }) async {
+    await Future.delayed(Duration(seconds: 2));
+    return 'userID';
+  }
+
+  Future<void> signOut() async {
+    await Future.delayed(Duration(seconds: 2));
   }
 }
 
-bool check(){
-	return true;
-}
