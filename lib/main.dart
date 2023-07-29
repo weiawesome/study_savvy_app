@@ -87,7 +87,7 @@ class MyApp extends StatelessWidget {
     return BlocBuilder<OnlineBloc,OnlineState>(
         builder: (context,state){
           return AnimatedSwitcher(
-              duration: const Duration(seconds: 1),
+              duration: const Duration(seconds: 2),
               child: _buildCurrentScreen(context, state, themeProvider)
           );
         }
@@ -97,25 +97,16 @@ class MyApp extends StatelessWidget {
 
 Widget _buildCurrentScreen(context,OnlineState state,themeProvider) {
   if (state.status==false && state.message=="INIT") {
-    return MaterialApp(
-        key: UniqueKey(),
-        locale: DevicePreview.locale(context),
-        builder: DevicePreview.appBuilder,
-        title: 'Study-Savvy',
-        theme: LightStyle.theme,
-        darkTheme: DarkStyle.theme,
-        themeMode: themeProvider.themeMode,
-        onGenerateRoute: RouteGenerator.generateRoute,
-        debugShowCheckedModeBanner: false,
-        home: Container(
-          alignment: Alignment.center,
-          decoration: const BoxDecoration(
+    return Container(
+            key: UniqueKey(),
+            alignment: Alignment.center,
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('assets/images/initial.jpg'),
                 fit: BoxFit.cover,
-              )),
-        )
-    );
+              )
+            ),
+          );
   }
   else if (state.status==false) {
     return RepositoryProvider(
