@@ -37,7 +37,7 @@ void main() {
                 create: (context) => AuthRepository(),
               ),
               BlocProvider(
-                create: (context) => AuthCubit(sessionCubit: SessionCubit(authRepo: AuthRepository())), // 创建 AuthCubit 提供者
+                create: (context) => AuthCubit(sessionCubit: SessionCubit(authRepo: AuthRepository())), 
               ),
               ChangeNotifierProvider(
                 create: (_) => ThemeProvider(),
@@ -121,16 +121,7 @@ class MyApp extends StatelessWidget {
          //initialRoute: Routes.home,
         onGenerateRoute: RouteGenerator.generateRoute,
         debugShowCheckedModeBanner: false,
-        home: Container(
-          alignment: Alignment.center,
-          decoration: const BoxDecoration(
-              image: DecorationImage(
-            image: AssetImage('assets/images/initial.jpg'),
-            fit: BoxFit.cover,
-          )),
-          child: const HomePage(),
-
-        )
+        home:  HomePage(),
       //)
       );
   }
