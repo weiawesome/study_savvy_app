@@ -4,6 +4,10 @@ import 'package:study_savvy_app/blocs/provider/theme_provider.dart';
 import 'package:study_savvy_app/screens/sign_in.dart';
 import 'package:study_savvy_app/screens/sign_up.dart';
 import 'package:study_savvy_app/styles/custom_style.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:study_savvy_app/blocs/profile/bloc_online.dart';
+import 'package:study_savvy_app/services/utils/jwt_storage.dart';
+
 
 
 class HomePage extends StatelessWidget {
@@ -78,12 +82,36 @@ class HomePage extends StatelessWidget {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => SignUpView()));
               },
+
             )
-            )
-          ]
-        ),
-      ),
-    
+            ),
+      
+          TextButton(
+            style: ButtonStyle(
+              overlayColor: MaterialStateProperty.resolveWith<Color>(
+                    (Set<MaterialState> states) {
+                  if (states.contains(MaterialState.pressed)) {
+                    return Theme.of(context).hintColor;
+                  }
+                  return Colors.transparent;
+                },
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("一鍵登入(未來會刪除)\n展示如何紀錄jwt 這件事是必要的",style: Theme.of(context).textTheme.displaySmall),
+                Icon(Icons.navigate_next_rounded,size: 25,color: Theme.of(context).hintColor)
+              ],
+            ),
+            onPressed: () async {
+              JwtService jwtService=JwtService();
+              await jwtService.saveJwt("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY5MDMwMzI4MywianRpIjoiOWM2MGQ1NWYtY2MzZi00NzU1LWFiZDEtMjdjMmQ1Y2I0N2QyIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IndlaTg5MTAxM0BnbWFpbC5jb20iLCJuYmYiOjE2OTAzMDMyODMsImNzcmYiOiIyNTZhMzcxYy1hYzU5LTRmNWYtODk0OS1jZTU3ODgzYjZhYjYiLCJleHAiOjE2OTE1MTI4ODN9.fVWwqSY84XE0pEv3ZnRuUlXxq1tzHQ5244DEbn0NXTQ").then((value) => context.read<OnlineBloc>().add(OnlineEventCheck()));
+            },
+          ),
+        ]
+        )
+      )
     );
   }
 }

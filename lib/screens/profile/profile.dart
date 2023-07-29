@@ -45,7 +45,7 @@ class _ProfilePage extends State<ProfilePage> {
         builder: (BuildContext context) {
           return BlocBuilder<OnlineBloc,OnlineState>(
               builder: (context,state){
-                if(state.status==null){
+                if(state.status==null && state.message==null){
                   return CupertinoAlertDialog(
                     title: Text('Logout',style: Theme.of(context).textTheme.displayMedium),
                     content: const Loading(),
@@ -80,7 +80,7 @@ class _ProfilePage extends State<ProfilePage> {
                     ],
                   );
                 }
-                else if(state.status==true){
+                else if(state.status==null && state.message!=null && state.message!="SUCCESS"){
                   return CupertinoAlertDialog(
                     title: Text('Logout',style: Theme.of(context).textTheme.displayMedium),
                     content: Failure(error: state.message!,),
@@ -113,7 +113,8 @@ class _ProfilePage extends State<ProfilePage> {
         },
       ).then((value){
         bool? status=context.read<OnlineBloc>().state.status;
-        context.read<OnlineBloc>().add(OnlineEventReset(status));
+        String? message=context.read<OnlineBloc>().state.message;
+        context.read<OnlineBloc>().add(OnlineEventReset(status,message));
       });
     }
     return Column(
@@ -126,7 +127,6 @@ class _ProfilePage extends State<ProfilePage> {
               Expanded(flex:1,child: Container()),
               Expanded(flex:5,child: Text('Profile',style: Theme.of(context).textTheme.bodyLarge,textAlign: TextAlign.center,),),
               Expanded(flex:1,child: IconButton(onPressed: (){
-                context.read<OnlineBloc>().add(OnlineEventCheck());
                 showLogoutDialog(context);
                 }, icon: const Icon(Icons.logout),alignment: Alignment.centerRight,)),
             ],
@@ -345,6 +345,30 @@ class _ProfilePage extends State<ProfilePage> {
                             onPressed: () async {
                               JwtService jwtService=JwtService();
                               await jwtService.saveJwt("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4OTM1MzIwNCwianRpIjoiY2IyZDQyYzAtNDA5ZC00ZjIwLWE5OWMtMjM4Y2M0NWJiNzVhIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IndlaTg5MTAxM0BnbWFpbC5jb20iLCJuYmYiOjE2ODkzNTMyMDQsImNzcmYiOiI2MmJiMTgxMS1lYjZhLTRkZWYtOTQ2Mi1kZDE3YTVmOTRmMTciLCJleHAiOjE2OTA1NjI4MDR9.VR2yL1m9DMak5_9NczOAo4QJvl7ouZ_SuCCTRFlxBOI");
+                            },
+                          ),
+                          TextButton(
+                            style: ButtonStyle(
+                              overlayColor: MaterialStateProperty.resolveWith<Color>(
+                                    (Set<MaterialState> states) {
+                                  if (states.contains(MaterialState.pressed)) {
+                                    return Theme.of(context).hintColor;
+                                  }
+                                  return Colors.transparent;
+                                },
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text("迅速登出",style: Theme.of(context).textTheme.displaySmall),
+                                Icon(Icons.navigate_next_rounded,size: 25,color: Theme.of(context).hintColor)
+                              ],
+                            ),
+                            onPressed: () async {
+                              JwtService jwtService=JwtService();
+                              jwtService.deleteJwt();
+                              context.read<OnlineBloc>().add(OnlineEventCheck());
                             },
                           ),
 
