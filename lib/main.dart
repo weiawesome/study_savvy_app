@@ -109,13 +109,24 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     context.read<OnlineBloc>().add(OnlineEventCheck());
-    return BlocBuilder<OnlineBloc,OnlineState>(
-        builder: (context,state){
-          return AnimatedSwitcher(
-              duration: const Duration(seconds: 2),
-              child: _buildCurrentScreen(context, state, themeProvider)
-          );
-        }
+    return MaterialApp(
+        locale: DevicePreview.locale(context),
+        builder: DevicePreview.appBuilder,
+        title: 'Study-Savvy',
+        theme: LightStyle.theme,
+        darkTheme: DarkStyle.theme,
+        themeMode: themeProvider.themeMode,
+        onGenerateRoute: RouteGenerator.generateRoute,
+        debugShowCheckedModeBanner: false,
+        home: Container(
+          alignment: Alignment.center,
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/initial.jpg'),
+                fit: BoxFit.cover,
+              )),
+          child: const HomePage(),
+        )
     );
   }
 }

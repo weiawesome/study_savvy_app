@@ -82,7 +82,7 @@ class HomePage extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("一鍵登入(未來會刪除)\n展示如何轉換畫面 紀錄jwt",style: Theme.of(context).textTheme.displaySmall),
+                Text("一鍵登入(未來會刪除)\n展示如何紀錄jwt 這件事是必要的",style: Theme.of(context).textTheme.displaySmall),
                 Icon(Icons.navigate_next_rounded,size: 25,color: Theme.of(context).hintColor)
               ],
             ),
