@@ -108,7 +108,13 @@ class _PasswordPage extends State<PasswordPage> {
                                               },
                                               validator: (value) {
                                                 if (value == null || value.isEmpty) {
-                                                  return 'Empty error';
+                                                  return 'Empty Error';
+                                                }
+                                                else if(value.contains(' ')){
+                                                  return 'Space Error';
+                                                }
+                                                else if(value.length<8){
+                                                  return 'At least 8 chars Error';
                                                 }
                                                 return null;
                                               },
@@ -137,6 +143,12 @@ class _PasswordPage extends State<PasswordPage> {
                                                 }
                                                 else if(value==oldPasswordController.text.toString()){
                                                   return 'Same with current Error';
+                                                }
+                                                else if(value.contains(' ')){
+                                                  return 'Have space Error';
+                                                }
+                                                else if(value.length<8){
+                                                  return 'At least 8 chars Error';
                                                 }
                                                 return null;
                                               },

@@ -49,25 +49,25 @@ void main() {
                 create: (context) => PageBloc(),
               ),
               BlocProvider(
-                create: (context) => JWTBloc(),
+                create:  (context) => JWTBloc(),
               ),
               BlocProvider(
-                create: (context) => FileBloc(),
+                create:  (context) => FileBloc(),
               ),
               BlocProvider(
-                create: (context) => FilesBloc(),
+                create:  (context) => FilesBloc(),
               ),
               BlocProvider(
-                create: (context) => ProfileBloc(),
+                create:  (context) => ProfileBloc(),
               ),
               BlocProvider(
-                create: (context) => AccessMethodBloc(),
+                create:  (context) => AccessMethodBloc(),
               ),
               BlocProvider(
-                create: (context) => ArticleBloc(),
+                create:  (context) => ArticleBloc(),
               ),
               BlocProvider(
-                create: (context) => PasswordBloc(),
+                create:  (context) => PasswordBloc(),
               ),
               // RepositoryProvider(
               //   create: (context) => LoginBloc(authRepo: context.read<AuthRepository>(), authCubit: context.read<AuthCubit>()),
@@ -90,13 +90,15 @@ void main() {
                 create:  (context) => OnlineBloc(),
               ),
               BlocProvider(
-                create:  (context) 
+                create:  (context)
                             => SessionCubit(authRepo: context.read<AuthRepository>(),),
                 child: AppNavigator(), //responsible for showing the view
               ),
             ],
             child: const MyApp(),
-          )));
+          )
+      )
+  );
 }
 
 class MyApp extends StatelessWidget {

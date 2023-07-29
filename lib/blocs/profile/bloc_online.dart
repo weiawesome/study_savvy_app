@@ -8,7 +8,8 @@ class OnlineEventLogout extends OnlineEvent{}
 class OnlineEventCheck extends OnlineEvent{}
 class OnlineEventReset extends OnlineEvent{
   final bool? status;
-  OnlineEventReset(this.status);
+  final String? message;
+  OnlineEventReset(this.status,this.message);
 }
 class OnlineEventUnknown extends OnlineEvent{}
 
@@ -25,7 +26,7 @@ class OnlineState {
 class OnlineBloc extends Bloc<OnlineEvent,OnlineState> {
   final ProfileService apiService;
   final JwtService jwtService;
-  OnlineBloc({ProfileService? apiService,JwtService? jwtService}):apiService=apiService??ProfileService(),jwtService=jwtService??JwtService(), super(OnlineState(true,null)){
+  OnlineBloc({ProfileService? apiService,JwtService? jwtService}):apiService=apiService??ProfileService(),jwtService=jwtService??JwtService(), super(OnlineState(false,"INIT")){
     on<OnlineEvent>((event,emit) async {
       apiService ??= ProfileService();
       jwtService ??= JwtService();
@@ -34,11 +35,11 @@ class OnlineBloc extends Bloc<OnlineEvent,OnlineState> {
         try{
           await apiService!.logout();
           await jwtService!.deleteJwt();
-          emit(OnlineState(false,null));
+          emit(OnlineState(null,"SUCCESS"));
         }
         on AuthException {
           await jwtService!.deleteJwt();
-          emit(OnlineState(false,"AUTH"));
+          emit(OnlineState(null,"AUTH"));
         }
         on ServerException {
           emit(OnlineState(true,"SERVER"));
@@ -56,6 +57,9 @@ class OnlineBloc extends Bloc<OnlineEvent,OnlineState> {
       else if(event is OnlineEventReset){
         if(event.status==true){
           emit(OnlineState(true,null));
+        }
+        else if(event.status==null && event.message!=null){
+          emit(OnlineState(false, null));
         }
         else if(event.status==false){
           throw Exception("Offline can't logout.");
