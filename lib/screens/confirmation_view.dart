@@ -6,6 +6,7 @@ import 'package:study_savvy_app/blocs/auth/auth_cubit.dart';
 import 'package:study_savvy_app/blocs/confirmation/confirmation_bloc.dart';
 import 'package:study_savvy_app/blocs/confirmation/confirmation_event.dart';
 import 'package:study_savvy_app/blocs/confirmation/confirmation_state.dart';
+import 'package:study_savvy_app/screens/email_confirm.dart';
 
 class ConfirmationView extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -18,12 +19,12 @@ class ConfirmationView extends StatelessWidget {
           authRepo: context.read<AuthRepository>(),
           authCubit: context.read<AuthCubit>(),
         ),
-        child: _confirmationForm(),
+        child: _confirmationForm(context),
       ),
     );
   }
 
-  Widget _confirmationForm() {
+  Widget _confirmationForm(BuildContext context) {
     return BlocListener<ConfirmationBloc, ConfirmationState>(
         listener: (context, state) {
           final formStatus = state.formStatus;
@@ -38,7 +39,14 @@ class ConfirmationView extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _codeField(),
+                Text(
+                  "Please check your email\nfor\nthe confirmation message.",
+                  style: Theme.of(context).textTheme.displayMedium,
+                  textAlign: TextAlign.center,
+                  ),
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 150),
+                  child: _codeField()),
                 _confirmButton(),
               ],
             ),
@@ -50,8 +58,8 @@ class ConfirmationView extends StatelessWidget {
     return BlocBuilder<ConfirmationBloc, ConfirmationState>(
         builder: (context, state) {
       return TextFormField(
-        decoration: InputDecoration(
-          icon: Icon(Icons.person),
+        decoration: const InputDecoration(
+          icon: Icon(Icons.cookie_rounded),
           hintText: 'Confirmation Code',
         ),
         validator: (value) =>
@@ -72,9 +80,21 @@ class ConfirmationView extends StatelessWidget {
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
                   context.read<ConfirmationBloc>().add(ConfirmationSubmitted());
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => EmailConfirm()),
+                    );
                 }
               },
-              child: Text('Confirm'),
+              child: const Text(
+                'Confirm',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                color: Colors.white,
+                fontSize: 23,
+                fontFamily: 'Play',
+                fontWeight: FontWeight.bold,
+                  ),),
             );
     });
   }
