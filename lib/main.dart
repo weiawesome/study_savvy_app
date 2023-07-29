@@ -39,7 +39,7 @@ void main() {
                 create: (context) => AuthRepository(),
               ),
               BlocProvider(
-                create: (context) => AuthCubit(sessionCubit: SessionCubit(authRepo: AuthRepository())), // 创建 AuthCubit 提供者
+                create: (context) => AuthCubit(sessionCubit: SessionCubit(authRepo: AuthRepository())), 
               ),
               ChangeNotifierProvider(
                 create: (_) => ThemeProvider(),
@@ -91,6 +91,26 @@ void main() {
               BlocProvider(
                 create:  (context) => OnlineBloc(),
               ),
+              // RepositoryProvider(
+              //   create: (context) => LoginBloc(authRepo: context.read<AuthRepository>(), authCubit: context.read<AuthCubit>()),
+              //   child: SignInPage(),
+              // ),
+                BlocProvider(
+                  create: (context) => LoginBloc(authRepo: context.read<AuthRepository>(), authCubit: AuthCubit(sessionCubit: SessionCubit(authRepo: AuthRepository())))
+                ),
+                // RepositoryProvider(
+                //   create: (context) => SignUpBloc(authRepo: context.read<AuthRepository>(), authCubit: context.read<AuthCubit>()),
+                //   child: SignUpView(),
+                // ),
+                BlocProvider(
+                  create: (context) => SignUpBloc(authRepo: context.read<AuthRepository>(), authCubit: context.read<AuthCubit>())
+                ),
+              BlocProvider(
+                create:  (context) => PasswordBloc(),
+              ),
+              BlocProvider(
+                create:  (context) => OnlineBloc(),
+              ),
               BlocProvider(
                 create:  (context)
                             => SessionCubit(authRepo: context.read<AuthRepository>(),),
@@ -118,18 +138,12 @@ class MyApp extends StatelessWidget {
         themeMode: themeProvider.themeMode,
         onGenerateRoute: RouteGenerator.generateRoute,
         debugShowCheckedModeBanner: false,
-        home: Container(
-          alignment: Alignment.center,
-          decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/initial.jpg'),
-                fit: BoxFit.cover,
-              )),
-          child: const HomePage(),
-        )
-    );
-  }
-}
+
+        home:  HomePage(),
+      //)
+      );
+
+
 
 Widget _buildCurrentScreen(context,OnlineState state,themeProvider) {
   if (state.status==false && state.message=="INIT") {
@@ -182,4 +196,4 @@ Widget _buildCurrentScreen(context,OnlineState state,themeProvider) {
   } else {
     return const Failure(error: "Error Page");
   }
-}
+}}}

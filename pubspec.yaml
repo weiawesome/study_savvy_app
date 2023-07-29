@@ -90,6 +90,7 @@ flutter:
     - assets/images/initial.jpg
     - assets/keys/public_key.pem
     - assets/images/recording.png
+    - assets/images/initial_white.jpg
 
   fonts:
     - family: Play

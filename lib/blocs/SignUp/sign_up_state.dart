@@ -8,7 +8,7 @@ class SignUpState {
   bool get isValidEmail => email.contains('@');
 
   final String password;
-  bool get isValidPassword => password.length > 6;
+  bool get isValidPassword => password.length >= 8;
 
   final FormSubmissionStatus formStatus;
 
