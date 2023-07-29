@@ -17,6 +17,7 @@ class LightStyle {
     primarySwatch: primarySwatch,
     primaryColor: primaryLight,
     brightness: Brightness.light,
+
     textTheme: const TextTheme(
       bodyLarge: TextStyle(color: Colors.black, fontSize:36,fontFamily: 'Play',fontWeight: FontWeight.bold),
       bodyMedium: TextStyle(color: Colors.black38, fontSize:24,fontFamily: 'Play',fontWeight: FontWeight.bold),

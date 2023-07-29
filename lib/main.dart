@@ -16,10 +16,10 @@ import 'package:study_savvy_app/blocs/profile/bloc_online.dart';
 import 'package:study_savvy_app/blocs/files/bloc_specific_file.dart';
 import 'package:study_savvy_app/utils/routes.dart';
 import 'blocs/LogIn/login_bloc.dart';
-import 'package:study_savvy_app/blocs/files/bloc_files.dart';
-import 'package:study_savvy_app/blocs/utils/bloc_jwt.dart';
-import 'package:study_savvy_app/blocs/profile/bloc_password.dart';
-import 'package:study_savvy_app/blocs/profile/bloc_profile.dart';
+import 'blocs/files/bloc_files.dart';
+import 'blocs/utils/bloc_jwt.dart';
+import 'blocs/profile/bloc_password.dart';
+import 'blocs/profile/bloc_profile.dart';
 import 'blocs/provider/ocr_image_provider.dart';
 import 'blocs/provider/theme_provider.dart';
 import 'styles/custom_style.dart';
@@ -66,6 +66,23 @@ void main() {
               BlocProvider(
                 create: (context) => ArticleBloc(),
               ),
+              BlocProvider(
+                create: (context) => PasswordBloc(),
+              ),
+              // RepositoryProvider(
+              //   create: (context) => LoginBloc(authRepo: context.read<AuthRepository>(), authCubit: context.read<AuthCubit>()),
+              //   child: SignInPage(),
+              // ),
+                BlocProvider(
+                  create: (context) => LoginBloc(authRepo: context.read<AuthRepository>(), authCubit: AuthCubit(sessionCubit: SessionCubit(authRepo: AuthRepository())))
+                ),
+                // RepositoryProvider(
+                //   create: (context) => SignUpBloc(authRepo: context.read<AuthRepository>(), authCubit: context.read<AuthCubit>()),
+                //   child: SignUpView(),
+                // ),
+                BlocProvider(
+                  create: (context) => SignUpBloc(authRepo: context.read<AuthRepository>(), authCubit: context.read<AuthCubit>())
+                ),
               BlocProvider(
                 create:  (context) => PasswordBloc(),
               ),
