@@ -16,7 +16,7 @@ class Files{
   final int totalPages;
   Files(this.files,this.currentPage,this.totalPages);
   Files.fromJson(Map<String, dynamic> json) :
-        files=(json['datas']).map((item){
+        files=(json['data']).map((item){
           return File(item['file_id'],item["file_type"],item["status"],item["file_time"]);
         }).toList(),
         currentPage=json['current_page'],

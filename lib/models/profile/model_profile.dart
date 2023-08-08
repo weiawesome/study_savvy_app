@@ -24,13 +24,13 @@ class UpdateProfile{
   }
 }
 class UpdatePwd{
-  final String oldPwd;
-  final String newPwd;
-  UpdatePwd(this.oldPwd,this.newPwd);
+  final String currentPassword;
+  final String EditPassword;
+  UpdatePwd(this.currentPassword,this.EditPassword);
   Map<String,String> formatJson(){
     return {
-      "original_pwd": oldPwd,
-      "new_pwd": newPwd
+      "current_password": currentPassword,
+      "edit_password": EditPassword
     };
   }
 }
@@ -47,10 +47,10 @@ class SecureData{
   SecureData(this.data,this.key);
 
   Map<String,String> formatAccessToken(){
-    return {"AES_key":key,"access_token":data};
+    return {"aes_key":key,"access_token":data};
   }
   Map<String,String> formatApiKey(){
-    return {"AES_key":key,"api_key":data};
+    return {"aes_key":key,"api_key":data};
   }
 }
 
