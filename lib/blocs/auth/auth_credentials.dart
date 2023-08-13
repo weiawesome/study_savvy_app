@@ -1,15 +1,17 @@
 import 'package:flutter/foundation.dart';
 
 class AuthCredentials {
-  final String username;
-  final String? email;
+  final String email;
+  final String? username;
   final String? password;
+  final String? gender;
   String? userId;
 
   AuthCredentials({
-    required this.username,
-    this.email,
+    required this.email,
+    this.username,
     this.password,
+    this.gender,
     this.userId,
   });
 }

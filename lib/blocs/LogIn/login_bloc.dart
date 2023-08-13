@@ -6,7 +6,6 @@ import 'package:study_savvy_app/blocs/auth/auth_repository.dart';
 import 'package:study_savvy_app/screens/sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:study_savvy_app/blocs/auth/auth_cubit.dart';
-
 import '../auth/auth_credentials.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
@@ -38,7 +37,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         emit(state.copyWith(formStatus: SubmissionSuccess()));
 
         authCubit.launchSession(AuthCredentials(
-          username: state.email,
+          email: state.email,
           userId: userId,   //這裡
         ));
       } catch (e) {

@@ -38,13 +38,14 @@ class AuthRepository {
     required String username,
     required String email,
     required String password,
+    required String gender,
   }) async {
     print('signUp auth repo~~');
     await Future.delayed(Duration(seconds: 2));
   }
 
   Future<String> confirmSignUp({
-    required String username,
+    required String email,
     required String confirmationCode,
   }) async {
     await Future.delayed(Duration(seconds: 2));

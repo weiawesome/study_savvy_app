@@ -27,22 +27,30 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     } else if (event is SignUpPasswordChanged) {
       emit(state.copyWith(password: event.password));
 
+    } else if (event is SignUpConfirmPasswordChanged) {
+      emit(state.copyWith(confirmPassword: event.confirmPassword));
+
+    } else if (event is SignUpGenderChanged) {
+      emit(state.copyWith(gender: event.gender));
+
       // Form submitted
     } else if (event is SignUpSubmitted) {
       emit(state.copyWith(formStatus: FormSubmitting()));
 
       try {
         await authRepo.signUp(
-          username: state.username,
           email: state.email,
+          username: state.username,
           password: state.password,
+          gender: state.gender,
         );
         emit(state.copyWith(formStatus: SubmissionSuccess()));
 
         authCubit.showConfirmSignUp( 
-          username: state.username,
           email: state.email,
+          username: state.username,
           password: state.password,
+          gender: state.gender,
         );
       } catch (e) {
         emit(state.copyWith(formStatus: SubmissionFailed(e.toString() as Exception)));

@@ -27,7 +27,7 @@ class ConfirmationBloc extends Bloc<ConfirmationEvent, ConfirmationState> {
   
       try {
         final userId = await authRepo.confirmSignUp(    //這裡
-          username: authCubit.credentials.username,
+          email: authCubit.credentials.email,
           confirmationCode: state.code,
         );
         print(userId);
