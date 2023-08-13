@@ -18,4 +18,16 @@ class SignUpPasswordChanged extends SignUpEvent {
   SignUpPasswordChanged({required this.password});
 }
 
+class SignUpConfirmPasswordChanged extends SignUpEvent {
+  final String confirmPassword;
+
+  SignUpConfirmPasswordChanged({required this.confirmPassword});
+}
+
+class SignUpGenderChanged extends SignUpEvent {
+  final String gender;
+
+  SignUpGenderChanged({required this.gender});
+}
+
 class SignUpSubmitted extends SignUpEvent {}

@@ -19,6 +19,7 @@ import 'package:study_savvy_app/widgets/failure.dart';
 import 'package:study_savvy_app/widgets/loading.dart';
 import 'blocs/LogIn/login_bloc.dart';
 import 'blocs/files/bloc_files.dart';
+import 'blocs/provider/audio_provider.dart';
 import 'blocs/utils/bloc_jwt.dart';
 import 'blocs/profile/bloc_password.dart';
 import 'blocs/profile/bloc_profile.dart';
@@ -29,6 +30,8 @@ import 'package:study_savvy_app/screens/initial.dart';
 import 'package:study_savvy_app/screens/sign_in.dart';
  import 'package:study_savvy_app/screens/sign_up.dart';
 import 'package:study_savvy_app/blocs/auth/auth_repository.dart';
+import 'package:study_savvy_app/blocs/note_taker/noteTaker_bloc.dart';
+
 
 void main() {
   runApp(DevicePreview(
@@ -115,6 +118,12 @@ void main() {
                 create:  (context)
                             => SessionCubit(authRepo: context.read<AuthRepository>(),),
                 child: AppNavigator(), //responsible for showing the view
+              ),
+              BlocProvider(
+                create:  (context) => audioBloc(),
+              ),
+              ChangeNotifierProvider(
+                create: (_) => FileProvider(),
               ),
             ],
             child: const MyApp(),

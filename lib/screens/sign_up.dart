@@ -9,7 +9,6 @@ import 'package:study_savvy_app/blocs/SignUp/sign_up_event.dart';
 import 'package:study_savvy_app/blocs/SignUp/sign_up_state.dart';
 import 'package:study_savvy_app/screens/confirmation_view.dart';
 
-enum gender { Male, Female, others }
 
 class SignUpView extends StatefulWidget {
   @override
@@ -168,10 +167,15 @@ class _SignUpViewState extends State<SignUpView> {
         decoration: const InputDecoration(
           hintText: 'Confirm Password',
         ),
-        validator: (value) =>
-            state.isValidPassword ? null : 'Password is too short',
+        validator: (value) {
+          if (value != state.password) {
+          return 'Password confirmation failed.';
+          }
+        return null;
+        },
+            //state.isValidConfirmPassword ? null : 'Password confirmation failed.',
         onChanged: (value) => context.read<SignUpBloc>().add(
-              SignUpPasswordChanged(password: value),
+              SignUpConfirmPasswordChanged(confirmPassword: value),
             ),
       );
     });
@@ -179,6 +183,7 @@ class _SignUpViewState extends State<SignUpView> {
   
   
   Widget _genderSelector(){
+    return BlocBuilder<SignUpBloc, SignUpState>(builder: (context, state) {
     return Container(
       width: 312,
       height: 50,
@@ -195,6 +200,8 @@ class _SignUpViewState extends State<SignUpView> {
           setState(() {
             _currentIndex = index;
           });
+          String selectedGender = _getGenderFromIndex(index);
+          context.read<SignUpBloc>().add(SignUpGenderChanged(gender: selectedGender));
         },
         selectedColor: Theme.of(context).textTheme.labelLarge!.color, //選中的背景
         unselectedColor: Theme.of(context).textTheme.titleLarge!.color, //未選中的背景
@@ -202,6 +209,20 @@ class _SignUpViewState extends State<SignUpView> {
         pressedColor: Theme.of(context).textTheme.titleMedium!.color!.withOpacity(0.4),
         ),
     );
+  }
+  );}
+
+  String _getGenderFromIndex(int index) {
+  switch (index) {
+    case 0:
+      return "Male";
+    case 1:
+      return "Female";
+    case 2:
+      return "Others";
+    default:
+      return "Male";
+    }
   }
 
   Widget _signUpButton() {

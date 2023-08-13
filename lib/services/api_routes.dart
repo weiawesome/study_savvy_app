@@ -12,4 +12,10 @@ class ApiRoutes{
   static const String articleImproverTextUrl="${apiBaseUrl}predict/OCR/text";
   static const String fileNlpEditOCRUrl="${apiBaseUrl}NLP_edit/OCR";
   static const String fileNlpEditASRUrl="${apiBaseUrl}NLP_edit/ASR";
+
+  static const String logInUrl="${apiBaseUrl}login/app";
+  static const String signUpUrl="${apiBaseUrl}signup";
+  static const String emailSendUrl="${apiBaseUrl}verification";
+  static const String emailCheckUrl="${apiBaseUrl}verification";
+  static const String noteTakerUrl="${apiBaseUrl}predict/ASR";
 }
