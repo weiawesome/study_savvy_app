@@ -49,8 +49,8 @@ void main(){
 
       final updatePwd = UpdatePwd(testOldPwd, testNewPwd);
 
-      expect(updatePwd.oldPwd, testOldPwd);
-      expect(updatePwd.newPwd, testNewPwd);
+      expect(updatePwd.currentPassword, testOldPwd);
+      expect(updatePwd.EditPassword, testNewPwd);
 
     });
     test('UpdatePwd object formatJson method test', () {
