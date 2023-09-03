@@ -1,4 +1,3 @@
-import 'package:study_savvy_app/blocs/auth/form_submission_status.dart';
 
 class SignUpState {
   final String username;
@@ -15,15 +14,15 @@ class SignUpState {
 
   final String gender;
 
-  final FormSubmissionStatus formStatus;
+  final String formStatus;
 
-  SignUpState({
+  SignUpState( {
     this.username = '',
     this.email = '',
     this.password = '',
     this.confirmPassword = '',
-    this.gender = "",
-    this.formStatus = const InitialFormStatus(),
+    this.gender = '',
+    this.formStatus = '',
   });
 
   SignUpState copyWith({
@@ -32,7 +31,7 @@ class SignUpState {
     String? password,
     String? confirmPassword,
     String? gender,
-    FormSubmissionStatus? formStatus,
+    String? formStatus,
   }) {
     return SignUpState(
       username: username ?? this.username,

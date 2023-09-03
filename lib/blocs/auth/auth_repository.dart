@@ -11,27 +11,10 @@ class AuthRepository {
     required String email,
     required String password,
   }) async {
-    print('attempting login');
+    print('<AuthRepo>attempting login');
     await Future.delayed(Duration(seconds: 3));
-    /*
-      /*
-      if(...)
-        map{username : Name
-          password : passwd}
-          toJSON
-          db.update(map)
-      else
-        throw Exception('failed log in');
-      */
-      debugPrint('success');
-      
-      }
-      catch(e)
-      {
-        debugPrint("failed login");
-      }
-    */
-    return 'userID';
+    
+    return 'email';
   }
 
   Future<void> signUp({

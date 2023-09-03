@@ -29,17 +29,19 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     else if (event is LoginSubmitted) {
       emit(state.copyWith(formStatus: FormSubmitting()));
       try {
-        debugPrint("test");
+        
         final userId = await authRepo.login(  //這裡
           email: state.email,
           password: state.password,
         );
         emit(state.copyWith(formStatus: SubmissionSuccess()));
+        
 
         authCubit.launchSession(AuthCredentials(
           email: state.email,
           userId: userId,   //這裡
         ));
+        debugPrint("<login Bloc>test");
       } catch (e) {
         emit(state.copyWith(formStatus: SubmissionFailed(e.toString() as Exception)));
       }

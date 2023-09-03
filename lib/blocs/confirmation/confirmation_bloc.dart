@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_savvy_app/blocs/auth/auth_cubit.dart';
 import 'package:study_savvy_app/blocs/auth/auth_repository.dart';
@@ -30,15 +31,15 @@ class ConfirmationBloc extends Bloc<ConfirmationEvent, ConfirmationState> {
           email: authCubit.credentials.email,
           confirmationCode: state.code,
         );
-        print(userId);
+        debugPrint("userId: $userId");
         emit(state.copyWith(formStatus: SubmissionSuccess()));
 
         final credentials = authCubit.credentials;
         credentials.userId = userId;              //這裡
-        print(credentials);
+        debugPrint(credentials.email);
         authCubit.launchSession(credentials);
       } catch (e) {
-        print(e);
+        debugPrint(e.toString());
         emit(state.copyWith(formStatus: SubmissionFailed(e.toString() as Exception)));
       }
     }

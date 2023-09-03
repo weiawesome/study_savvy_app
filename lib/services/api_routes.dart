@@ -13,9 +13,9 @@ class ApiRoutes{
   static const String fileNlpEditOCRUrl="${apiBaseUrl}NLP_edit/OCR";
   static const String fileNlpEditASRUrl="${apiBaseUrl}NLP_edit/ASR";
 
-  static const String logInUrl="${apiBaseUrl}login/app";
-  static const String signUpUrl="${apiBaseUrl}signup";
-  static const String emailSendUrl="${apiBaseUrl}verification";
-  static const String emailCheckUrl="${apiBaseUrl}verification";
-  static const String noteTakerUrl="${apiBaseUrl}predict/ASR";
+  static const String logInUrl="${apiBaseUrl}User/login/app";
+  static const String signUpUrl="${apiBaseUrl}User/signup";
+  static const String emailSendUrl="${apiBaseUrl}Mail/verification";
+  static const String emailCheckUrl="${apiBaseUrl}Mail/verification";
+  static const String noteTakerUrl="${apiBaseUrl}Predict/ASR";
 }

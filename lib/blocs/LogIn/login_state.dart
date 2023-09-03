@@ -5,7 +5,7 @@ class LoginState {
   bool get isValidEmail => email.contains("@");
 
   final String password;
-  bool get isValidPassword => password.length >= 8;
+  bool get isValidPassword => password.length >= 8 && password.length<=30 && !password.contains(' ');
 
   final FormSubmissionStatus formStatus;
 

@@ -4,13 +4,18 @@ import 'package:study_savvy_app/blocs/auth/auth_repository.dart';
 import 'package:study_savvy_app/blocs/auth/form_submission_status.dart';
 import 'package:study_savvy_app/blocs/SignUp/sign_up_event.dart';
 import 'package:study_savvy_app/blocs/SignUp/sign_up_state.dart';
+import 'package:study_savvy_app/services/signUp_api.dart';
+
+import '../../utils/exception.dart';
 
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   final AuthRepository authRepo;
   final AuthCubit authCubit;
+  final SignUpService apiService;
 
-  SignUpBloc({required this.authRepo, required this.authCubit})
-     : super(SignUpState()){
+  SignUpBloc({required this.authRepo, required this.authCubit, SignUpService? apiService})
+     : apiService = apiService ?? SignUpService(),
+     super(SignUpState()){
       on<SignUpEvent>(_onEvent);
      }
 
@@ -35,26 +40,22 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 
       // Form submitted
     } else if (event is SignUpSubmitted) {
-      emit(state.copyWith(formStatus: FormSubmitting()));
 
-      try {
-        await authRepo.signUp(
-          email: state.email,
-          username: state.username,
-          password: state.password,
-          gender: state.gender,
-        );
-        emit(state.copyWith(formStatus: SubmissionSuccess()));
-
-        authCubit.showConfirmSignUp( 
-          email: state.email,
-          username: state.username,
-          password: state.password,
-          gender: state.gender,
-        );
-      } catch (e) {
-        emit(state.copyWith(formStatus: SubmissionFailed(e.toString() as Exception)));
-      }
+        emit(SignUpState(formStatus: "PENDING"));
+        try{
+          await apiService!.signUp(event.model);
+          emit(SignUpState(formStatus: "SUCCESS"));
+        }
+        on ClientException {
+          emit(SignUpState(formStatus: "FAILURE"));
+        }
+        on ExistException {
+          emit(SignUpState(formStatus: "FAILURE"));
+        }
+        catch(e) {
+          emit(SignUpState(formStatus: "FAILURE"));
+        }
+ 
     }
   }
 }

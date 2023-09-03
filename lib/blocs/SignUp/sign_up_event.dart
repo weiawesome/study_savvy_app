@@ -1,3 +1,4 @@
+import 'package:study_savvy_app/models/model_signup.dart';
 abstract class SignUpEvent {}
 
 class SignUpUsernameChanged extends SignUpEvent {
@@ -30,4 +31,8 @@ class SignUpGenderChanged extends SignUpEvent {
   SignUpGenderChanged({required this.gender});
 }
 
-class SignUpSubmitted extends SignUpEvent {}
+class SignUpSubmitted extends SignUpEvent {
+  final SignUpModel model;
+
+  SignUpSubmitted({required this.model});
+}

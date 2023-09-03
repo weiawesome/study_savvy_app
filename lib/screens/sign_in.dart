@@ -22,19 +22,30 @@ class SignInPage extends StatefulWidget {
 
 class _SignInPageState extends State<SignInPage> {
   final _formKey = GlobalKey<FormState>();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  AuthRepository authRepo = AuthRepository();
+  LoginState loginState = LoginState();
+
+   @override
+  void dispose() {
+    emailController.dispose();    // 釋放控制器
+    passwordController.dispose();  // 釋放控制器
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
             backgroundColor: Theme.of(context).primaryColor,
-            // body: BlocProvider<LoginBloc>(
-            //   create: (context) => LoginBloc(
-            //     authRepo: context.read<AuthRepository>(),
-            //     authCubit: context.read<AuthCubit>(),
-            //   ),
-              // child:
-              body: 
+            body: BlocProvider<LoginBloc>(
+              create: (context) => LoginBloc(
+                authRepo: context.read<AuthRepository>(),
+                authCubit: context.read<AuthCubit>(),
+              ),
+              child:
+              //body: 
               SafeArea(
                 child: Column(children: [
                   Expanded(flex: 1, child: Container()),
@@ -83,7 +94,7 @@ class _SignInPageState extends State<SignInPage> {
                           ]))
                 ]),
               ),
-            //)
+            )
             );
   }
 
@@ -117,6 +128,7 @@ class _SignInPageState extends State<SignInPage> {
   Widget _EmailField() {
     return BlocBuilder<LoginBloc, LoginState>(builder: (context, state) {
       return TextFormField(
+        controller: emailController,
         style: TextStyle(color: Theme.of(context).textTheme.titleMedium!.color),
         decoration: InputDecoration(
           hintText: 'Email',
@@ -136,6 +148,7 @@ class _SignInPageState extends State<SignInPage> {
   Widget _PasswordField() {
     return BlocBuilder<LoginBloc, LoginState>(builder: (context, state) {
       return TextFormField(
+        controller: passwordController,
         obscureText: true,
         style: TextStyle(color: Theme.of(context).textTheme.titleMedium!.color),
         decoration: InputDecoration(
@@ -145,7 +158,7 @@ class _SignInPageState extends State<SignInPage> {
           filled: true,
           fillColor: Theme.of(context).inputDecorationTheme.fillColor,
         ),
-        validator: (value) => state.isValidPassword ? null : 'Password must be at least 8 chars.',
+        validator: (value) => state.isValidPassword ? null : 'Invalid password.',
         onChanged: (value) => context.read<LoginBloc>().add(
               LoginPasswordChanged(password: value),
             ),
@@ -166,9 +179,19 @@ class _SignInPageState extends State<SignInPage> {
                   debugPrint('Click "sign in!" button');
                   if (_formKey.currentState!.validate()) {
                   context.read<LoginBloc>().add(LoginSubmitted());
-                  if(SubmissionSuccess().test)
-                    Navigator.push(context, 
-                      MaterialPageRoute(builder: (context) => HomePage()));
+                  authRepo.login(email: emailController.text.toString(), password: passwordController.text.toString());
+
+                    if(SubmissionSuccess().test){
+                      Navigator.push(context, 
+                        MaterialPageRoute(builder: (context) => const HomePage()));}
+                    
+                    
+//                    if(loginState.formStatus is SubmissionSuccess){
+//                      Navigator.push(context, 
+//                        MaterialPageRoute(builder: (context) => const HomePage()));
+//                    }else{
+//                      _showSnackBar(context, "Invalid login credentials. Please try again.");
+//                    }
                   }
                 },
                 child: const Text(

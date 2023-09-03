@@ -77,8 +77,8 @@ class _SignUpViewState extends State<SignUpView> {
     return BlocListener<SignUpBloc, SignUpState>(
       listener: (context, state) {
         final formStatus = state.formStatus;
-        if (formStatus is SubmissionFailed) {
-          _showSnackBar(context, formStatus.exception.toString());
+        if (formStatus is SubmissionFailed) { //改
+          _showSnackBar(context, formStatus);
         }
       },
       child: Form(
