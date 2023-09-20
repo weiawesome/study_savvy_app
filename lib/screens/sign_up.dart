@@ -235,7 +235,7 @@ class _SignUpViewState extends State<SignUpView> {
               child: ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    context.read<SignUpBloc>().add(SignUpSubmitted());
+                    //context.read<SignUpBloc>().add(SignUpSubmitted());
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => ConfirmationView()),

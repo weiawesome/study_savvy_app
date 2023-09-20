@@ -43,7 +43,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 
         emit(SignUpState(formStatus: "PENDING"));
         try{
-          await apiService!.signUp(event.model);
+          await apiService!.sendEmailConfirmation(event.model);
           emit(SignUpState(formStatus: "SUCCESS"));
         }
         on ClientException {

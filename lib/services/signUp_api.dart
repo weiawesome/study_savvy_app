@@ -14,45 +14,71 @@ class SignUpService {
 
   SignUpService({JwtService? jwtService, http.Client? httpClient,}): jwtService = jwtService ?? JwtService(), httpClient = httpClient ?? http.Client();
 
-  Future<void> signUp(SignUpModel data) async {
+  Future<void> sendEmailConfirmation(SignUpModel data) async {
     
     final response = await httpClient.post(
-      Uri.parse(ApiRoutes.signUpUrl),
+      Uri.parse(ApiRoutes.emailSendUrl),
       headers: {
         'Content-Type': 'application/json',
       },
-      body: jsonEncode(data.formatJson()),
+      body: jsonEncode({'mail':data.mail}),
     );
     if (response.statusCode == 200) {
 
-      final emailConfirmationResult = await sendEmailConfirmation(data.mail);
-
-      if (emailConfirmationResult) {
-        // 确认电子邮件发送成功，可以执行其他操作，如跳转到登录页面
-        // 你可以使用路由导航或其他方式来跳转
-        // Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
-      } else {
-        throw Exception("Failed to send email confirmation");
-      }
-      
       return ;
     }
     else if(response.statusCode == 400){
-      throw ClientException("Client's error");
-    }
-    else if(response.statusCode == 401){
-      throw ExistException("Unauthorized with information. User have been signup for the service.");
+      throw ClientException("Invalid status value. RequestBody is not match request.");
     }
     else{
       throw Exception('Failed in unknown reason');
     }
   }
 
-
-    Future<bool> sendEmailConfirmation(String mail) async {
-    // 在这里实现发送电子邮件确认的逻辑，包括生成验证码等
-    // 如果发送成功，返回 true；否则返回 false
-    return true; // 示例中总是返回 true，需要根据实际情况来实现
+  Future<bool> verifyEmail(SignUpModel data, String verificationCode) async {
+    
+    final response = await httpClient.get(
+      Uri.parse('${ApiRoutes.emailCheckUrl}/${data.mail}/$verificationCode'),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    );
+    if (response.statusCode == 200) {
+      //驗證成功
+      await signup(data);
+      return true;
+    }
+    else if(response.statusCode == 400){
+      throw ClientException("Invalid status value. RequestBody is not match request.");
+    }
+    else{
+      throw Exception('Failed in unknown reason');
+    }
   }
+
+  Future<void> signup(SignUpModel data) async {
+    
+    final response = await httpClient.post(
+      Uri.parse(ApiRoutes.signUpUrl),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept':'application/json',
+      },
+      body: jsonEncode(data.formatJson()),
+    );
+    if (response.statusCode == 200) {
+
+      return ;
+    }else if(response.statusCode == 400){
+      throw ClientException("Invalid status value. RequestBody is not match request.");
+    }else if(response.statusCode == 401){
+      throw ClientException("Unauthorized with information. User have been signup for the service.");
+    }
+    else{
+      throw Exception('Failed in unknown reason');
+    }
+  }
+
+    
 }
 
