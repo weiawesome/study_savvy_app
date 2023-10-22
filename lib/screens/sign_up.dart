@@ -9,6 +9,10 @@ import 'package:study_savvy_app/blocs/SignUp/sign_up_event.dart';
 import 'package:study_savvy_app/blocs/SignUp/sign_up_state.dart';
 import 'package:study_savvy_app/screens/confirmation_view.dart';
 
+import '../widgets/failure.dart';
+import '../widgets/loading.dart';
+import '../widgets/success.dart';
+
 
 class SignUpView extends StatefulWidget {
   @override
@@ -23,21 +27,54 @@ class _SignUpViewState extends State<SignUpView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
-      body: BlocProvider(
-        create: (context) => SignUpBloc(
-          authRepo: context.read<AuthRepository>(),
-          authCubit: context.read<AuthCubit>(),
-        ),
-        child: SafeArea(
+      body: 
+      // BlocProvider(
+      //   create: (context) => SignUpBloc(
+      //     authRepo: context.read<AuthRepository>(),
+      //     authCubit: context.read<AuthCubit>(),
+      //   ),
+        //child: 
+        SafeArea(
           child: Column(
             children: [
               Expanded(flex: 2, child: _topbar(context)),
-              Expanded(flex: 11, child: _signUpForm()),
+              BlocBuilder<SignUpBloc,SignUpState>(
+                  builder: ((context, state) {
+                    if(state.formStatus=="INIT"){
+                      return Expanded(flex: 11, child: _signUpForm());
+                    }
+                    else if(state.formStatus=="PENDING"){
+                      return const Expanded(
+                        flex:9,
+                        child: Loading(),
+                      );
+                    }
+                    else if(state.formStatus=="SUCCESS"){
+                      return const Expanded(
+                        flex:8,
+                        child: Success(message: "Success to update Password",),
+                      );
+                    }
+                    else if(state.formStatus=="FAILURE"){
+                      return Expanded(
+                        flex:8,
+                        child: Failure(error: state.formStatus,),
+                      );
+                    }
+                    else{
+                      return Container();
+                    }
+                  }
+                )
+  
+              ),
+              
             ],
+          
           ),
         ),
-      ),
-    );
+      );
+    //);
   }
 
   Widget _topbar(BuildContext context) {

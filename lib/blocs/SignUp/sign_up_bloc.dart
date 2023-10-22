@@ -57,5 +57,11 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         }
  
     }
+    if(event is SignUpEventReset){
+      emit(SignUpState(formStatus: "INIT"));
+    }
+    else{
+      throw Exception("Error event in SignUp_file");
+    }
   }
 }

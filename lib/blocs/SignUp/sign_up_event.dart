@@ -36,3 +36,6 @@ class SignUpSubmitted extends SignUpEvent {
 
   SignUpSubmitted({required this.model});
 }
+
+class SignUpEventReset extends SignUpEvent{}
+

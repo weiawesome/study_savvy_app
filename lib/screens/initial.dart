@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:study_savvy_app/blocs/SignUp/sign_up_event.dart';
 import 'package:study_savvy_app/blocs/provider/theme_provider.dart';
 import 'package:study_savvy_app/screens/sign_in.dart';
 import 'package:study_savvy_app/screens/sign_up.dart';
@@ -7,6 +8,9 @@ import 'package:study_savvy_app/styles/custom_style.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_savvy_app/blocs/profile/bloc_online.dart';
 import 'package:study_savvy_app/services/utils/jwt_storage.dart';
+import 'package:study_savvy_app/utils/routes.dart';
+
+import '../blocs/SignUp/sign_up_bloc.dart';
 
 
 
@@ -78,12 +82,16 @@ class HomePage extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   )
                 ),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => SignUpView()));
-              },
+                onPressed: () {
+                  // Navigator.push(context,
+                  //     MaterialPageRoute(builder: (context) => SignUpView()));
 
-            )
+                  context.read<SignUpBloc>().add(SignUpEventReset());
+                  Navigator.push(context,
+                       MaterialPageRoute(builder: (context) => SignUpView()));
+                },
+
+              )
             ),
       
           TextButton(
