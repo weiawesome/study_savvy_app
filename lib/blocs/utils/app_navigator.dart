@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_savvy_app/blocs/auth/auth_cubit.dart';
 import 'package:study_savvy_app/blocs/auth/auth_navigator.dart';
-import 'package:study_savvy_app/screens/loading_view.dart';
+import 'package:study_savvy_app/screens/sign_in/loading_view.dart';
 import 'package:study_savvy_app/blocs/session/session_cubit.dart';
 import 'package:study_savvy_app/blocs/session/session_state.dart';
-//import 'package:study_savvy_app/session_view.dart';
 import 'package:study_savvy_app/screens/home.dart';
 
 class AppNavigator extends StatelessWidget {
@@ -28,7 +27,7 @@ class AppNavigator extends StatelessWidget {
             ),
 
           // Show session flow
-          if (state is Authenticated) MaterialPage(child: HomePage())
+          if (state is Authenticated) MaterialPage(child: MenuHome())
         ],
         onPopPage: (route, result) => route.didPop(result),
       );

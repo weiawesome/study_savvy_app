@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:study_savvy_app/screens/home.dart';
-import 'package:study_savvy_app/screens/sign_in.dart';
-import 'package:study_savvy_app/styles/custom_style.dart';
+import 'package:study_savvy_app/screens/sign_in/sign_in.dart';
 
 class EmailConfirm extends StatefulWidget {
   const EmailConfirm({super.key});

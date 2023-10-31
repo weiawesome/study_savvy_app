@@ -8,7 +8,6 @@ import 'package:study_savvy_app/blocs/profile/bloc_online.dart';
 import 'package:study_savvy_app/blocs/profile/bloc_password.dart';
 import 'package:study_savvy_app/blocs/profile/bloc_profile.dart';
 import 'package:study_savvy_app/blocs/provider/theme_provider.dart';
-import 'package:study_savvy_app/services/utils/jwt_storage.dart';
 import 'package:study_savvy_app/utils/routes.dart';
 import 'package:study_savvy_app/widgets/failure.dart';
 import 'package:study_savvy_app/widgets/loading.dart';
@@ -102,6 +101,7 @@ class _ProfilePage extends State<ProfilePage> {
                       CupertinoDialogAction(
                         child: Text('confirm',style: Theme.of(context).textTheme.displaySmall,),
                         onPressed: () {
+                          context.read<OnlineBloc>().add(OnlineEventCheck());
                           Navigator.of(context).pop();
                         },
                       ),
@@ -111,11 +111,7 @@ class _ProfilePage extends State<ProfilePage> {
               }
           );
         },
-      ).then((value){
-        bool? status=context.read<OnlineBloc>().state.status;
-        String? message=context.read<OnlineBloc>().state.message;
-        context.read<OnlineBloc>().add(OnlineEventReset(status,message));
-      });
+      );
     }
     return Column(
       children: [
@@ -323,55 +319,7 @@ class _ProfilePage extends State<ProfilePage> {
                             onPressed: () async {
                               await DefaultCacheManager().emptyCache();
                             },
-                          ),
-                          TextButton(
-                            style: ButtonStyle(
-                              overlayColor: MaterialStateProperty.resolveWith<Color>(
-                                    (Set<MaterialState> states) {
-                                  if (states.contains(MaterialState.pressed)) {
-                                    return Theme.of(context).hintColor;
-                                  }
-                                  return Colors.transparent;
-                                },
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text("一鍵登入(未來會刪除)",style: Theme.of(context).textTheme.displaySmall),
-                                Icon(Icons.navigate_next_rounded,size: 25,color: Theme.of(context).hintColor)
-                              ],
-                            ),
-                            onPressed: () async {
-                              JwtService jwtService=JwtService();
-                              await jwtService.saveJwt("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4OTM1MzIwNCwianRpIjoiY2IyZDQyYzAtNDA5ZC00ZjIwLWE5OWMtMjM4Y2M0NWJiNzVhIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IndlaTg5MTAxM0BnbWFpbC5jb20iLCJuYmYiOjE2ODkzNTMyMDQsImNzcmYiOiI2MmJiMTgxMS1lYjZhLTRkZWYtOTQ2Mi1kZDE3YTVmOTRmMTciLCJleHAiOjE2OTA1NjI4MDR9.VR2yL1m9DMak5_9NczOAo4QJvl7ouZ_SuCCTRFlxBOI");
-                            },
-                          ),
-                          TextButton(
-                            style: ButtonStyle(
-                              overlayColor: MaterialStateProperty.resolveWith<Color>(
-                                    (Set<MaterialState> states) {
-                                  if (states.contains(MaterialState.pressed)) {
-                                    return Theme.of(context).hintColor;
-                                  }
-                                  return Colors.transparent;
-                                },
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text("迅速登出",style: Theme.of(context).textTheme.displaySmall),
-                                Icon(Icons.navigate_next_rounded,size: 25,color: Theme.of(context).hintColor)
-                              ],
-                            ),
-                            onPressed: () async {
-                              JwtService jwtService=JwtService();
-                              jwtService.deleteJwt();
-                              context.read<OnlineBloc>().add(OnlineEventCheck());
-                            },
-                          ),
-
+                          )
                         ],
                       ),
                     ),

@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:study_savvy_app/blocs/SignUp/sign_up_bloc.dart';
 import 'package:study_savvy_app/blocs/auth/auth_repository.dart';
 import 'package:study_savvy_app/blocs/auth/form_submission_status.dart';
 import 'package:study_savvy_app/blocs/auth/auth_cubit.dart';
 import 'package:study_savvy_app/blocs/confirmation/confirmation_bloc.dart';
 import 'package:study_savvy_app/blocs/confirmation/confirmation_event.dart';
 import 'package:study_savvy_app/blocs/confirmation/confirmation_state.dart';
-import 'package:study_savvy_app/screens/email_confirm.dart';
+import 'package:study_savvy_app/screens/signup/email_confirm.dart';
+
+import '../../blocs/utils/bloc_navigator.dart';
 
 class ConfirmationView extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -35,7 +38,7 @@ class ConfirmationView extends StatelessWidget {
         child: Form(
           key: _formKey,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 40),
+            padding: const EdgeInsets.symmetric(horizontal: 40),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -45,7 +48,7 @@ class ConfirmationView extends StatelessWidget {
                   textAlign: TextAlign.center,
                   ),
                 Container(
-                  padding: EdgeInsets.symmetric(vertical: 150),
+                  padding: const EdgeInsets.symmetric(vertical: 150),
                   child: _codeField()),
                 _confirmButton(),
               ],
@@ -75,15 +78,18 @@ class ConfirmationView extends StatelessWidget {
     return BlocBuilder<ConfirmationBloc, ConfirmationState>(
         builder: (context, state) {
       return state.formStatus is FormSubmitting
-          ? CircularProgressIndicator()
+          ? const CircularProgressIndicator()
           : ElevatedButton(
               onPressed: () {
+                print("KAKA");
+                print(context.read<SignUpBloc>().state.toString());
                 if (_formKey.currentState!.validate()) {
+
                   context.read<ConfirmationBloc>().add(ConfirmationSubmitted());
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => EmailConfirm()),
-                    );
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(builder: (context) => EmailConfirm()),
+                  //   );
                 }
               },
               child: const Text(

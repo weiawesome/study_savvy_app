@@ -3,12 +3,12 @@ import 'package:study_savvy_app/blocs/LogIn/login_state.dart';
 import 'package:study_savvy_app/blocs/LogIn/login_event.dart';
 import 'package:study_savvy_app/blocs/auth/form_submission_status.dart';
 import 'package:study_savvy_app/blocs/auth/auth_repository.dart';
-import 'package:study_savvy_app/screens/sign_in.dart';
-import 'package:flutter/material.dart';
 import 'package:study_savvy_app/blocs/auth/auth_cubit.dart';
-import '../auth/auth_credentials.dart';
+import 'package:study_savvy_app/models/model_login.dart';
+import 'package:study_savvy_app/services/login_api.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
+  final LoginService apiService=LoginService();
   final AuthRepository authRepo;
   final AuthCubit authCubit;
 
@@ -21,30 +21,20 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     if (event is LoginEmailChanged) {
       emit(state.copyWith(email: event.email));
     }
-    // password update
     else if (event is LoginPasswordChanged) {
       emit(state.copyWith(password: event.password));
     }
-    // form submitted
     else if (event is LoginSubmitted) {
       emit(state.copyWith(formStatus: FormSubmitting()));
       try {
-        
-        final userId = await authRepo.login(  //這裡
-          email: state.email,
-          password: state.password,
-        );
+        await apiService.login(LoginModel(state.email, state.password));
         emit(state.copyWith(formStatus: SubmissionSuccess()));
-        
-
-        authCubit.launchSession(AuthCredentials(
-          email: state.email,
-          userId: userId,   //這裡
-        ));
-        debugPrint("<login Bloc>test");
-      } catch (e) {
-        emit(state.copyWith(formStatus: SubmissionFailed(e.toString() as Exception)));
+      } catch(e){
+        emit(state.copyWith(formStatus: SubmissionFailed(Exception(e.toString()))));
       }
+    }
+    else if (event is LoginCancel) {
+      emit(state.copyWith(formStatus: const InitialFormStatus()));
     }
   }
 }

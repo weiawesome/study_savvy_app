@@ -36,6 +36,12 @@ class SignUpSubmitted extends SignUpEvent {
 
   SignUpSubmitted({required this.model});
 }
+class SignUpVerify extends SignUpEvent {
+  final SignUpModel model;
+  final String code;
+
+  SignUpVerify({required this.model,required this.code});
+}
 
 class SignUpEventReset extends SignUpEvent{}
 

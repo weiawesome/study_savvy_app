@@ -15,7 +15,7 @@ class SignUpService {
   SignUpService({JwtService? jwtService, http.Client? httpClient,}): jwtService = jwtService ?? JwtService(), httpClient = httpClient ?? http.Client();
 
   Future<void> sendEmailConfirmation(SignUpModel data) async {
-    
+    print(jsonEncode(data.formatJson()));
     final response = await httpClient.post(
       Uri.parse(ApiRoutes.emailSendUrl),
       headers: {
@@ -23,8 +23,8 @@ class SignUpService {
       },
       body: jsonEncode({'mail':data.mail}),
     );
-    if (response.statusCode == 200) {
 
+    if (response.statusCode == 200) {
       return ;
     }
     else if(response.statusCode == 400){
@@ -43,6 +43,7 @@ class SignUpService {
         'Content-Type': 'application/json',
       },
     );
+    print(response.statusCode);
     if (response.statusCode == 200) {
       //驗證成功
       await signup(data);
@@ -66,8 +67,9 @@ class SignUpService {
       },
       body: jsonEncode(data.formatJson()),
     );
+    print(jsonEncode(data.formatJson()));
+    print(response.body);
     if (response.statusCode == 200) {
-
       return ;
     }else if(response.statusCode == 400){
       throw ClientException("Invalid status value. RequestBody is not match request.");

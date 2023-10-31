@@ -74,15 +74,22 @@ class _ArticleImproverPage extends State<ArticleImproverPage>{
           }
         }
         final combined = img_package.Image(
-            loadedImages[0].width,
-            loadedImages.fold<int>(0, (previousValue, element) => previousValue + element.height)
+            width:loadedImages[0].width,
+            height:loadedImages.fold<int>(0, (previousValue, element) => previousValue + element.height)
         );
 
         int offset = 0;
         for (img_package.Image img in loadedImages) {
-          img_package.copyInto(combined, img, dstY: offset);
+          for (int y = 0; y < img.height; y++) {
+            for (int x = 0; x < img.width; x++) {
+              img_package.Pixel pixel = img.getPixel(x, y);
+              combined.setPixel(x, y + offset, pixel);
+            }
+          }
           offset += img.height;
         }
+
+
 
         final directory = await getApplicationDocumentsDirectory();
         final filePath = '${directory.path}/combined.jpg';

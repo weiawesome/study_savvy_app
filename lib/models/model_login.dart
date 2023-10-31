@@ -4,7 +4,7 @@ class LoginModel{
   LoginModel(this.email, this.password);
   Map<String,String> formatJson(){
     return {
-      "email": email,
+      "mail": email,
       "password": password, 
     };
   }

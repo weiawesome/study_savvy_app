@@ -20,7 +20,7 @@ class RouteGenerator {
   static Route<dynamic>? generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case Routes.home:
-        return MaterialPageRoute(builder: (_) => const HomePage());
+        return MaterialPageRoute(builder: (_) => const MenuHome());
       case Routes.information:
         return MaterialPageRoute(builder: (_) => const InformationPage());
       case Routes.password:

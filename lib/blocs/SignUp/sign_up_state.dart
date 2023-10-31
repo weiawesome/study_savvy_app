@@ -1,7 +1,7 @@
 
 class SignUpState {
   final String username;
-  bool get isValidUsername => username.length > 3;
+  bool get isValidUsername => username.length >= 3;
 
   final String email;
   bool get isValidEmail => email.contains('@');

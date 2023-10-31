@@ -5,11 +5,11 @@ import 'package:provider/provider.dart';
 import 'package:study_savvy_app/blocs/note_taker/noteTaker_state.dart';
 import 'package:study_savvy_app/styles/custom_style.dart';
 
-import '../blocs/note_taker/noteTaker_bloc.dart';
-import '../blocs/note_taker/noteTaker_event.dart';
-import '../blocs/provider/audio_provider.dart';
-import '../models/model_noteTaker.dart';
-import '../widgets/loading.dart';
+import '../../blocs/note_taker/noteTaker_bloc.dart';
+import '../../blocs/note_taker/noteTaker_event.dart';
+import '../../blocs/provider/audio_provider.dart';
+import '../../models/model_noteTaker.dart';
+import '../../widgets/loading.dart';
 import 'dart:io';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 import 'package:file_picker/file_picker.dart';

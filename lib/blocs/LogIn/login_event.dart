@@ -18,3 +18,7 @@ class LoginPasswordChanged extends LoginEvent {
 class LoginSubmitted extends LoginEvent {
   LoginSubmitted();
 }
+
+class LoginCancel extends LoginEvent {
+  LoginCancel();
+}

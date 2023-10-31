@@ -13,8 +13,6 @@ class LoginService {
   LoginService({JwtService? jwtService, http.Client? httpClient,}): jwtService = jwtService ?? JwtService(), httpClient = httpClient ?? http.Client();
 
   Future<void> login(LoginModel data) async {
-    //String? jwt=await jwtService.getJwt();
-    
     final response = await httpClient.post(
       Uri.parse(ApiRoutes.logInUrl),
       headers: {
@@ -23,8 +21,8 @@ class LoginService {
       },
       body: jsonEncode(data.formatJson()),
     );
+
     if (response.statusCode == 200) {
-      
       final responseBody = jsonDecode(response.body);
       if (responseBody.containsKey('token')) {
         String token = responseBody['token'];
@@ -34,7 +32,6 @@ class LoginService {
       } else {
         throw AuthException("Token not found in response");
       }
-
       return ;
     }
     else if(response.statusCode == 400){

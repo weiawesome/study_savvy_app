@@ -40,10 +40,9 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 
       // Form submitted
     } else if (event is SignUpSubmitted) {
-
         emit(SignUpState(formStatus: "PENDING"));
         try{
-          await apiService!.sendEmailConfirmation(event.model);
+          await apiService.sendEmailConfirmation(event.model);
           emit(SignUpState(formStatus: "SUCCESS"));
         }
         on ClientException {
@@ -55,9 +54,23 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         catch(e) {
           emit(SignUpState(formStatus: "FAILURE"));
         }
- 
-    }
-    if(event is SignUpEventReset){
+    } else if(event is SignUpVerify){
+      emit(SignUpState(formStatus: "PENDING"));
+      try{
+        await apiService.verifyEmail(event.model, event.code);
+        await apiService.signup(event.model);
+        emit(SignUpState(formStatus: "SUCCESS_SIGNUP"));
+      }
+      on ClientException {
+        emit(SignUpState(formStatus: "FAILURE"));
+      }
+      on ExistException {
+        emit(SignUpState(formStatus: "FAILURE"));
+      }
+      catch(e) {
+        emit(SignUpState(formStatus: "FAILURE"));
+      }
+    } else if(event is SignUpEventReset){
       emit(SignUpState(formStatus: "INIT"));
     }
     else{

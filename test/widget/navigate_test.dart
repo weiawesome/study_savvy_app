@@ -58,11 +58,11 @@ void main(){
         )
       ],
       child: const MaterialApp(
-        home:HomePage()
+        home:MenuHome()
       ),
     ));
 
-    expect(find.byType(HomePage),findsOneWidget);
+    expect(find.byType(MenuHome),findsOneWidget);
     expect(find.byType(CustomNavigate),findsOneWidget);
 
     await tester.tap(find.byIcon(Icons.feed_outlined));

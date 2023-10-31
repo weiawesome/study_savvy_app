@@ -3,12 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_savvy_app/blocs/utils/bloc_navigator.dart';
 import 'package:study_savvy_app/widgets/custom_navigate.dart';
 
-class HomePage extends StatefulWidget{
-  const HomePage({Key?key}):super(key: key);
+class MenuHome extends StatefulWidget{
+  const MenuHome({Key?key}):super(key: key);
   @override
-  State<HomePage> createState()=> _HomePage();
+  State<MenuHome> createState()=> _HomePage();
 }
-class _HomePage extends State<HomePage> {
+class _HomePage extends State<MenuHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
