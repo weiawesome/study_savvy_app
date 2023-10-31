@@ -7,6 +7,8 @@ import 'package:study_savvy_app/blocs/LogIn/login_event.dart';
 import 'package:study_savvy_app/blocs/auth/form_submission_status.dart';
 import 'package:study_savvy_app/blocs/auth/auth_repository.dart';
 import 'package:study_savvy_app/blocs/LogIn/login_bloc.dart';
+import '../../blocs/SignUp/sign_up_bloc.dart';
+import '../../blocs/SignUp/sign_up_event.dart';
 import '../../blocs/profile/bloc_online.dart';
 
 
@@ -163,7 +165,7 @@ class _SignInPageState extends State<SignInPage> {
                             style: Theme.of(context).textTheme.bodySmall),
                         TextButton(
                           onPressed: () {
-                            context.read<AuthCubit>().showLogin();
+                            context.read<SignUpBloc>().add(SignUpEventReset());
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
