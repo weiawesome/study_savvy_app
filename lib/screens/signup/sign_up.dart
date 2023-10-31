@@ -7,7 +7,6 @@ import 'package:study_savvy_app/blocs/SignUp/sign_up_event.dart';
 import 'package:study_savvy_app/blocs/SignUp/sign_up_state.dart';
 import 'package:study_savvy_app/models/model_signup.dart';
 import 'package:study_savvy_app/screens/sign_in/sign_in.dart';
-
 import '../../blocs/auth/auth_cubit.dart';
 import '../../blocs/auth/auth_repository.dart';
 import '../../blocs/confirmation/confirmation_bloc.dart';
@@ -31,6 +30,7 @@ class _SignUpViewState extends State<SignUpView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Theme.of(context).primaryColor,
       body:
         SafeArea(
