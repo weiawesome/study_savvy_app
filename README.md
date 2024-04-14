@@ -1,9 +1,26 @@
-# study_savvy_app
+# Study Savvy App
+## Introduction
+The application has two main function
+1. Summarize the content in the class
+2. Correct the articles which user written
 
-我們使用 BLoC架構 建立 Flutter_App
-重點是我們是很有架構的去建立 不懂記得去研究
-目前我只講最重要部分 請按照一下規格行開發
+Furthermore, in the application we can upload the file including audio or graph and gain the content calculated or predicted by AI.
+
+The backend repository is in </br>
+https://github.com/weiawesome/study_savvy_api_go </br>
+https://github.com/weiawesome/study_savvy_asyncwork_celery/tree/master
+
+## User Interface
+![UI.png](assets/ui.png)
+## System Architecture
+
+The project we use the BLoC architecture to build the application.
+
+Hence, What is BLoC architecture ?
+
+In order to introduce the BLoC architecture, we can the project architecture at first.
 ```
+# Project Architecture
 ├── README.md
 ├── lib
 │   ├── blocs
@@ -26,33 +43,25 @@
 │   │
 │   ├── main.dart
 ```
-# blocs
-> 在 blocs 負責作為與UI跟資料間的橋梁
-> 若UI需要資料則會將 bloc內的dart檔案呼叫 拉資料
-> (可以自己建立需要的檔案)
-# models
-> 不論是有模型都放這 如呼叫API需要的物件 或是接收API需要的物件
-> (按照需求自己建立需要的檔案)
-# screens
-> 這就是每頁的檔案位置 僅建置UI部分(按照自己需求建立檔案)
-# services
-> 即為呼叫API的地方(依照自己需求建立檔案)
-# styles
-> 當有共同需要用到的style時放置位置(如顏色之類的)(按照自己需求建立檔案)
-# widgets
-> 當有共同需要用到的widget時放置位置 尤其當這個widget可以重複使用時(按照自己需求建立檔案)
+### blocs
+> In Bloc, like the bridge with UI and service.
+> If the UI need the data, publish an event to bloc.
+> When the service is complete, it will send the state to UI.
+### models
+> This is the model for request and response.
+### screens
+> This is all screens(pages) should be designed here.
+### services
+> This is where to call the API request.
+### styles
+> When the UI has some sharing style, it can be written here to avoid repeat too much.
+### widgets
+> When the widget in UI can be sharing, it can be written here.
 
-A new Flutter project.
+### Summarize to BLoC 
+![bloc.png](assets/bloc.png)
 
-## Getting Started
+Hence, just like the graph showing and project setting.
 
-This project is a starting point for a Flutter application.
+In this architecture, we can easily separate UI and logic unit. 
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
